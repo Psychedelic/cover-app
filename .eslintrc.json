@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "sonarjs", "import", "promise"],
+  "plugins": ["@typescript-eslint", "sonarjs", "import", "promise", "react", "jsx-a11y", "react-hooks"],
   "env": {
     "node": true
   },
@@ -9,6 +9,9 @@
     "eslint:recommended",
     "react-app",
     "react-app/jest",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:sonarjs/recommended",
@@ -19,6 +22,7 @@
   ],
   "ignorePatterns": ["src/actor/factory*"],
   "rules": {
+    "no-console": "warn",
     "import/no-named-as-default-member": "off",
     "import/no-named-as-default": ["error"],
     "eqeqeq": ["error"],
