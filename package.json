@@ -10,23 +10,32 @@
     "@types/node": "^16.11.26",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
+    "prettier": "^2.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.0",
     "typescript": "^4.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-sonarjs": "^0.11.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "prettier:check": "prettier --check .",
+    "prettier": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint": "eslint . --fix",
+    "clean": "rm -rf node_modules build public dist package-lock.json",
     "start": "react-scripts start",
+    "prebuild": "npm run prettier:check && npm run lint:check",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
