@@ -27,7 +27,7 @@
     "guard-for-in": ["error"],
     "no-param-reassign": ["error"],
     "prefer-rest-params": ["error"],
-    "spaced-comment": ["error", "always", {"exceptions": ["-"]}],
+    "spaced-comment": ["error", "always", {"exceptions": ["-"], "markers": ["/"]}],
     "prefer-arrow-callback": ["error"],
     "arrow-parens": ["error", "as-needed"],
     "no-confusing-arrow": ["error"],
