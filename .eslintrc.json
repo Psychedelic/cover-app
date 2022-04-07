@@ -63,15 +63,16 @@
   },
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts"]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
-      "typescript": {
-        "alwaysTryTypes": false
-      }
+      "node": {
+        "extensions": [".ts", ".tsx"]
+      },
+      "typescript": {}
     }
   },
   "parserOptions": {
-    "warnOnUnsupportedTypeScriptVersion": false
+    "warnOnUnsupportedTypeScriptVersion": true
   }
 }
