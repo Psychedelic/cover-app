@@ -1,9 +1,9 @@
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 
-import {globalStyles} from './App.styled';
+import {globalStyles} from './app.styled';
 import {Example} from './views';
 
-const App = () => {
+export const App = () => {
   globalStyles();
   return (
     <BrowserRouter>
@@ -14,5 +14,3 @@ const App = () => {
     </BrowserRouter>
   );
 };
-
-export default App;
