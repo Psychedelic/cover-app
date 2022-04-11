@@ -63,7 +63,8 @@
           "caseInsensitive": true
         }
       }
-    ]
+    ],
+    "react/react-in-jsx-scope": "off"
   },
   "settings": {
     "import/parsers": {
