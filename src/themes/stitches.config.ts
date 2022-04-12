@@ -87,4 +87,4 @@ export const createCustomStitches = <Prefix, Media, Theme, ThemeMap, Utils>({
   };
 };
 
-export const customStitches = createCustomStitches();
+export const defaultStitches = createCustomStitches();

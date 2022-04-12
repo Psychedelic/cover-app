@@ -1,10 +1,10 @@
-import {cssReset, customStitches} from './themes';
+import {cssReset, defaultStitches} from './themes';
 
-const {styled, globalCss} = customStitches;
+const {styled, globalCss} = defaultStitches;
 
 export const globalStyles = globalCss({
   '*, html': {
-    'font-family': `'Nunito', sans-serif;`
+    'font-family': `'Monaco', sans-serif;`
   },
   cssReset
 });

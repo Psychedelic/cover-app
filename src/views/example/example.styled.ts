@@ -1,6 +1,6 @@
-import {customStitches} from '@/themes';
+import {defaultStitches} from '@/themes';
 
-const {styled} = customStitches;
+const {styled} = defaultStitches;
 
 export const Container = styled('div', {
   background: '$slate2',
