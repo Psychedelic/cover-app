@@ -17,5 +17,4 @@ export const Button = styled('button', {
   width: 134,
   color: '#03BF00',
   backgroundColor: '#013200;'
-  // '&:hover': {backgroundColor: '##013200'},
 });
