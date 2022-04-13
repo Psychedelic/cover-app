@@ -15,6 +15,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTests.ts'
+    setupFiles: './src/setupTests.ts',
+    coverage: {
+      lines: 75,
+      functions: 75,
+      branches: 75,
+      statements: 75
+    }
   }
 });
