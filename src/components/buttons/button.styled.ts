@@ -33,5 +33,9 @@ export const StitchesButton = styled('button', {
         height: 34
       }
     }
+  },
+  defaultVariants: {
+    type: 'main',
+    size: 'medium'
   }
 });

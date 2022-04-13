@@ -24,6 +24,7 @@
     "no-console": "warn",
     "eqeqeq": ["error"],
     "one-var": "off",
+    "id-length": "off",
     "max-lines-per-function": ["error", {"max": 80}],
     "sort-keys": "off",
     "prefer-const": ["error"],
@@ -45,6 +46,7 @@
     "comma-dangle": ["error", "never"],
     "semi": ["error", "always"],
     "max-len": ["error", {"code": 120, "ignoreComments": true, "ignoreTrailingComments": true}],
+    "@typescript-eslint/no-empty-function": "off",
     "react/jsx-filename-extension": ["error", {"extensions": [".tsx"]}],
     "react/jsx-curly-brace-presence": [
       "error",

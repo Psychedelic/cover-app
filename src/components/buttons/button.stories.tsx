@@ -8,7 +8,7 @@ const meta: ComponentMeta<typeof Button> = {
 };
 export default meta;
 
-export const MainBtn: ComponentStoryObj<typeof Button> = {
+export const MediumMainButton: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Button',
     type: 'main',
@@ -16,7 +16,7 @@ export const MainBtn: ComponentStoryObj<typeof Button> = {
   }
 };
 
-export const SecondaryBtn: ComponentStoryObj<typeof Button> = {
+export const LargeSecondaryButton: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Secondary Button',
     type: 'secondary',
