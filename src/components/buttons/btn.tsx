@@ -10,4 +10,8 @@ type PropTypes = {
   onClick: ReactEventHandler;
 };
 
-export const Btn: React.FC<PropTypes> = props => <Button {...props}></Button>;
+export const Btn: React.FC<PropTypes> = ({css, children, onClick}) => (
+  <Button css={css} onClick={onClick}>
+    {children}
+  </Button>
+);

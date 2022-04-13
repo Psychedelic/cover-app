@@ -1,4 +1,4 @@
-import {purple, red, slate, redDark, purpleDark, slateDark, grass, grassDark} from '@radix-ui/colors';
+import {grass, grassDark, purple, purpleDark, red, redDark, slate, slateDark} from '@radix-ui/colors';
 
 export const colors = {
   ...slate,

@@ -1,4 +1,6 @@
-import {cssReset, defaultStitches} from './themes';
+import {reset} from 'stitches-reset';
+
+import {defaultStitches} from './themes';
 
 const {styled, globalCss} = defaultStitches;
 
@@ -6,7 +8,7 @@ export const globalStyles = globalCss({
   '*, html': {
     'font-family': `'Monaco', sans-serif;`
   },
-  cssReset
+  reset
 });
 
 export const MainContainer = styled('div', {

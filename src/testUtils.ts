@@ -5,7 +5,7 @@ export {default as userEvent} from '@testing-library/user-event';
 
 const customRender = (ui: React.ReactElement, options = {}) =>
   render(ui, {
-    // wrap provider(s) here if needed
+    // Wrap provider(s) here if needed
     wrapper: ({children}) => children,
     ...options
   });

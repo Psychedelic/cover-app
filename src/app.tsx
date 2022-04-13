@@ -1,15 +1,17 @@
+import React from 'react';
+
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 
 import {globalStyles} from './app.styled';
 import {Example} from './views';
 
-export const App = () => {
+export const App: React.VFC = () => {
   globalStyles();
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/example" element={<Example />} />
-        <Route path="*" element={<Navigate to="/example" />} />
+        <Route element={<Example />} path={'/example'} />
+        <Route element={<Navigate to={'/example'} />} path={'*'} />
       </Routes>
     </BrowserRouter>
   );

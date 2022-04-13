@@ -5,8 +5,10 @@ import {
   colors,
   darkColors,
   typography
-  // u can add the rest here if you need
-  // ex spaces, sizes, radii, shadows, etc
+  /*
+   * U can add the rest here if you need
+   * ex spaces, sizes, radii, shadows, etc
+   */
 } from './foundations';
 
 export interface CreateStitchesConfig<Prefix, Media, Theme, ThemeMap, Utils> {
@@ -25,59 +27,58 @@ export const createCustomStitches = <Prefix, Media, Theme, ThemeMap, Utils>({
   media
 }: CreateStitchesConfig<Prefix, Media, Theme, ThemeMap, Utils> = {}) => {
   const {createTheme, ...otherStitches} = createStitches({
-    prefix: prefix || ('cover' as string),
-    media: {
-      ...(media || {})
-    },
-    theme: {
-      colors: {
-        ...colors,
-        ...(theme?.colors || {})
+      prefix: prefix || ('cover' as string),
+      media: {
+        ...(media || {})
       },
-      space: {
-        ...(theme?.space || {})
+      theme: {
+        colors: {
+          ...colors,
+          ...(theme?.colors || {})
+        },
+        space: {
+          ...(theme?.space || {})
+        },
+        sizes: {
+          ...(theme?.sizes || {})
+        },
+        fontWeights: {
+          ...typography.fontWeights,
+          ...(theme?.fontWeights || {})
+        },
+        fonts: {
+          ...typography.fonts,
+          ...(theme?.fonts || {})
+        },
+        letterSpacings: {
+          ...(theme?.letterSpacings || {})
+        },
+        lineHeights: {
+          ...(theme?.lineHeights || {})
+        },
+        fontSizes: {
+          ...typography.fontSizes,
+          ...(theme?.fontSizes || {})
+        },
+        radii: {
+          ...(theme?.radii || {})
+        },
+        shadows: {
+          ...(theme?.shadows || {})
+        },
+        zIndices: {
+          ...(theme?.zIndices || {})
+        },
+        ...(theme || {})
       },
-      sizes: {
-        ...(theme?.sizes || {})
-      },
-      fontWeights: {
-        ...typography.fontWeights,
-        ...(theme?.fontWeights || {})
-      },
-      fonts: {
-        ...typography.fonts,
-        ...(theme?.fonts || {})
-      },
-      letterSpacings: {
-        ...(theme?.letterSpacings || {})
-      },
-      lineHeights: {
-        ...(theme?.lineHeights || {})
-      },
-      fontSizes: {
-        ...typography.fontSizes,
-        ...(theme?.fontSizes || {})
-      },
-      radii: {
-        ...(theme?.radii || {})
-      },
-      shadows: {
-        ...(theme?.shadows || {})
-      },
-      zIndices: {
-        ...(theme?.zIndices || {})
-      },
-      ...(theme || {})
-    },
-    themeMap,
-    utils: {
-      ...(utils || {})
-    }
-  });
-
-  const darkTheme = createTheme({
-    colors: darkColors
-  });
+      themeMap,
+      utils: {
+        ...(utils || {})
+      }
+    }),
+    darkTheme = createTheme({
+      colors: darkColors
+    });
 
   return {
     createTheme,
