@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
 
-import {StatusDot} from '@/components/statusDots/statusDot';
+import {StatusDot} from './statusDot';
 
 const meta: ComponentMeta<typeof StatusDot> = {
   title: 'Example/StatusDot',

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {CSS} from '@stitches/react';
 
-import {StitchesStatusDot} from '@/components/statusDots/statusDot.styled';
+import {StitchesStatusDot} from './statusDot.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesStatusDot> {
   css?: CSS;
