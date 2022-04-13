@@ -6,11 +6,11 @@ import {Button} from './mainBtn.styled';
 
 const MainBtnPropTypes = {
   styled: PropTypes.object,
-  textContent: PropTypes.string
+  children: PropTypes.node
 };
 
-export const MainBtn: React.VFC<InferProps<typeof MainBtnPropTypes>> = props => (
-  <Button css={{...props.styled}}>{props.textContent}</Button>
+export const MainBtn: React.FC<InferProps<typeof MainBtnPropTypes>> = props => (
+  <Button css={{...props.styled}}>{props.children}</Button>
 );
 
 MainBtn.propTypes = MainBtnPropTypes;

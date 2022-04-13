@@ -10,24 +10,6 @@ export default meta;
 
 export const Primary: ComponentStoryObj<typeof MainBtn> = {
   args: {
-    textContent: 'Button'
-  }
-};
-
-export const Secondary: ComponentStoryObj<typeof MainBtn> = {
-  args: {
-    textContent: 'Button'
-  }
-};
-
-export const Large: ComponentStoryObj<typeof MainBtn> = {
-  args: {
-    textContent: 'Button'
-  }
-};
-
-export const Small: ComponentStoryObj<typeof MainBtn> = {
-  args: {
-    textContent: 'Button'
+    children: 'Button'
   }
 };
