@@ -1,4 +1,4 @@
-import React, {ReactEventHandler, ReactNode} from 'react';
+import React, {ReactEventHandler} from 'react';
 
 import {CSS} from '@stitches/react';
 
@@ -6,7 +6,6 @@ import {StitchesButton} from './button.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesButton> {
   css?: CSS;
-  children: ReactNode;
   onClick?: ReactEventHandler;
 }
 
@@ -18,5 +17,6 @@ export const Button: React.FC<PropTypes> = ({css, children, onClick, type, size}
 
 Button.defaultProps = {
   css: {},
-  onClick: _e => {}
+  onClick: _e => {},
+  children: 'Button'
 };
