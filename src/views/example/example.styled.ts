@@ -3,7 +3,7 @@ import {defaultStitches} from '@/themes';
 const {styled} = defaultStitches;
 
 export const Container = styled('div', {
-  background: '$slate2',
+  background: '$slate12',
   height: '100vh',
   width: '100%'
 });
