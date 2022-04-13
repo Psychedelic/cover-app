@@ -1,15 +1,25 @@
 import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
 
-import {Btn} from './btn';
+import {Button} from './button';
 
-const meta: ComponentMeta<typeof Btn> = {
+const meta: ComponentMeta<typeof Button> = {
   title: 'Example/Button',
-  component: Btn
+  component: Button
 };
 export default meta;
 
-export const DefaultBtn: ComponentStoryObj<typeof Btn> = {
+export const MainBtn: ComponentStoryObj<typeof Button> = {
   args: {
-    children: 'Button'
+    children: 'Button',
+    type: 'main',
+    size: 'medium'
+  }
+};
+
+export const SecondaryBtn: ComponentStoryObj<typeof Button> = {
+  args: {
+    children: 'Secondary Button',
+    type: 'secondary',
+    size: 'large'
   }
 };

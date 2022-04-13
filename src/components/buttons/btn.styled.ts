@@ -1,7 +1,7 @@
 import {defaultStitches, typography} from '@/themes';
 const {styled} = defaultStitches;
 
-export const Button = styled('button', {
+export const StitchesButton = styled('button', {
   all: 'unset',
   display: 'inline-flex',
   alignItems: 'center',
