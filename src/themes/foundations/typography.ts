@@ -12,7 +12,6 @@ export const typography = {
   },
 
   fonts: {
-    nunito: `'Nunito', sans-serif;`,
     monaco: `'Monaco', sans-serif;`
   },
 

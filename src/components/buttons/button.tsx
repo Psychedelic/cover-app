@@ -17,6 +17,6 @@ export const Button: React.FC<PropTypes> = ({css, children, onClick, type, size}
 
 Button.defaultProps = {
   css: {},
-  onClick: _e => {},
+  onClick: () => new Error('unimplemented'),
   children: 'Button'
 };
