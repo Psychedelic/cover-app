@@ -1,36 +1,31 @@
-import {defaultStitches, typography} from '@/themes';
+import {defaultStitches} from '@/themes';
 const {styled} = defaultStitches;
 
 export const StitchesButton = styled('button', {
   all: 'unset',
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '0 15px',
-  borderRadius: 8,
-  lineHeight: 12,
-  fontWeight: typography.fontWeights.normal,
-  fontSize: typography.fontSizes.xs,
-  fontFamily: typography.fonts.monaco,
-  fontStyle: 'normal',
+  padding: '$0 $15',
+  borderRadius: '$8',
+  fontWeight: '$normal',
+  fontSize: '$xs',
+  fontFamily: '$monaco',
   variants: {
     type: {
       main: {
-        color: '#03BF00',
-        backgroundColor: '#013200'
+        color: '$coverGreen',
+        backgroundColor: '$coverGreenDark'
       },
       secondary: {
-        border: '1px solid #434343',
+        border: '1px solid $coverLightGray',
         boxSizing: 'border-box',
-        color: '#FFFFFF'
+        color: '$coverWhite'
       }
     },
     size: {
       large: {
-        height: 44
+        height: '$btnLg'
       },
       medium: {
-        height: 34
+        height: '$btnMd'
       }
     }
   },

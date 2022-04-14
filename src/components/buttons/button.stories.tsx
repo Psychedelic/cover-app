@@ -3,23 +3,24 @@ import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
 import {Button} from './button';
 
 const meta: ComponentMeta<typeof Button> = {
-  title: 'Example/Button',
+  title: 'Components/Button',
   component: Button
 };
 export default meta;
 
-export const MediumMainButton: ComponentStoryObj<typeof Button> = {
+export const MediumMain: ComponentStoryObj<typeof Button> = {
   args: {
-    children: 'Button',
+    children: 'Main',
     type: 'main',
     size: 'medium'
   }
 };
 
-export const LargeSecondaryButton: ComponentStoryObj<typeof Button> = {
+export const LargeSecondary: ComponentStoryObj<typeof Button> = {
   args: {
-    children: 'Secondary Button',
+    children: 'Secondary',
     type: 'secondary',
-    size: 'large'
+    size: 'large',
+    css: {color: 'black'}
   }
 };

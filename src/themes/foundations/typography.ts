@@ -16,9 +16,10 @@ export const typography = {
   },
 
   fontSizes: {
-    xs: 12,
-    sm: 14,
-    md: 16,
-    lg: 22
+    xs: '12px',
+    sm: '14px',
+    md: '16px',
+    lg: '20px',
+    xl: '24px'
   }
 };

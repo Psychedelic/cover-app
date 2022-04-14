@@ -2,7 +2,8 @@ import React from 'react';
 
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 
-import {globalStyles} from './app.styled';
+import {globalStyles} from '@/themes';
+
 import {Example} from './views';
 
 export const App: React.VFC = () => {

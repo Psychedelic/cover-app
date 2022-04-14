@@ -1,15 +1,8 @@
-import {grass, grassDark, purple, purpleDark, red, redDark, slate, slateDark} from '@radix-ui/colors';
-
 export const colors = {
-  ...slate,
-  ...red,
-  ...purple,
-  ...grass
-};
-
-export const darkColors = {
-  ...slateDark,
-  ...redDark,
-  ...purpleDark,
-  ...grassDark
+  coverGreen: '#03BF00',
+  coverRed: '#ED3357',
+  coverYellow: '#FFDF00',
+  coverGreenDark: '#013200',
+  coverWhite: '#FCFCFC',
+  coverLightGray: '#434343'
 };

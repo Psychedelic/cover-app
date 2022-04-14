@@ -1,15 +1,8 @@
 import {createStitches} from '@stitches/react';
 import type {ConfigType} from '@stitches/react/types/config';
+import {opinionated} from 'stitches-normalize-css';
 
-import {
-  colors,
-  darkColors,
-  typography
-  /*
-   * U can add the rest here if you need
-   * ex spaces, sizes, radii, shadows, etc
-   */
-} from './foundations';
+import {colors, radii, sizes, space, typography} from './foundations';
 
 export interface CreateStitchesConfig<Prefix, Media, Theme, ThemeMap, Utils> {
   prefix?: ConfigType.Prefix<Prefix>;
@@ -25,67 +18,65 @@ export const createCustomStitches = <Prefix, Media, Theme, ThemeMap, Utils>({
   themeMap,
   utils,
   media
-}: CreateStitchesConfig<Prefix, Media, Theme, ThemeMap, Utils> = {}) => {
-  const {createTheme, ...otherStitches} = createStitches({
-      prefix: prefix || ('cover' as string),
-      media: {
-        ...(media || {})
+}: CreateStitchesConfig<Prefix, Media, Theme, ThemeMap, Utils> = {}) =>
+  createStitches({
+    prefix: prefix || ('cover' as string),
+    media: {
+      ...(media || {})
+    },
+    theme: {
+      colors: {
+        ...colors,
+        ...(theme?.colors || {})
       },
-      theme: {
-        colors: {
-          ...colors,
-          ...(theme?.colors || {})
-        },
-        space: {
-          ...(theme?.space || {})
-        },
-        sizes: {
-          ...(theme?.sizes || {})
-        },
-        fontWeights: {
-          ...typography.fontWeights,
-          ...(theme?.fontWeights || {})
-        },
-        fonts: {
-          ...typography.fonts,
-          ...(theme?.fonts || {})
-        },
-        letterSpacings: {
-          ...(theme?.letterSpacings || {})
-        },
-        lineHeights: {
-          ...(theme?.lineHeights || {})
-        },
-        fontSizes: {
-          ...typography.fontSizes,
-          ...(theme?.fontSizes || {})
-        },
-        radii: {
-          ...(theme?.radii || {})
-        },
-        shadows: {
-          ...(theme?.shadows || {})
-        },
-        zIndices: {
-          ...(theme?.zIndices || {})
-        },
-        ...(theme || {})
+      space: {
+        ...space,
+        ...(theme?.space || {})
       },
-      themeMap,
-      utils: {
-        ...(utils || {})
-      }
-    }),
-    darkTheme = createTheme({
-      colors: darkColors
-    });
-
-  return {
-    createTheme,
-    darkTheme,
-    darkThemeSelector: `.${darkTheme} &`,
-    ...otherStitches
-  };
-};
+      sizes: {
+        ...sizes,
+        ...(theme?.sizes || {})
+      },
+      fontWeights: {
+        ...typography.fontWeights,
+        ...(theme?.fontWeights || {})
+      },
+      fonts: {
+        ...typography.fonts,
+        ...(theme?.fonts || {})
+      },
+      letterSpacings: {
+        ...(theme?.letterSpacings || {})
+      },
+      lineHeights: {
+        ...(theme?.lineHeights || {})
+      },
+      fontSizes: {
+        ...typography.fontSizes,
+        ...(theme?.fontSizes || {})
+      },
+      radii: {
+        ...radii,
+        ...(theme?.radii || {})
+      },
+      shadows: {
+        ...(theme?.shadows || {})
+      },
+      zIndices: {
+        ...(theme?.zIndices || {})
+      },
+      ...(theme || {})
+    },
+    themeMap,
+    utils: {
+      ...(utils || {})
+    }
+  });
 
 export const defaultStitches = createCustomStitches();
+
+export const globalStyles = defaultStitches.globalCss(...opinionated, {
+  html: {
+    fontFamily: typography.fonts.monaco
+  }
+});
