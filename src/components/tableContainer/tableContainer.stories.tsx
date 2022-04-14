@@ -10,6 +10,7 @@ export default meta;
 
 export const Example: ComponentStoryObj<typeof TableContainer> = {
   args: {
-    children: 'This is a table container'
+    children: 'This is a table container',
+    css: {color: '#FCFCFC', padding: '10px 10px'}
   }
 };

@@ -20,7 +20,6 @@ export const LargeSecondary: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Secondary',
     type: 'secondary',
-    size: 'large',
-    css: {color: 'black'}
+    size: 'large'
   }
 };

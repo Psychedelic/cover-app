@@ -7,7 +7,8 @@ module.exports = {
   addons: [
     '@storybook/addon-a11y',
     '@storybook/addon-links',
-    '@storybook/addon-essentials'
+    '@storybook/addon-essentials',
+    'storybook-dark-mode'
     // FIXME:
     // https://github.com/storybookjs/builder-vite/issues/292#issuecomment-1083124008
     // '@storybook/addon-interactions'
