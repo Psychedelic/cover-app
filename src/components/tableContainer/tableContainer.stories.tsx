@@ -8,7 +8,7 @@ const meta: ComponentMeta<typeof TableContainer> = {
 };
 export default meta;
 
-export const TableContainerExample: ComponentStoryObj<typeof TableContainer> = {
+export const Example: ComponentStoryObj<typeof TableContainer> = {
   args: {
     children: 'This is a table container'
   }

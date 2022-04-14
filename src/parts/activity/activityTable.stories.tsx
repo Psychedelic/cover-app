@@ -8,6 +8,6 @@ const meta: ComponentMeta<typeof ActivityTable> = {
 };
 export default meta;
 
-export const ActivityTableExample: ComponentStoryObj<typeof ActivityTable> = {
+export const Example: ComponentStoryObj<typeof ActivityTable> = {
   args: {}
 };
