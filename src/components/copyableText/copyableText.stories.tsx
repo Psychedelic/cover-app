@@ -8,7 +8,7 @@ const meta: ComponentMeta<typeof CopyableText> = {
 };
 export default meta;
 
-export const Default: ComponentStoryObj<typeof CopyableText> = {
+export const Example: ComponentStoryObj<typeof CopyableText> = {
   args: {
     children: 'Copyable Text'
   }
