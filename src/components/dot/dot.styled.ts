@@ -7,7 +7,10 @@ export const StitchesDot = styled('span', {
   borderRadius: '$dot',
   display: 'inline-block',
   variants: {
-    status: {
+    type: {
+      hollow: {
+        border: '1px solid $coverLightGray'
+      },
       green: {
         backgroundColor: '$coverGreen'
       },

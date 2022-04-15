@@ -7,7 +7,6 @@ export const StitchesButton = styled('button', {
   borderRadius: '$8',
   fontWeight: '$normal',
   fontSize: '$xs',
-  fontFamily: '$monaco',
   variants: {
     type: {
       main: {
@@ -20,7 +19,10 @@ export const StitchesButton = styled('button', {
       secondary: {
         border: '1px solid $coverLightGray',
         boxSizing: 'border-box',
-        color: '$coverWhite'
+        color: '$coverWhite',
+        '&:hover': {
+          color: '$coverWhiteOpacity'
+        }
       }
     },
     size: {

@@ -1,3 +1,3 @@
-export * from './buttons';
-export * from './dots';
+export * from './button';
+export * from './dot';
 export * from './tableContainer';

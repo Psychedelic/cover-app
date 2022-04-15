@@ -22,6 +22,7 @@
   ],
   "rules": {
     "eqeqeq": ["error"],
+    "no-ternary": "off",
     "one-var": "off",
     "id-length": "off",
     "max-lines-per-function": ["error", {"max": 80}],

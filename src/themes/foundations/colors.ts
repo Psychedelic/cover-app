@@ -8,8 +8,11 @@ export const colors = {
   coverYellow: '#FFDF00',
 
   coverWhite: '#FFFFFF',
+  coverWhiteOpacity: '#FFFFFF5E',
   coverLightWhite: '#FCFCFC',
   coverMediumWhite: '#E2E2E2',
 
-  coverLightGray: '#303030'
+  coverLightGray: '#303030',
+
+  coverBlue: '#0092FE'
 };

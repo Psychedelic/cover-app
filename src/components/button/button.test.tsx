@@ -8,8 +8,9 @@ import {Button} from './button';
 describe('Button', () => {
   it('Default', () => {
     customRender(<Button />);
-    expect(screen.getByText('Button')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
   });
+
   it('With children', () => {
     customRender(
       <Button>
@@ -18,6 +19,7 @@ describe('Button', () => {
     );
     expect(screen.getByRole('button')).toContainHTML('<span>children</span>');
   });
+
   it('Handler onClick event', () => {
     let count = 0;
     const onClick = () => (count += 1);

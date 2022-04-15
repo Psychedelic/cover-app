@@ -8,7 +8,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesDot> {
   css?: CSS;
 }
 
-export const Dot: React.FC<PropTypes> = ({css, status}) => <StitchesDot css={css} status={status} />;
+export const Dot: React.FC<PropTypes> = ({css, type}) => <StitchesDot css={css} type={type} />;
 
 Dot.defaultProps = {
   css: {}

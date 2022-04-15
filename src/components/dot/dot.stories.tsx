@@ -8,20 +8,26 @@ const meta: ComponentMeta<typeof Dot> = {
 };
 export default meta;
 
+export const Hollow: ComponentStoryObj<typeof Dot> = {
+  args: {
+    type: 'hollow'
+  }
+};
+
 export const Green: ComponentStoryObj<typeof Dot> = {
   args: {
-    status: 'green'
+    type: 'green'
   }
 };
 
 export const Red: ComponentStoryObj<typeof Dot> = {
   args: {
-    status: 'red'
+    type: 'red'
   }
 };
 
 export const Yellow: ComponentStoryObj<typeof Dot> = {
   args: {
-    status: 'yellow'
+    type: 'yellow'
   }
 };
