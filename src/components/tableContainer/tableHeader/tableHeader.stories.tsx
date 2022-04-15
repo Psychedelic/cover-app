@@ -3,7 +3,7 @@ import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
 import {TableHeader} from './tableHeader';
 
 const meta: ComponentMeta<typeof TableHeader> = {
-  title: 'Components/header',
+  title: 'Components/TableHeader',
   component: TableHeader
 };
 export default meta;

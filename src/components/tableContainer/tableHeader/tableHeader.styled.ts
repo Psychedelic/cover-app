@@ -5,16 +5,16 @@ const {styled} = defaultStitches;
 export const StitchesTableHeader = styled('tr', {
   borderBottom: '1px solid $coverMediumGray',
   color: '$coverLightGray',
-  fontSize: '12px',
-  fontWeight: '400',
+  fontSize: '$sm',
+  fontWeight: '$normal',
   boxSizing: 'border-box',
   textAlign: 'left',
-  height: '32px',
+  height: '$32',
   '& th': {
     verticalAlign: 'middle',
-    '&#statusDot': {
+    '&#statusDotHeader': {
       textAlign: 'center',
-      width: '40px'
+      width: '$40'
     }
   }
 });
