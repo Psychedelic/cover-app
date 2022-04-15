@@ -7,12 +7,14 @@ export const colors = {
 
   coverYellow: '#FFDF00',
 
+  coverLightWhite: '#FCFCFC',
   coverWhite: '#FFFFFF',
   coverWhiteOpacity: '#FFFFFF5E',
-  coverLightWhite: '#FCFCFC',
   coverMediumWhite: '#E2E2E2',
 
-  coverLightGray: '#303030',
+  coverLightGray: '#656565',
+  coverGray: '#434343',
+  coverMediumGray: '#303030',
 
   coverBlue: '#0092FE'
 };
