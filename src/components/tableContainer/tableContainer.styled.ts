@@ -4,5 +4,8 @@ const {styled} = defaultStitches;
 export const StitchesTableContainer = styled('div', {
   border: '1px solid $coverMediumGray',
   boxSizing: 'border-box',
-  borderRadius: '$8'
+  borderRadius: '$8',
+  '& table': {
+    width: '100%'
+  }
 });

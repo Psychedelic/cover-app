@@ -9,7 +9,9 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableContainer> 
 }
 
 export const TableContainer: React.FC<PropTypes> = ({css, children}) => (
-  <StitchesTableContainer css={css}>{children}</StitchesTableContainer>
+  <StitchesTableContainer css={css}>
+    <table>{children}</table>
+  </StitchesTableContainer>
 );
 
 TableContainer.defaultProps = {

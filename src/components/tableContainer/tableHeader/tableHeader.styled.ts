@@ -14,7 +14,7 @@ export const StitchesTableHeader = styled('tr', {
     verticalAlign: 'middle',
     '&#statusDot': {
       textAlign: 'center',
-      padding: '0 13px'
+      width: '40px'
     }
   }
 });
