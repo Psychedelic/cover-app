@@ -9,5 +9,18 @@ export const StitchesCopyableText = styled('span', {
   '&:hover': {
     color: '$coverBlue',
     cursor: 'pointer'
+  },
+  variants: {
+    color: {
+      gray: {
+        color: '$coverLightGray'
+      },
+      while: {
+        color: '$coverLightWhite'
+      }
+    }
+  },
+  defaultVariants: {
+    color: 'white'
   }
 });

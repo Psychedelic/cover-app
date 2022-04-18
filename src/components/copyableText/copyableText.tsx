@@ -11,7 +11,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesCopyableText> {
   css?: CSS;
 }
 
-export const CopyableText: React.FC<PropTypes> = ({children, css}) => {
+export const CopyableText: React.FC<PropTypes> = ({children, css, color}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -35,7 +35,12 @@ export const CopyableText: React.FC<PropTypes> = ({children, css}) => {
   }, [setIsHovered]);
 
   return (
-    <StitchesCopyableText css={css} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <StitchesCopyableText
+      color={color}
+      css={css}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}>
       {children}
       &nbsp;
       {isClicked ? <FontAwesomeIcon icon={faCheck} /> : isHovered && <FontAwesomeIcon icon={faCopy} />}
