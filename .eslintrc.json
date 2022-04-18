@@ -41,6 +41,8 @@
     "max-len": ["error", {"code": 120, "ignoreComments": true, "ignoreTrailingComments": true}],
     "react/jsx-filename-extension": ["error", {"extensions": [".tsx"]}],
     "react/jsx-sort-default-props": "off",
+    "react/prop-types": "off",
+    "react/require-default-props": "off",
     "react/jsx-curly-brace-presence": [
       "error",
       {"props": "always", "children": "always", "propElementValues": "always"}

@@ -21,8 +21,3 @@ export const TableHeader: React.FC<PropTypes> = ({css, children}) => (
     ))}
   </StitchesTableHeader>
 );
-
-TableHeader.defaultProps = {
-  css: {},
-  children: []
-};

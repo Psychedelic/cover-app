@@ -47,7 +47,3 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color}) => {
     </StitchesCopyableText>
   );
 };
-
-CopyableText.defaultProps = {
-  css: {}
-};

@@ -13,7 +13,3 @@ export const TableContainer: React.FC<PropTypes> = ({css, children}) => (
     <table>{children}</table>
   </StitchesTableContainer>
 );
-
-TableContainer.defaultProps = {
-  css: {}
-};

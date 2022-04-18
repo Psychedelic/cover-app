@@ -14,8 +14,3 @@ export const Button: React.FC<PropTypes> = ({css, children, onClick, type, size}
     {children}
   </StitchesButton>
 );
-
-Button.defaultProps = {
-  css: {},
-  onClick: () => new Error('unimplemented')
-};

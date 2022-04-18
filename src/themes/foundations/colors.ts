@@ -15,6 +15,8 @@ export const colors = {
   coverLightGray: '#656565',
   coverGray: '#434343',
   coverMediumGray: '#303030',
+  coverDarkGray: '#242424',
+  coverHeavyGray: '#1C1C1C',
 
   coverBlue: '#0092FE'
 };
