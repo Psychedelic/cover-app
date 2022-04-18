@@ -1,6 +1,8 @@
 import React, {ReactEventHandler, useCallback, useState} from 'react';
 
-import {CheckIcon, ClipboardIcon} from '@radix-ui/react-icons';
+import {faCopy} from '@fortawesome/free-regular-svg-icons';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 
 import {StitchesCopyableText} from './copyableText.styled';
@@ -36,7 +38,7 @@ export const CopyableText: React.FC<PropTypes> = ({children, css}) => {
     <StitchesCopyableText css={css} onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       {children}
       &nbsp;
-      {isClicked ? <CheckIcon /> : isHovered && <ClipboardIcon />}
+      {isClicked ? <FontAwesomeIcon icon={faCheck} /> : isHovered && <FontAwesomeIcon icon={faCopy} />}
     </StitchesCopyableText>
   );
 };

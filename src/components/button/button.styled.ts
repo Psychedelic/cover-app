@@ -8,6 +8,9 @@ export const StitchesButton = styled('button', {
   fontWeight: '$normal',
   fontSize: '$xs',
   cursor: 'pointer',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   variants: {
     type: {
       main: {
