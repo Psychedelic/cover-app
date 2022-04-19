@@ -63,7 +63,23 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
-    "no-restricted-imports": ["error", {"patterns": ["..*", "./*/", "@/*/", "components/*/", "themes/*/", "views/*/"]}],
+    "react/jsx-max-depth": ["error", {"max": 3}],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          "..*",
+          "./*/",
+          "@/*/",
+          "assets/*/",
+          "components/*/",
+          "pages/*/",
+          "parts/*/",
+          "themes/*/",
+          "utils/*/"
+        ]
+      }
+    ],
     "@typescript-eslint/no-unused-vars": ["error"]
   },
   "overrides": [
