@@ -17,7 +17,7 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color}) => {
 
   const onClick: ReactEventHandler = useCallback(
     e => {
-      navigator.clipboard.writeText((e.target as HTMLSpanElement).innerHTML);
+      navigator.clipboard.writeText((e.target as HTMLSpanElement).childNodes[0].textContent as string);
       setIsClicked(true);
       setTimeout(() => {
         setIsClicked(false);
