@@ -66,7 +66,10 @@
     "no-restricted-imports": ["error", {"patterns": ["..*", "./*/", "@/*/", "components/*/", "themes/*/", "views/*/"]}],
     "@typescript-eslint/no-unused-vars": ["error"]
   },
-  "overrides": [{"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off"}}],
+  "overrides": [
+    {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off"}},
+    {"files": ["*.styled.*"], "rules": {"sonarjs/no-duplicate-string": "off"}}
+  ],
   "settings": {
     "import/resolver": {"node": {"extensions": [".ts", ".tsx"]}, "typescript": {}}
   }

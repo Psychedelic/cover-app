@@ -7,17 +7,16 @@ export const StitchesInputContent = styled('input', {
     color: 'inherit'
   },
   color: '$coverMediumWhite',
+  width: '100%',
   variants: {
     size: {
       small: {
         height: '$28',
-        fontSize: '$xs',
-        width: '$400'
+        fontSize: '$xs'
       },
       medium: {
         height: '$44',
-        fontSize: '$sm',
-        width: '$560'
+        fontSize: '$sm'
       }
     }
   },

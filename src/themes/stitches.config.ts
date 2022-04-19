@@ -77,6 +77,7 @@ export const defaultStitches = createCustomStitches();
 
 export const globalStyles = defaultStitches.globalCss(...opinionated, {
   html: {
-    fontFamily: typography.fonts.monaco
+    fontFamily: typography.fonts.monaco,
+    background: colors.coverDarkBg
   }
 });

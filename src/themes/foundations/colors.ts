@@ -7,6 +7,8 @@ export const colors = {
 
   coverYellow: '#FFDF00',
 
+  coverDarkBg: '#171717',
+
   coverLightWhite: '#FCFCFC',
   coverWhite: '#FFFFFF',
   coverWhiteOpacity: '#FFFFFF5E',
