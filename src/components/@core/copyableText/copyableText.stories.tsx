@@ -3,7 +3,7 @@ import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
 import {CopyableText} from './copyableText';
 
 const meta: ComponentMeta<typeof CopyableText> = {
-  title: 'Components/CopyableText',
+  title: 'Cores/CopyableText',
   component: CopyableText
 };
 export default meta;

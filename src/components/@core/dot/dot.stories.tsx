@@ -3,7 +3,7 @@ import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
 import {Dot} from './dot';
 
 const meta: ComponentMeta<typeof Dot> = {
-  title: 'Components/Dot',
+  title: 'Cores/Dot',
   component: Dot
 };
 export default meta;

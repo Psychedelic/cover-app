@@ -3,7 +3,7 @@ import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
 import {SearchBar} from './searchBar';
 
 const meta: ComponentMeta<typeof SearchBar> = {
-  title: 'Parts/SearchBar',
+  title: 'Components/SearchBar',
   component: SearchBar
 };
 export default meta;

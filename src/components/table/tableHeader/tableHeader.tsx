@@ -2,7 +2,7 @@ import React from 'react';
 
 import {CSS} from '@stitches/react';
 
-import {Dot} from '@/components';
+import {Core} from '@/components';
 
 import {StitchesTableHeader} from './tableHeader.styled';
 
@@ -14,7 +14,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableHeader> {
 export const TableHeader: React.FC<PropTypes> = ({css, children}) => (
   <StitchesTableHeader css={css}>
     <th id={'statusDotHeader'}>
-      <Dot type={'hollow'} />
+      <Core.Dot type={'hollow'} />
     </th>
     {children?.map(c => (
       <th key={c}>{c}</th>

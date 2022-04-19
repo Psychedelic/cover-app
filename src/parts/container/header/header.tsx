@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {logo} from '@/assets';
-import {SearchBar} from '@/parts';
+import {SearchBar} from '@/components';
 
 import {StitchesHeaderContainer, StitchesMainHeader, StitchesSecondaryHeader} from './header.styled';
 

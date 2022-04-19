@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {Header} from '@/parts';
-
 import {StitchesContainer} from './container.styled';
+import {Header} from './header';
 
 export const Container: React.FC = ({children}) => (
   <StitchesContainer>
