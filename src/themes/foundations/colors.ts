@@ -1,13 +1,13 @@
 export const colors = {
   coverGreen: '#03BF00',
   coverGreenOpacity: '#03BF005E',
-  coverGreenDark: '#013200',
+  coverDarkGreen: '#013200',
 
   coverRed: '#ED3357',
 
   coverYellow: '#FFDF00',
 
-  coverDarkBg: '#171717',
+  coverEbony: '#171717',
 
   coverLightWhite: '#FCFCFC',
   coverWhite: '#FFFFFF',

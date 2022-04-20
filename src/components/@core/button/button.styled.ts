@@ -15,12 +15,12 @@ export const StitchesButton = styled('button', {
     type: {
       main: {
         color: '$coverGreen',
-        backgroundColor: '$coverGreenDark',
+        backgroundColor: '$coverDarkGreen',
         '&:hover': {
           color: '$coverGreenOpacity'
         }
       },
-      secondary: {
+      outline: {
         border: '1px solid $coverGray',
         boxSizing: 'border-box',
         color: '$coverWhite',
@@ -28,7 +28,7 @@ export const StitchesButton = styled('button', {
           color: '$coverWhiteOpacity'
         }
       },
-      hollow: {
+      text: {
         color: '$coverLightGray',
         '&:hover': {
           textDecorationLine: 'underline'

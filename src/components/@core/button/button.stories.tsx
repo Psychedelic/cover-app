@@ -24,34 +24,34 @@ export const LargeMain: ComponentStoryObj<typeof Button> = {
   }
 };
 
-export const MediumSecondary: ComponentStoryObj<typeof Button> = {
+export const MediumOutline: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Medium Secondary',
-    type: 'secondary',
+    type: 'outline',
     size: 'medium'
   }
 };
 
-export const LargeSecondary: ComponentStoryObj<typeof Button> = {
+export const LargeOutline: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Large Secondary',
-    type: 'secondary',
+    type: 'outline',
     size: 'large'
   }
 };
 
-export const MediumHollow: ComponentStoryObj<typeof Button> = {
+export const MediumText: ComponentStoryObj<typeof Button> = {
   args: {
-    children: 'Medium Hollow',
-    type: 'hollow',
+    children: 'Medium Text',
+    type: 'text',
     size: 'medium'
   }
 };
 
-export const LargeHollow: ComponentStoryObj<typeof Button> = {
+export const LargeText: ComponentStoryObj<typeof Button> = {
   args: {
-    children: 'Large Hollow',
-    type: 'hollow',
+    children: 'Large Text',
+    type: 'text',
     size: 'large'
   }
 };
