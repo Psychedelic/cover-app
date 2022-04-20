@@ -3,9 +3,6 @@ const {styled} = defaultStitches;
 
 export const StitchesInputContent = styled('input', {
   all: 'unset',
-  '&:placeholder': {
-    color: 'inherit'
-  },
   color: '$coverMediumWhite',
   width: '100%',
   variants: {

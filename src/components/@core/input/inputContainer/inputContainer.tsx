@@ -9,12 +9,11 @@ import {StitchesInputContainer} from './inputContainer.styled';
 interface PropTypes extends React.ComponentProps<typeof StitchesInputContainer> {
   css?: CSS;
   icon?: IconProp;
-  iconColor?: string;
 }
 
-export const InputContainer: React.FC<PropTypes> = ({size, bg, css, children, icon, iconColor}) => (
+export const InputContainer: React.FC<PropTypes> = ({size, bg, css, children, icon}) => (
   <StitchesInputContainer bg={bg} css={css} size={size}>
-    {icon && <FontAwesomeIcon color={iconColor} icon={icon} />}
+    {icon && <FontAwesomeIcon icon={icon} />}
     {children}
   </StitchesInputContainer>
 );

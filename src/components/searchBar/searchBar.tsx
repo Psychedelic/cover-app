@@ -13,8 +13,7 @@ export const SearchBar: React.FC = () => {
 
   const onInput: ReactEventHandler = useCallback(
     e => {
-      const value = (e.target as HTMLInputElement).value;
-      value === '' ? setHasValue(false) : setHasValue(true);
+      setHasValue((e.target as HTMLInputElement).value !== '');
     },
     [setHasValue]
   );
@@ -27,16 +26,12 @@ export const SearchBar: React.FC = () => {
     }
   }, [setHasValue]);
 
-  const iconColorByValue = (value: boolean) => (value ? colors.coverMediumWhite : colors.coverLightGray);
+  const color = hasValue ? colors.coverLightWhite : colors.coverLightGray;
 
   return (
-    <Core.InputContainer
-      bg={'gray'}
-      css={searchBarStyled}
-      icon={faSearch}
-      iconColor={iconColorByValue(hasValue)}
-      size={'small'}>
+    <Core.InputContainer bg={'gray'} css={{...searchBarStyled, color}} icon={faSearch} size={'small'}>
       <Core.InputContent
+        css={{color}}
         id={'headerSearchBar'}
         onInput={onInput}
         placeholder={'Search by Canister ID'}
