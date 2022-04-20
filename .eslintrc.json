@@ -84,7 +84,7 @@
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off"}},
-    {"files": ["*.styled.*"], "rules": {"sonarjs/no-duplicate-string": "off"}}
+    {"files": ["*.styled.*", "*.stories.*"], "rules": {"sonarjs/no-duplicate-string": "off"}}
   ],
   "settings": {
     "import/resolver": {"node": {"extensions": [".ts", ".tsx"]}, "typescript": {}}

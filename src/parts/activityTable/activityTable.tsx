@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
+import {getDuration} from '@/utils';
 
 import {tableBodyStyle} from './activityTable.styled';
 
@@ -28,7 +29,7 @@ export const ActivityTable: React.VFC<PropTypes> = ({activities}) => (
         <TableRow key={datetime} type={activityStatus[status]}>
           <span key={0}>{status}</span>
           <Core.CopyableText key={1}>{canisterId}</Core.CopyableText>
-          <span key={2}>{datetime}</span>
+          <span key={2}>{getDuration(datetime)}</span>
         </TableRow>
       ))}
     </TableContent>
