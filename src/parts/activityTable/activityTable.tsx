@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
 
-import {tableRowStyle} from './activityTable.styled';
+import {tableBodyStyle} from './activityTable.styled';
 
 interface Activity {
   status: 'Success' | 'Pending' | 'Failed';
@@ -23,12 +23,12 @@ const activityStatus = {
 export const ActivityTable: React.VFC<PropTypes> = ({activities}) => (
   <TableContainer>
     <TableHeader>{['Recent Activity']}</TableHeader>
-    <TableContent css={tableRowStyle}>
+    <TableContent css={tableBodyStyle}>
       {activities?.map(({status, canisterId, datetime}) => (
         <TableRow key={datetime} type={activityStatus[status]}>
-          <span>{status}</span>
-          <Core.CopyableText>{canisterId}</Core.CopyableText>
-          <span>{datetime}</span>
+          <span key={0}>{status}</span>
+          <Core.CopyableText key={1}>{canisterId}</Core.CopyableText>
+          <span key={2}>{datetime}</span>
         </TableRow>
       ))}
     </TableContent>

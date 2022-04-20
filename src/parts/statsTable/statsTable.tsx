@@ -4,25 +4,54 @@ import {TableContainer, TableContent, TableHeader, TableRow} from '@/components'
 
 import {tableBodyStyle} from './statsTable.styled';
 
-export const StatsTable: React.VFC = () => (
+interface Stats {
+  rustCanistersCount: string;
+  motokoCanistersCount: string;
+  totalCanisters: string;
+  buildSuccessCount: string;
+}
+
+interface PropTypes {
+  stats?: Stats;
+}
+
+export const StatsTable: React.VFC<PropTypes> = ({
+  stats: {rustCanistersCount, motokoCanistersCount, totalCanisters, buildSuccessCount} = {}
+}) => (
   <TableContainer>
     <TableHeader>{['Statistics']}</TableHeader>
     <TableContent css={tableBodyStyle}>
-      <TableRow>
-        <span>{'Total Canisters'}</span>
-        <span>{'6,296'}</span>
+      <TableRow override>
+        <td colSpan={2}>
+          <div>{'Total Canisters'}</div>
+        </td>
+        <td>
+          <div>{totalCanisters}</div>
+        </td>
       </TableRow>
-      <TableRow>
-        <span>{'-- Motoko Canisters'}</span>
-        <span>{'3,823'}</span>
+      <TableRow override>
+        <td colSpan={2}>
+          <div>{'-- Motoko Canisters'}</div>
+        </td>
+        <td>
+          <div>{motokoCanistersCount}</div>
+        </td>
       </TableRow>
-      <TableRow>
-        <span>{'-- Rust Canisters'}</span>
-        <span>{'2,473'}</span>
+      <TableRow override>
+        <td colSpan={2}>
+          <div>{'-- Rust Canisters'}</div>
+        </td>
+        <td>
+          <div>{rustCanistersCount}</div>
+        </td>
       </TableRow>
-      <TableRow>
-        <span>{'Total verified canisters'}</span>
-        <span>{'4,012'}</span>
+      <TableRow override>
+        <td colSpan={2}>
+          <div>{'Total Verified Canisters'}</div>
+        </td>
+        <td>
+          <div>{buildSuccessCount}</div>
+        </td>
       </TableRow>
     </TableContent>
   </TableContainer>

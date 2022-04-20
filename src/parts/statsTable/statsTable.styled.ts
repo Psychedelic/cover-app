@@ -1,5 +1,29 @@
 export const tableBodyStyle = {
-  '& td:nth-of-type(3)': {
-    textAlign: 'right'
+  '& td': {
+    height: '1px',
+    '& div': {
+      height: '100%',
+      width: '100%',
+      display: 'inline-flex',
+      alignItems: 'center'
+    },
+    '&:nth-of-type(2) div': {
+      justifyContent: 'flex-end'
+    }
+  },
+  '& tr:nth-of-type(1) td:nth-of-type(2)': {
+    color: '$coverLightWhite'
+  },
+  '& tr:nth-of-type(2) div': {
+    borderTop: '1px solid $coverSilver'
+  },
+  '& tr:nth-of-type(3) div': {
+    borderTop: '1px solid $coverSilver'
+  },
+  '& tr:nth-of-type(4)': {
+    borderTop: '1px solid $coverSilver',
+    '& td:nth-of-type(2)': {
+      color: '$coverLightWhite'
+    }
   }
 };

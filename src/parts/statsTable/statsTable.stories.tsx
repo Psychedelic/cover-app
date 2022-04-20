@@ -9,5 +9,12 @@ const meta: ComponentMeta<typeof StatsTable> = {
 export default meta;
 
 export const Example: ComponentStoryObj<typeof StatsTable> = {
-  args: {}
+  args: {
+    stats: {
+      rustCanistersCount: '2,473',
+      motokoCanistersCount: '3,823',
+      totalCanisters: '6,296',
+      buildSuccessCount: '4,012'
+    }
+  }
 };

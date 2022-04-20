@@ -8,7 +8,7 @@ import {colors} from '@/themes';
 
 import {searchBarStyled} from './searchBar.styled';
 
-export const SearchBar: React.FC = () => {
+export const SearchBar: React.VFC = () => {
   const [hasValue, setHasValue] = useState(false);
 
   const onInput: ReactEventHandler = useCallback(

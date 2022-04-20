@@ -1,4 +1,4 @@
-export const tableRowStyle = {
+export const tableBodyStyle = {
   color: '$coverLightWhite',
   '& tr:nth-of-type(n+2)': {
     borderTop: '1px solid $coverSilver'

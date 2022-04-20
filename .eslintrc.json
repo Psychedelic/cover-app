@@ -63,7 +63,7 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-max-depth": ["error", {"max": 3}],
+    "react/jsx-max-depth": ["error", {"max": 4}],
     "no-restricted-imports": [
       "error",
       {
