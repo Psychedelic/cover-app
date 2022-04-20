@@ -8,7 +8,7 @@ import {StitchesTableRow} from './tableRow.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
   css?: CSS;
-  type: VariantProps<typeof Core.Dot>;
+  type?: VariantProps<typeof Core.Dot>;
   children: React.ReactElement<{children: string}>[];
 }
 
