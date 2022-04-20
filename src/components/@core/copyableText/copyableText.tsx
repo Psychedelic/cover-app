@@ -5,25 +5,29 @@ import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 
+import {trim} from '@/utils';
+
 import {StitchesCopyableText} from './copyableText.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesCopyableText> {
   css?: CSS;
+  showRaw?: boolean;
+  children: string;
 }
 
-export const CopyableText: React.FC<PropTypes> = ({children, css, color}) => {
+export const CopyableText: React.FC<PropTypes> = ({children, css, color, showRaw}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const onClick: ReactEventHandler = useCallback(
-    e => {
-      navigator.clipboard.writeText((e.target as HTMLSpanElement).childNodes[0].textContent as string);
+    _ => {
+      navigator.clipboard.writeText(children);
       setIsClicked(true);
       setTimeout(() => {
         setIsClicked(false);
       }, 1000);
     },
-    [setIsClicked]
+    [children]
   );
 
   const onMouseEnter = useCallback(() => {
@@ -41,7 +45,7 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color}) => {
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
-      {children}
+      {showRaw ? children : trim(children)}
       &nbsp;
       {isClicked ? <FontAwesomeIcon icon={faCheck} /> : isHovered && <FontAwesomeIcon icon={faCopy} />}
     </StitchesCopyableText>

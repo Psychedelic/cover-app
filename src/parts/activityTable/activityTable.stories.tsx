@@ -13,17 +13,17 @@ export const Example: ComponentStoryObj<typeof ActivityTable> = {
     activities: [
       {
         status: 'Success',
-        canisterId: 's4jec...cai',
+        canisterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
         datetime: '2s'
       },
       {
         status: 'Pending',
-        canisterId: 'iftvq...cai',
+        canisterId: 'iftvq-niaaa-aaaai-qasga-cai',
         datetime: '1h'
       },
       {
         status: 'Failed',
-        canisterId: 'utozz...cai',
+        canisterId: 'utozz-siaaa-aaaam-qaaxq-ca',
         datetime: '23h'
       }
     ]
