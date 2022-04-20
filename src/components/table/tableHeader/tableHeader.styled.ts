@@ -1,20 +1,17 @@
 import {defaultStitches} from '@/themes';
-
 const {styled} = defaultStitches;
 
-export const StitchesTableHeader = styled('tr', {
-  borderBottom: '1px solid $coverMediumGray',
-  color: '$coverLightGray',
-  fontSize: '$sm',
-  fontWeight: '$normal',
-  boxSizing: 'border-box',
+export const StitchesTableHeader = styled('thead', {
   textAlign: 'left',
   height: '$32',
   '& th': {
     verticalAlign: 'middle',
-    '&#statusDotHeader': {
-      textAlign: 'center',
-      width: '$40'
+    '&:first-of-type': {
+      width: '$25',
+      paddingLeft: '$15'
+    },
+    '&:last-of-type': {
+      paddingRight: '$15'
     }
   }
 });

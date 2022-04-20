@@ -13,11 +13,13 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableHeader> {
 
 export const TableHeader: React.FC<PropTypes> = ({css, children}) => (
   <StitchesTableHeader css={css}>
-    <th id={'statusDotHeader'}>
-      <Core.Dot type={'hollow'} />
-    </th>
-    {children?.map(c => (
-      <th key={c}>{c}</th>
-    ))}
+    <tr>
+      <th>
+        <Core.Dot type={'hollow'} />
+      </th>
+      {children?.map(c => (
+        <th key={c}>{c}</th>
+      ))}
+    </tr>
   </StitchesTableHeader>
 );

@@ -14,6 +14,8 @@ export const colors = {
   coverWhiteOpacity: '#FFFFFF5E',
   coverMediumWhite: '#E2E2E2',
 
+  coverSilver: '#222222',
+
   coverLightGray: '#656565',
   coverGray: '#434343',
   coverMediumGray: '#303030',

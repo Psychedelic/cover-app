@@ -1,4 +1,5 @@
 export const sizes = {
+  25: '25px',
   28: '28px',
   32: '32px',
   40: '40px',

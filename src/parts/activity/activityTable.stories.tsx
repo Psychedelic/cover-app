@@ -9,5 +9,23 @@ const meta: ComponentMeta<typeof ActivityTable> = {
 export default meta;
 
 export const Example: ComponentStoryObj<typeof ActivityTable> = {
-  args: {}
+  args: {
+    activities: [
+      {
+        status: 'Success',
+        canisterId: 's4jec...cai',
+        datetime: '2s'
+      },
+      {
+        status: 'Pending',
+        canisterId: 'iftvq...cai',
+        datetime: '1h'
+      },
+      {
+        status: 'Failed',
+        canisterId: 'utozz...cai',
+        datetime: '23h'
+      }
+    ]
+  }
 };
