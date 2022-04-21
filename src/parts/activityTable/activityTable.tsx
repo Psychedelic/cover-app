@@ -22,7 +22,7 @@ const activityStatus = {
 };
 
 export const ActivityTable: React.VFC<PropTypes> = ({activities}) => (
-  <TableContainer>
+  <TableContainer paginated>
     <TableHeader>{['Recent Activity']}</TableHeader>
     <TableContent css={tableBodyStyle}>
       {activities?.map(({status, canisterId, datetime}) => (
