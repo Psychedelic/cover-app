@@ -12,12 +12,15 @@ export const StitchesDot = styled('span', {
         border: '1px solid $coverLightGray'
       },
       green: {
+        border: '1px solid $coverGreen',
         backgroundColor: '$coverGreen'
       },
       red: {
+        border: '1px solid $coverRed',
         backgroundColor: '$coverRed'
       },
       yellow: {
+        border: '1px solid $coverYellow',
         backgroundColor: '$coverYellow'
       }
     }

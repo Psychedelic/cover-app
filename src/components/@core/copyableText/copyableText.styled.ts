@@ -15,7 +15,7 @@ export const StitchesCopyableText = styled('span', {
       gray: {
         color: '$coverLightGray'
       },
-      while: {
+      white: {
         color: '$coverLightWhite'
       }
     }
