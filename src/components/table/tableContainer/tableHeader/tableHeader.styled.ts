@@ -3,7 +3,9 @@ const {styled} = defaultStitches;
 
 export const StitchesTableHeader = styled('thead', {
   textAlign: 'left',
-  height: '$32',
+  '& tr': {
+    height: '$32'
+  },
   '& th': {
     verticalAlign: 'middle',
     '&:first-of-type': {

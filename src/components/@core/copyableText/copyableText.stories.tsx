@@ -10,13 +10,13 @@ export default meta;
 
 export const White: ComponentStoryObj<typeof CopyableText> = {
   args: {
-    children: 'Copyable Text'
+    children: 'rrkah-fqaaa-aaaaa-aaaaq-cai'
   }
 };
 
 export const Gray: ComponentStoryObj<typeof CopyableText> = {
   args: {
-    children: 'Copyable Text',
+    children: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
     color: 'gray'
   }
 };
