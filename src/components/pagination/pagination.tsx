@@ -42,11 +42,11 @@ export const Pagination: React.VFC<PropTypes> = ({css, page}) => {
   return (
     <StitchesPagination css={css}>
       <Core.Button type={'outline'}>
-        <FontAwesomeIcon color={color} icon={faChevronLeft} />{' '}
+        <FontAwesomeIcon color={color} icon={faChevronLeft} />
       </Core.Button>
       <input onBlur={onBlur} onChange={onChange} value={value} />
       <Core.Button type={'outline'}>
-        <FontAwesomeIcon icon={faChevronRight} />{' '}
+        <FontAwesomeIcon icon={faChevronRight} />
       </Core.Button>
     </StitchesPagination>
   );
