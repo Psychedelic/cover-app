@@ -1,4 +1,4 @@
-import React, {ReactEventHandler, useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -6,6 +6,7 @@ import {CSS} from '@stitches/react';
 
 import {Core} from '@/components';
 import {colors} from '@/themes';
+import {isPositiveNum} from '@/utils';
 
 import {StitchesPagination} from './pagination.styled';
 
@@ -20,24 +21,16 @@ export const Pagination: React.VFC<PropTypes> = ({css, page}) => {
 
   const color = isFirstPage ? colors.coverMediumGray : colors.coverLightWhite;
 
-  const onBlur: ReactEventHandler = useCallback(e => {
+  const onBlur = useCallback(e => {
     const inputVal = (e.target as HTMLInputElement).value;
     setValue(isPositiveNum(inputVal) ? inputVal : '1');
-    setIsFirstPage(isPositiveNum(inputVal) ? inputVal === '1' : true);
+    setIsFirstPage(!isPositiveNum(inputVal) || inputVal === '1');
   }, []);
 
-  const isPositiveNum = (s: string): boolean => {
-    const pattern = /^[1-9][0-9]+$/u;
-    return pattern.test(s);
-  };
-
-  const onChange: ReactEventHandler = useCallback(
-    e => {
-      const inputVal = (e.target as HTMLInputElement).value;
-      setValue(inputVal);
-    },
-    [setValue]
-  );
+  const onChange = useCallback(e => {
+    const inputVal = (e.target as HTMLInputElement).value;
+    setValue(inputVal);
+  }, []);
 
   return (
     <StitchesPagination css={css}>

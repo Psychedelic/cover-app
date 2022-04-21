@@ -1,4 +1,4 @@
-import React, {ReactEventHandler, useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {faCopy} from '@fortawesome/free-regular-svg-icons';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color, showRaw
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const onClick: ReactEventHandler = useCallback(
+  const onClick = useCallback(
     _ => {
       navigator.clipboard.writeText(children);
       setIsClicked(true);
@@ -32,11 +32,11 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color, showRaw
 
   const onMouseEnter = useCallback(() => {
     setIsHovered(true);
-  }, [setIsHovered]);
+  }, []);
 
   const onMouseLeave = useCallback(() => {
     setIsHovered(false);
-  }, [setIsHovered]);
+  }, []);
 
   return (
     <StitchesCopyableText

@@ -1,4 +1,4 @@
-import React, {ReactEventHandler, useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -11,27 +11,30 @@ import {searchBarStyled} from './searchBar.styled';
 export const SearchBar: React.VFC = () => {
   const [hasValue, setHasValue] = useState(false);
 
-  const onInput: ReactEventHandler = useCallback(
-    e => {
-      setHasValue((e.target as HTMLInputElement).value !== '');
-    },
-    [setHasValue]
-  );
+  const onInput = useCallback(e => {
+    setHasValue((e.target as HTMLInputElement).value !== '');
+  }, []);
 
-  const onClick: ReactEventHandler = useCallback(() => {
+  const onClick = useCallback(() => {
     const searchBar = document.getElementById('headerSearchBar') as HTMLInputElement;
     if (searchBar) {
       searchBar.value = '';
       setHasValue(false);
     }
-  }, [setHasValue]);
+  }, []);
 
-  const color = hasValue ? colors.coverLightWhite : colors.coverLightGray;
+  const {containerCss, contentCss} = useMemo(() => {
+    const color = hasValue ? colors.coverLightWhite : colors.coverLightGray;
+    return {
+      containerCss: {...searchBarStyled, color},
+      contentCss: {color}
+    };
+  }, [hasValue]);
 
   return (
-    <Core.InputContainer bg={'gray'} css={{...searchBarStyled, color}} icon={faSearch} size={'small'}>
+    <Core.InputContainer bg={'gray'} css={containerCss} icon={faSearch} size={'small'}>
       <Core.InputContent
-        css={{color}}
+        css={contentCss}
         id={'headerSearchBar'}
         onInput={onInput}
         placeholder={'Search by Canister ID'}
