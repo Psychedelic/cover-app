@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -10,15 +10,15 @@ import {searchBarStyled} from './searchBar.styled';
 
 export const SearchBar: React.VFC = () => {
   const [hasValue, setHasValue] = useState(false);
+  const searchBarRef = useRef(null);
 
   const onInput = useCallback(e => {
     setHasValue((e.target as HTMLInputElement).value !== '');
   }, []);
 
   const onClick = useCallback(() => {
-    const searchBar = document.getElementById('headerSearchBar') as HTMLInputElement;
-    if (searchBar) {
-      searchBar.value = '';
+    if (searchBarRef.current) {
+      (searchBarRef.current as HTMLInputElement).value = '';
       setHasValue(false);
     }
   }, []);
@@ -35,12 +35,12 @@ export const SearchBar: React.VFC = () => {
     <Core.InputContainer bg={'gray'} css={containerCss} icon={faSearch} size={'small'}>
       <Core.InputContent
         css={contentCss}
-        id={'headerSearchBar'}
         onInput={onInput}
         placeholder={'Search by Canister ID'}
+        ref={searchBarRef}
         size={'small'}
       />
-      {hasValue && <FontAwesomeIcon icon={faXmark} id={'deleteIcon'} onClick={onClick} />}
+      {hasValue && <FontAwesomeIcon icon={faXmark} onClick={onClick} />}
     </Core.InputContainer>
   );
 };
