@@ -28,6 +28,15 @@ export const Example: ComponentStoryObj<typeof VerificationTable> = {
         gitCommit: '1fkasdf',
         wasmHash: '23fsadfasd',
         lastVerified: '31231 3123'
+      },
+      {
+        isVerified: false,
+        canisterId: 'hello3',
+        name: 'xxx',
+        repo: 'abc',
+        gitCommit: '1fkasdf',
+        wasmHash: '23fsadfasd',
+        lastVerified: '31231 3123'
       }
     ]
   }

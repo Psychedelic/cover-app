@@ -26,5 +26,8 @@ export const tableBodyStyle = {
   },
   '& svg': {
     cursor: 'pointer'
+  },
+  '& td button': {
+    padding: '$0'
   }
 };
