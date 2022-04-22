@@ -11,7 +11,10 @@ export const StitchesPagination = styled('div', {
     height: '$28',
     width: '$28',
     backgroundColor: '$coverDarkGray',
-    border: '1px solid $coverMediumGray'
+    border: '1px solid $coverMediumGray',
+    '& svg': {
+      fontWeight: '$black'
+    }
   },
   '& input': {
     all: 'unset',
