@@ -18,6 +18,10 @@ export const StitchesButton = styled('button', {
         backgroundColor: '$coverDarkGreen',
         '&:hover': {
           color: '$coverGreenOpacity'
+        },
+        '&[disabled]': {
+          cursor: 'default',
+          color: '$coverGreenOpacity'
         }
       },
       outline: {
@@ -26,12 +30,19 @@ export const StitchesButton = styled('button', {
         color: '$coverWhite',
         '&:hover': {
           color: '$coverWhiteOpacity'
+        },
+        '&[disabled]': {
+          cursor: 'default',
+          color: '$coverWhiteOpacity'
         }
       },
       text: {
         color: '$coverLightGray',
         '&:hover': {
           textDecorationLine: 'underline'
+        },
+        '&[disabled]': {
+          cursor: 'default'
         }
       }
     },

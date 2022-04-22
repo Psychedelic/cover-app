@@ -5,68 +5,56 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 
 import {Core} from '@/components';
-import {colors} from '@/themes';
 import {isPositiveNum} from '@/utils';
 
 import {StitchesPagination} from './pagination.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesPagination> {
   css?: CSS;
-  page: string;
+  defaultPage?: string;
 }
 
-export const Pagination: React.VFC<PropTypes> = ({css, page}) => {
-  const [value, setValue] = useState(page);
-  const [isFirstPage, setIsFirstPage] = useState(value === '1');
+export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1'}) => {
+  const [isFirstPage, setIsFirstPage] = useState(defaultPage === '1');
+  const recentValue = useRef(defaultPage);
+  const leftBtn = useRef(null);
+  const rightBtn = useRef(null);
   const inputRef = useRef(null);
 
-  const color = isFirstPage ? colors.coverMediumGray : colors.coverLightWhite;
-
-  const onBlur = useCallback(
-    e => {
-      const inputVal = (e.target as HTMLInputElement).value;
-      const newVal = isPositiveNum(inputVal) ? inputVal : value;
-      (e.target as HTMLInputElement).value = newVal;
-      setValue(newVal);
-      setIsFirstPage(newVal === '1');
-    },
-    [value]
-  );
+  const onBlur = useCallback(e => {
+    const value = (e.target as HTMLInputElement).value;
+    const newValue = isPositiveNum(value) ? value : recentValue.current;
+    (e.target as HTMLInputElement).value = newValue;
+    setIsFirstPage(newValue === '1');
+    recentValue.current = newValue;
+  }, []);
 
   const onChange = useCallback(e => {
-    const inputVal = (e.target as HTMLInputElement).value;
-    (e.target as HTMLInputElement).value = inputVal;
-    if (isPositiveNum(inputVal)) {
-      setValue(inputVal);
+    const value = (e.target as HTMLInputElement).value;
+    (e.target as HTMLInputElement).value = value;
+    if (isPositiveNum(value)) {
+      recentValue.current = value;
     }
   }, []);
 
-  const onLeftCLick = useCallback(() => {
-    if (value !== '1' && inputRef.current) {
-      const newValue = parseInt(value, 10) - 1;
-      (inputRef.current as HTMLInputElement).value = String(newValue);
-      setValue(`${newValue}`);
-      setIsFirstPage(newValue === 1);
-    }
-  }, [value]);
-
-  const onRightClick = useCallback(() => {
+  const onBtnClick = useCallback(e => {
+    const isMinus = leftBtn.current && (leftBtn.current as HTMLButtonElement).contains(e.target);
     if (inputRef.current) {
-      const newValue = parseInt(value, 10) + 1;
-      (inputRef.current as HTMLInputElement).value = String(newValue);
-      setValue(`${newValue}`);
+      const newValue = parseInt(recentValue.current, 10) + (isMinus ? -1 : 1);
+      (inputRef.current as HTMLInputElement).value = `${newValue}`;
+      recentValue.current = `${newValue}`;
       setIsFirstPage(newValue === 1);
     }
-  }, [value]);
+  }, []);
 
   return (
     <StitchesPagination css={css}>
       <div>
-        <Core.Button onClick={onLeftCLick} type={'outline'}>
-          <FontAwesomeIcon color={color} icon={faChevronLeft} />
+        <Core.Button disabled={isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
+          <FontAwesomeIcon icon={faChevronLeft} />
         </Core.Button>
-        <input defaultValue={page} onBlur={onBlur} onChange={onChange} ref={inputRef} />
-        <Core.Button onClick={onRightClick} type={'outline'}>
+        <input defaultValue={defaultPage} onBlur={onBlur} onChange={onChange} ref={inputRef} />
+        <Core.Button onClick={onBtnClick} ref={rightBtn} type={'outline'}>
           <FontAwesomeIcon icon={faChevronRight} />
         </Core.Button>
       </div>

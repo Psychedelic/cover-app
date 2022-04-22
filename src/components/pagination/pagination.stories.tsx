@@ -9,7 +9,5 @@ const meta: ComponentMeta<typeof Pagination> = {
 export default meta;
 
 export const Example: ComponentStoryObj<typeof Pagination> = {
-  args: {
-    page: '6'
-  }
+  args: {}
 };
