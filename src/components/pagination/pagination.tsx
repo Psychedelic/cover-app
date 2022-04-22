@@ -49,15 +49,13 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1'}) => {
 
   return (
     <StitchesPagination css={css}>
-      <div>
-        <Core.Button disabled={isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </Core.Button>
-        <input defaultValue={defaultPage} onBlur={onBlur} onChange={onChange} ref={inputRef} />
-        <Core.Button onClick={onBtnClick} ref={rightBtn} type={'outline'}>
-          <FontAwesomeIcon icon={faChevronRight} />
-        </Core.Button>
-      </div>
+      <Core.Button disabled={isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
+        <FontAwesomeIcon icon={faChevronLeft} />
+      </Core.Button>
+      <input defaultValue={defaultPage} onBlur={onBlur} onChange={onChange} ref={inputRef} />
+      <Core.Button onClick={onBtnClick} ref={rightBtn} type={'outline'}>
+        <FontAwesomeIcon icon={faChevronRight} />
+      </Core.Button>
     </StitchesPagination>
   );
 };
