@@ -1,9 +1,13 @@
 export const searchBarStyled = {
-  '& svg:nth-of-type(2)': {
-    marginLeft: '$10',
+  '& button': {
+    padding: '$0',
+    height: 'inherit',
     color: '$coverRed',
     ':hover': {
       cursor: 'pointer'
+    },
+    '& svg': {
+      margin: '$0'
     }
   }
 };

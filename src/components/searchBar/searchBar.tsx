@@ -18,7 +18,9 @@ export const SearchBar: React.VFC = () => {
 
   const onClick = useCallback(() => {
     if (searchBarRef.current) {
-      (searchBarRef.current as HTMLInputElement).value = '';
+      const searchBar = searchBarRef.current as HTMLInputElement;
+      searchBar.value = '';
+      searchBar.focus();
       setHasValue(false);
     }
   }, []);
@@ -40,7 +42,11 @@ export const SearchBar: React.VFC = () => {
         ref={searchBarRef}
         size={'small'}
       />
-      {hasValue && <FontAwesomeIcon icon={faXmark} onClick={onClick} />}
+      {hasValue && (
+        <Core.Button onClick={onClick} type={'text'}>
+          <FontAwesomeIcon icon={faXmark} size={'lg'} />
+        </Core.Button>
+      )}
     </Core.InputContainer>
   );
 };
