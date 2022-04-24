@@ -39,9 +39,11 @@ export const TableRow: React.FC<PropTypes> = ({
       )}
       {children.map(c => (override ? c : <td key={c.key}>{c}</td>))}
       {showCollapseBtn && (
-        <Core.Button onClick={onClick} type={'text'}>
-          <FontAwesomeIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
-        </Core.Button>
+        <td>
+          <Core.Button onClick={onClick} type={'text'}>
+            <FontAwesomeIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
+          </Core.Button>
+        </td>
       )}
     </StitchesTableRow>
   );
