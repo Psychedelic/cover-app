@@ -12,8 +12,10 @@ export const SearchBar: React.VFC = () => {
   const [hasValue, setHasValue] = useState(false);
   const searchBarRef = useRef(null);
 
-  const onInput = useCallback(e => {
-    setHasValue((e.target as HTMLInputElement).value !== '');
+  const onInput = useCallback(_ => {
+    if (searchBarRef.current) {
+      setHasValue((searchBarRef.current as HTMLInputElement).value !== '');
+    }
   }, []);
 
   const onClick = useCallback(() => {
