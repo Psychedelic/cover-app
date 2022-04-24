@@ -21,24 +21,27 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1'}) => {
   const rightBtn = useRef(null);
   const inputRef = useRef(null);
 
-  const onBlur = useCallback(e => {
-    const value = (e.target as HTMLInputElement).value;
-    const newValue = isPositiveNum(value) ? value : recentValue.current;
-    (e.target as HTMLInputElement).value = newValue;
-    setIsFirstPage(newValue === '1');
-    recentValue.current = newValue;
-  }, []);
-
-  const onChange = useCallback(e => {
-    const value = (e.target as HTMLInputElement).value;
-    (e.target as HTMLInputElement).value = value;
-    if (isPositiveNum(value)) {
-      recentValue.current = value;
+  const onBlur = useCallback(_ => {
+    if (inputRef.current) {
+      const input = inputRef.current as HTMLInputElement;
+      const newValue = isPositiveNum(input.value) ? input.value : recentValue.current;
+      input.value = newValue;
+      setIsFirstPage(newValue === '1');
+      recentValue.current = newValue;
     }
   }, []);
 
-  const onBtnClick = useCallback(e => {
-    const isMinus = leftBtn.current && (leftBtn.current as HTMLButtonElement).contains(e.target);
+  const onChange = useCallback(_ => {
+    if (inputRef.current) {
+      const value = (inputRef.current as HTMLInputElement).value;
+      if (isPositiveNum(value)) {
+        recentValue.current = value;
+      }
+    }
+  }, []);
+
+  const onBtnClick = useCallback(({target}) => {
+    const isMinus = leftBtn.current && (leftBtn.current as HTMLButtonElement).contains(target);
     if (inputRef.current) {
       const newValue = parseInt(recentValue.current, 10) + (isMinus ? -1 : 1);
       (inputRef.current as HTMLInputElement).value = `${newValue}`;
