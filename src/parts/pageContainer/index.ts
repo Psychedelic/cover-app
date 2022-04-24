@@ -1,2 +1,2 @@
-export * from './activityTable';
 export * from './pageContainer';
+export * from './pageHeader';

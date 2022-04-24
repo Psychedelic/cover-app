@@ -3,11 +3,11 @@ import React from 'react';
 import {logo} from '@/assets';
 import {Core, SearchBar} from '@/components';
 
-import {StitchesHeaderContainer, StitchesMainHeader, StitchesSecondaryHeader} from './header.styled';
+import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
 
-export const Header: React.VFC = () => (
-  <StitchesHeaderContainer>
-    <StitchesMainHeader>
+export const PageHeader: React.VFC = () => (
+  <StitchesPageHeaderContainer>
+    <StitchesPageMainHeader>
       <img alt={'logo'} src={logo} />
       <SearchBar />
       <Core.Button size={'medium'} type={'text'}>
@@ -16,9 +16,9 @@ export const Header: React.VFC = () => (
       <Core.Button size={'medium'} type={'text'}>
         {'Docs'}
       </Core.Button>
-    </StitchesMainHeader>
-    <StitchesSecondaryHeader>
+    </StitchesPageMainHeader>
+    <StitchesPageSecondaryHeader>
       <Core.Button>{'Connect to Plug'}</Core.Button>
-    </StitchesSecondaryHeader>
-  </StitchesHeaderContainer>
+    </StitchesPageSecondaryHeader>
+  </StitchesPageHeaderContainer>
 );

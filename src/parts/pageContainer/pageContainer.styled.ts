@@ -2,7 +2,7 @@ import {defaultStitches} from '@/themes';
 
 const {styled} = defaultStitches;
 
-export const StitchesContainer = styled('div', {
+export const StitchesPageContainer = styled('div', {
   display: 'inline-flex',
   flexDirection: 'column',
   alignItems: 'center',
