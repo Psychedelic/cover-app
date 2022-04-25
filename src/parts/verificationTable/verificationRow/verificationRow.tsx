@@ -29,7 +29,7 @@ interface PropTypes {
   setCanisterIdSelected: (canisterId: string) => void;
 }
 
-export const VerificationRow: React.VFC<PropTypes> = ({verification, isSelected, setCanisterIdSelected}) => {
+export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, isSelected, setCanisterIdSelected}) => {
   const onCollapse = useCallback(
     (canisterId: string) => {
       setCanisterIdSelected(isSelected ? '' : canisterId);
@@ -84,4 +84,4 @@ export const VerificationRow: React.VFC<PropTypes> = ({verification, isSelected,
       ) : undefined}
     </>
   );
-};
+});
