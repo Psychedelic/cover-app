@@ -43,7 +43,7 @@ export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
   return (
     <TableContainer css={tableContainerStyle} paginated>
       <TableHeader css={tableHeaderStyle}>
-        {['Canister ID', 'Name', 'Repo', 'Git Commit', 'Wasm Hash', 'Last Verified', '']}
+        {['Canister ID', 'Name', 'Repo', 'Git Commit', 'IC Wasm Hash', 'Last Activity', '']}
       </TableHeader>
       <TableContent css={canisterIdSelected === '' ? undefined : tableContentTransparent}>
         {verifications?.map(

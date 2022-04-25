@@ -46,7 +46,7 @@ export const CopyableText: React.FC<PropTypes> = React.memo(({children, css, col
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
       {showRaw ? children : trim(children)}
-      &nbsp;
+      {(isClicked || isHovered) && ' '}
       {isClicked ? <FontAwesomeIcon icon={faCheck} /> : isHovered && <FontAwesomeIcon icon={faCopy} />}
     </StitchesCopyableText>
   );

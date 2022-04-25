@@ -1,1 +1,1 @@
-export * from './verificatoinDetail';
+export * from './verificationDetail';
