@@ -22,6 +22,7 @@
   ],
   "rules": {
     "eqeqeq": ["error"],
+    "no-undefined": "off",
     "no-ternary": "off",
     "one-var": "off",
     "id-length": "off",
@@ -62,6 +63,8 @@
         "alphabetize": {"order": "asc", "caseInsensitive": false}
       }
     ],
+    "react/no-unused-prop-types": "off",
+    "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-max-depth": ["error", {"max": 4}],
     "no-restricted-imports": [
