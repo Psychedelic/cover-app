@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 
 import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
 
-import {DetailCell} from './DetailCell';
+import {VerificationDetail} from './verificationDetail';
 import {
   tableContainerStyle,
   tableContentTransparent,
@@ -86,20 +86,20 @@ export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
               {canisterIdSelected === canisterId && (
                 <>
                   <TableRow override>
-                    <DetailCell label={'Owner Principal ID'} value={ownerId} />
-                    <DetailCell label={'Repo visibility'} value={repoVisibility} />
+                    <VerificationDetail isTrim label={'Owner Principal ID'} value={ownerId} />
+                    <VerificationDetail label={'Repo visibility'} value={repoVisibility} />
                   </TableRow>
                   <TableRow override>
-                    <DetailCell label={'Rust version'} value={rustVersion} />
-                    <DetailCell label={'Canister type'} value={canisterType} />
+                    <VerificationDetail label={'Rust version'} value={rustVersion} />
+                    <VerificationDetail label={'Canister type'} value={canisterType} />
                   </TableRow>
                   <TableRow override>
-                    <DetailCell label={'DFX version'} value={dfxVersion} />
-                    <DetailCell label={'WASM Optimization count'} value={optimizeCount} />
+                    <VerificationDetail label={'DFX version'} value={dfxVersion} />
+                    <VerificationDetail label={'WASM Optimization count'} value={optimizeCount} />
                   </TableRow>
                   <TableRow override>
-                    <DetailCell label={'Build WASM hash'} value={buildWasmHash} />
-                    <DetailCell label={'Build Result'} value={buildUrl} />
+                    <VerificationDetail isTrim label={'Build WASM hash'} value={buildWasmHash} />
+                    <VerificationDetail isLink label={'Build Result'} value={buildUrl} />
                   </TableRow>
                 </>
               )}

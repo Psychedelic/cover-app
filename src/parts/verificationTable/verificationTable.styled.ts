@@ -105,7 +105,11 @@ export const tableRowSelected = {
       padding: '10px 0px 25px 0px'
     },
     '& td:nth-of-type(4) div span': {
-      padding: '10px 50px 25px 0px'
+      padding: '10px 50px 25px 0px',
+      '& a': {
+        textDecoration: 'none',
+        color: '$coverBlue'
+      }
     }
   }
 };
