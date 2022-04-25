@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 
 import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
 
@@ -71,16 +71,14 @@ export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
                 rowId={canisterId}
                 showCollapseBtn
                 type={isVerified ? 'green' : 'red'}>
-                <Core.CopyableText key={0}>{canisterId}</Core.CopyableText>
-                <span key={1}>{name}</span>
-                <span key={2}>{repo}</span>
-                <Core.CopyableText color={'gray'} key={3}>
-                  {gitCommit}
-                </Core.CopyableText>
-                <Core.CopyableText color={'gray'} key={4}>
-                  {wasmHash}
-                </Core.CopyableText>
-                <span key={5}>{lastVerified}</span>
+                {useMemo(() => [
+                  <Core.CopyableText key={0}>{canisterId}</Core.CopyableText>,
+                  <span key={1}>{name}</span>,
+                  <span key={2}>{repo}</span>,
+                  <Core.CopyableText color={'gray'} key={3}>{gitCommit}</Core.CopyableText>,
+                  <Core.CopyableText color={'gray'} key={4}>{wasmHash}</Core.CopyableText>,
+                  <span key={5}>{lastVerified}</span>
+                ], [canisterId, name, repo, gitCommit, wasmHash, lastVerified])}
               </TableRow>
               {canisterIdSelected === canisterId && (
                 <>

@@ -21,7 +21,7 @@ export const VerificationDetail: React.VFC<PropTypes> = ({label, value, isLink, 
         {isTrim ? (
           <Core.CopyableText>{value}</Core.CopyableText>
         ) : (
-          <span>{isLink ? <a href={value}>{'View'}</a> : value}</span>
+          <span>{isLink ? <a target={'_blank'} href={value}>{'View'}</a> : value}</span>
         )}
       </div>
     </td>

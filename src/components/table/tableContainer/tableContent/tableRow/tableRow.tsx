@@ -1,7 +1,6 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 import {faCaretSquareDown, faCaretSquareRight} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS, VariantProps} from '@stitches/react';
 
 import {Core} from '@/components';
@@ -22,6 +21,17 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
 export const TableRow: React.FC<PropTypes> = React.memo(
   ({css, children, type, override, showCollapseBtn, isSelected, onCollapse, rowId}) => {
     const onClick = useCallback(() => onCollapse && onCollapse(rowId as string), [rowId, onCollapse]);
+    const Collapse = useMemo(
+      () =>
+        showCollapseBtn && (
+          <td>
+            <Core.Button onClick={onClick} type={'text'}>
+              <Core.FontIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
+            </Core.Button>
+          </td>
+        ),
+      [showCollapseBtn, isSelected, onClick]
+    );
     return (
       <StitchesTableRow css={css}>
         {type && (
@@ -30,13 +40,7 @@ export const TableRow: React.FC<PropTypes> = React.memo(
           </td>
         )}
         {children.map(c => (override ? c : <td key={c.key}>{c}</td>))}
-        {showCollapseBtn && (
-          <td>
-            <Core.Button onClick={onClick} type={'text'}>
-              <FontAwesomeIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
-            </Core.Button>
-          </td>
-        )}
+        {Collapse}
       </StitchesTableRow>
     );
   }
