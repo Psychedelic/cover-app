@@ -4,7 +4,8 @@ export const tableBodyStyle = {
     borderTop: '1px solid $coverSilver'
   },
   '& td:nth-of-type(3)': {
-    textAlign: 'center'
+    textAlign: 'center',
+    textDecoration: 'underline'
   },
   '& td:nth-of-type(4)': {
     textAlign: 'right'
