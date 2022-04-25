@@ -19,32 +19,25 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
   rowId?: string;
 }
 
-export const TableRow: React.FC<PropTypes> = ({
-  css,
-  children,
-  type,
-  override,
-  showCollapseBtn,
-  isSelected,
-  onCollapse,
-  rowId
-}) => {
-  const onClick = useCallback(() => onCollapse && onCollapse(rowId as string), [rowId, onCollapse]);
-  return (
-    <StitchesTableRow css={css}>
-      {type && (
-        <td>
-          <Core.Dot type={type} />
-        </td>
-      )}
-      {children.map(c => (override ? c : <td key={c.key}>{c}</td>))}
-      {showCollapseBtn && (
-        <td>
-          <Core.Button onClick={onClick} type={'text'}>
-            <FontAwesomeIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
-          </Core.Button>
-        </td>
-      )}
-    </StitchesTableRow>
-  );
-};
+export const TableRow: React.FC<PropTypes> = React.memo(
+  ({css, children, type, override, showCollapseBtn, isSelected, onCollapse, rowId}) => {
+    const onClick = useCallback(() => onCollapse && onCollapse(rowId as string), [rowId, onCollapse]);
+    return (
+      <StitchesTableRow css={css}>
+        {type && (
+          <td>
+            <Core.Dot type={type} />
+          </td>
+        )}
+        {children.map(c => (override ? c : <td key={c.key}>{c}</td>))}
+        {showCollapseBtn && (
+          <td>
+            <Core.Button onClick={onClick} type={'text'}>
+              <FontAwesomeIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
+            </Core.Button>
+          </td>
+        )}
+      </StitchesTableRow>
+    );
+  }
+);

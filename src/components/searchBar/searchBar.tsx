@@ -8,7 +8,7 @@ import {colors} from '@/themes';
 
 import {searchBarStyled} from './searchBar.styled';
 
-export const SearchBar: React.VFC = () => {
+export const SearchBar: React.VFC = React.memo(() => {
   const [hasValue, setHasValue] = useState(false);
   const searchBarRef = useRef(null);
 
@@ -51,4 +51,4 @@ export const SearchBar: React.VFC = () => {
       )}
     </Core.InputContainer>
   );
-};
+});

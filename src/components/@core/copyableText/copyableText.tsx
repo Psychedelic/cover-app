@@ -15,7 +15,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesCopyableText> {
   children: string;
 }
 
-export const CopyableText: React.FC<PropTypes> = ({children, css, color, showRaw}) => {
+export const CopyableText: React.FC<PropTypes> = React.memo(({children, css, color, showRaw}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -50,4 +50,4 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color, showRaw
       {isClicked ? <FontAwesomeIcon icon={faCheck} /> : isHovered && <FontAwesomeIcon icon={faCopy} />}
     </StitchesCopyableText>
   );
-};
+});

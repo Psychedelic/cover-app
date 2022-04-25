@@ -8,4 +8,4 @@ interface PropTypes extends React.ComponentProps<typeof StitchesDot> {
   css?: CSS;
 }
 
-export const Dot: React.VFC<PropTypes> = ({css, type}) => <StitchesDot css={css} type={type} />;
+export const Dot: React.VFC<PropTypes> = React.memo(({css, type}) => <StitchesDot css={css} type={type} />);

@@ -10,12 +10,10 @@ interface PropTypes extends React.ComponentProps<typeof StitchesButton> {
   disabled?: boolean;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, PropTypes>(
-  ({css, children, onClick, type, size, disabled}, ref) => (
+export const Button: React.FC<PropTypes> = React.memo<PropTypes>(
+  React.forwardRef<HTMLButtonElement, PropTypes>(({css, children, onClick, type, size, disabled}, ref) => (
     <StitchesButton css={css} disabled={disabled} onClick={onClick} ref={ref} size={size} type={type}>
       {children}
     </StitchesButton>
-  )
+  ))
 );
-
-Button.displayName = 'Button';

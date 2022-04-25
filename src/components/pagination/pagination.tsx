@@ -14,7 +14,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesPagination> {
   defaultPage?: string;
 }
 
-export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1'}) => {
+export const Pagination: React.VFC<PropTypes> = React.memo(({css, defaultPage = '1'}) => {
   const [isFirstPage, setIsFirstPage] = useState(defaultPage === '1');
   const recentValue = useRef(defaultPage);
   const leftBtn = useRef(null);
@@ -61,4 +61,4 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1'}) => {
       </Core.Button>
     </StitchesPagination>
   );
-};
+});
