@@ -44,6 +44,23 @@ export const Example: ComponentStoryObj<typeof VerificationTable> = {
         optimizeCount: '0',
         buildWasmHash: '0xb809d6b1713f68f8a042bc51878fd57640ee46aaa3ddae9e09ac25c37feb6cb5',
         buildUrl: 'https://github.com/Psychedelic/cover/actions/runs/2096948851'
+      },
+      {
+        isVerified: false,
+        canisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
+        name: 'WICP',
+        repo: '/wicp',
+        gitCommit: '7e654d94c514e709d4b25374820149997305f6ad',
+        wasmHash: '0x5b872f9177b871b6f957f0268ce0f5722008a5abc45f9d2bef28e9300ad9693e',
+        lastVerified: '12/29/2021',
+        ownerId: 'v4ehh-6sqi7-irvn2-s43ef-enl26-h7vtu-kymgf-ikejl-k7mdv-wypuo-kqe',
+        repoVisibility: 'Public',
+        rustVersion: 'N/A',
+        canisterType: 'Motoko',
+        dfxVersion: '0.9.3',
+        optimizeCount: '0',
+        buildWasmHash: '0xb809d6b1713f68f8a042bc51878fd57640ee46aaa3ddae9e09ac25c37feb6cb5',
+        buildUrl: 'https://github.com/Psychedelic/cover/actions/runs/2096948851'
       }
     ]
   }

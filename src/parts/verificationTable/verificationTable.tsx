@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
 
@@ -34,12 +34,11 @@ interface PropTypes {
 
 export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
   const [canisterIdSelected, setCanisterIdSelected] = useState('');
-  const onCollapse = useCallback(
-    (canisterId: string) => {
-      setCanisterIdSelected(canisterId === canisterIdSelected ? '' : canisterId);
-    },
-    [canisterIdSelected]
-  );
+  const cacheSelectedCanisterId = useRef('');
+  const onCollapse = useCallback((canisterId: string) => {
+    cacheSelectedCanisterId.current = canisterId === cacheSelectedCanisterId.current ? '' : canisterId;
+    setCanisterIdSelected(cacheSelectedCanisterId.current);
+  }, []);
   return (
     <TableContainer css={tableContainerStyle} paginated>
       <TableHeader css={tableHeaderStyle}>
