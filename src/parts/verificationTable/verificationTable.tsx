@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {TableContainer, TableContent, TableHeader} from '@/components';
 
@@ -14,7 +14,7 @@ export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
   return (
     <TableContainer css={tableContainerStyle} paginated>
       <TableHeader css={tableHeaderStyle}>
-        {['Canister ID', 'Name', 'Repo', 'Git Commit', 'IC Wasm Hash', 'Last Activity', '']}
+        {useMemo(() => ['Canister ID', 'Name', 'Repo', 'Git Commit', 'IC Wasm Hash', 'Last Activity', ''], [])}
       </TableHeader>
       <TableContent css={canisterIdSelected === '' ? undefined : tableContentTransparent}>
         {verifications?.map(verification => (
