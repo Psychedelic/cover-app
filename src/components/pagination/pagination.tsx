@@ -1,7 +1,6 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 
 import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 
 import {Core} from '@/components';
@@ -52,13 +51,23 @@ export const Pagination: React.VFC<PropTypes> = React.memo(({css, defaultPage = 
 
   return (
     <StitchesPagination css={css}>
-      <Core.Button disabled={isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </Core.Button>
+      {useMemo(
+        () => (
+          <Core.Button disabled={isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
+            <Core.FontIcon icon={faChevronLeft} />
+          </Core.Button>
+        ),
+        [isFirstPage, onBtnClick]
+      )}
       <input defaultValue={defaultPage} onBlur={onBlur} onChange={onChange} ref={inputRef} />
-      <Core.Button onClick={onBtnClick} ref={rightBtn} type={'outline'}>
-        <FontAwesomeIcon icon={faChevronRight} />
-      </Core.Button>
+      {useMemo(
+        () => (
+          <Core.Button onClick={onBtnClick} ref={rightBtn} type={'outline'}>
+            <Core.FontIcon icon={faChevronRight} />
+          </Core.Button>
+        ),
+        [onBtnClick]
+      )}
     </StitchesPagination>
   );
 });
