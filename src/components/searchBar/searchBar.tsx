@@ -1,14 +1,13 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core} from '@/components';
-import {colors} from '@/themes';
 
-import {searchBarStyled} from './searchBar.styled';
+import {hasValueStyled, searchBarStyled} from './searchBar.styled';
 
-export const SearchBar: React.VFC = React.memo(() => {
+export const SearchBar: React.VFC = () => {
   const [hasValue, setHasValue] = useState(false);
   const searchBarRef = useRef(null);
 
@@ -27,23 +26,11 @@ export const SearchBar: React.VFC = React.memo(() => {
     }
   }, []);
 
-  const {containerCss, contentCss} = useMemo(() => {
-    const color = hasValue ? colors.coverLightWhite : colors.coverLightGray;
-    return {
-      containerCss: {...searchBarStyled, color},
-      contentCss: {color}
-    };
-  }, [hasValue]);
+  const containerStyled = hasValue ? hasValueStyled : searchBarStyled;
 
   return (
-    <Core.InputContainer bg={'gray'} css={containerCss} icon={faSearch} size={'small'}>
-      <Core.InputContent
-        css={contentCss}
-        onInput={onInput}
-        placeholder={'Search by Canister ID'}
-        ref={searchBarRef}
-        size={'small'}
-      />
+    <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
+      <Core.InputContent onInput={onInput} placeholder={'Search by Canister ID'} ref={searchBarRef} size={'small'} />
       {hasValue && (
         <Core.Button onClick={onClick} type={'text'}>
           <FontAwesomeIcon icon={faXmark} size={'lg'} />
@@ -51,4 +38,4 @@ export const SearchBar: React.VFC = React.memo(() => {
       )}
     </Core.InputContainer>
   );
-});
+};

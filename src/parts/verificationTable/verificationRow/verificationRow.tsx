@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 
 import {Core, TableRow} from '@/components';
 
@@ -36,10 +36,10 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
     },
     [setCanisterIdSelected, isSelected]
   );
-  const Row = useMemo(
-    () => (
+  return (
+    <>
       <TableRow
-        css={isSelected ? tableRowSelected : undefined}
+        css={isSelected ? tableRowSelected : {}}
         isSelected={isSelected}
         onCollapse={onCollapse}
         rowId={verification.canisterId}
@@ -56,13 +56,7 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
         </Core.CopyableText>
         <span key={5}>{verification.lastVerified}</span>
       </TableRow>
-    ),
-    [onCollapse, isSelected, verification]
-  );
-  return (
-    <>
-      {Row}
-      {isSelected ? (
+      {isSelected && (
         <>
           <TableRow override>
             <VerificationDetail isTrim label={'Owner Principal ID'} value={verification.ownerId} />
@@ -81,7 +75,7 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
             <VerificationDetail isLink label={'Build Result'} value={verification.buildUrl} />
           </TableRow>
         </>
-      ) : undefined}
+      )}
     </>
   );
 });

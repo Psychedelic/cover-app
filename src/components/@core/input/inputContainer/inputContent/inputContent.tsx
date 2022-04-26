@@ -9,6 +9,8 @@ interface PropTypes extends React.ComponentProps<typeof StitchesInputContent> {
   onInput: ReactEventHandler;
 }
 
-export const InputContent: React.VFC<PropTypes> = React.forwardRef(({size, css, placeholder, onInput}, ref) => (
-  <StitchesInputContent css={css} onInput={onInput} placeholder={placeholder} ref={ref} size={size} />
-));
+export const InputContent: React.VFC<PropTypes> = React.memo(
+  React.forwardRef(({size, css, placeholder, onInput}, ref) => (
+    <StitchesInputContent css={css} onInput={onInput} placeholder={placeholder} ref={ref} size={size} />
+  ))
+);

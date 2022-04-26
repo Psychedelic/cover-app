@@ -16,7 +16,7 @@ export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
       <TableHeader css={tableHeaderStyle}>
         {useMemo(() => ['Canister ID', 'Name', 'Repo', 'Git Commit', 'IC Wasm Hash', 'Last Activity', ''], [])}
       </TableHeader>
-      <TableContent css={canisterIdSelected === '' ? undefined : tableContentTransparent}>
+      <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>
         {verifications?.map(verification => (
           <VerificationRow
             isSelected={canisterIdSelected === verification.canisterId}
