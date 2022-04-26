@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 import {Core, TableRow} from '@/components';
 
@@ -49,24 +49,29 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
         showCollapseBtn
         showLoadingMask
         type={getStatus(verification.isVerified)}>
-        <Core.LoadingMask key={0}>
-          <Core.CopyableText>{verification.canisterId}</Core.CopyableText>
-        </Core.LoadingMask>
-        <Core.LoadingMask key={1}>
-          <span>{verification.name}</span>
-        </Core.LoadingMask>
-        <Core.LoadingMask key={2}>
-          <span>{verification.repo}</span>
-        </Core.LoadingMask>
-        <Core.LoadingMask key={3}>
-          <Core.CopyableText color={'gray'}>{verification.gitCommit}</Core.CopyableText>
-        </Core.LoadingMask>
-        <Core.LoadingMask key={4}>
-          <Core.CopyableText color={'gray'}>{verification.wasmHash}</Core.CopyableText>
-        </Core.LoadingMask>
-        <Core.LoadingMask key={5}>
-          <span>{verification.lastVerified}</span>
-        </Core.LoadingMask>
+        {useMemo(
+          () => [
+            <Core.LoadingMask key={0}>
+              <Core.CopyableText>{verification.canisterId}</Core.CopyableText>
+            </Core.LoadingMask>,
+            <Core.LoadingMask key={1}>
+              <span>{verification.name}</span>
+            </Core.LoadingMask>,
+            <Core.LoadingMask key={2}>
+              <span>{verification.repo}</span>
+            </Core.LoadingMask>,
+            <Core.LoadingMask key={3}>
+              <Core.CopyableText color={'gray'}>{verification.gitCommit}</Core.CopyableText>
+            </Core.LoadingMask>,
+            <Core.LoadingMask key={4}>
+              <Core.CopyableText color={'gray'}>{verification.wasmHash}</Core.CopyableText>
+            </Core.LoadingMask>,
+            <Core.LoadingMask key={5}>
+              <span>{verification.lastVerified}</span>
+            </Core.LoadingMask>
+          ],
+          [verification]
+        )}
       </TableRow>
       {isSelected && (
         <>
