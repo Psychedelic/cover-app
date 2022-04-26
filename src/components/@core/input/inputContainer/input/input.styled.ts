@@ -1,7 +1,7 @@
 import {defaultStitches} from '@/themes';
 const {styled} = defaultStitches;
 
-export const StitchesInputContent = styled('input', {
+export const StitchesInput = styled('input', {
   all: 'unset',
   color: '$coverMediumWhite',
   width: '100%',
