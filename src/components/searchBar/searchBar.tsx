@@ -30,7 +30,7 @@ export const SearchBar: React.VFC = () => {
 
   return (
     <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
-      <Core.InputContent onInput={onInput} placeholder={'Search by Canister ID'} ref={searchBarRef} size={'small'} />
+      <Core.Input onInput={onInput} placeholder={'Search by Canister ID'} ref={searchBarRef} size={'small'} />
       {hasValue && (
         <Core.Button onClick={onClick} type={'text'}>
           <FontAwesomeIcon icon={faXmark} size={'lg'} />
