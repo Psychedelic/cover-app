@@ -2,7 +2,9 @@ import React from 'react';
 
 import {StitchesLoadingMask} from './loadingMask.styled';
 
-type PropTypes = React.ComponentProps<typeof StitchesLoadingMask>;
+interface PropTypes extends React.ComponentProps<typeof StitchesLoadingMask> {
+  children?: React.ReactElement;
+}
 
 export const LoadingMask: React.FC<PropTypes> = ({children, size}) =>
-  (children as React.ReactElement)?.props?.children ? children : <StitchesLoadingMask size={size} />;
+  children?.props?.children ? children : <StitchesLoadingMask size={size} />;

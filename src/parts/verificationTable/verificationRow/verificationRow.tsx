@@ -6,21 +6,21 @@ import {VerificationDetail} from './verificationDetail';
 import {tableRowSelected} from './verificationRow.styled';
 
 export interface Verification {
-  isVerified: boolean;
-  canisterId: string;
-  name: string;
-  repo: string;
-  gitCommit: string;
-  wasmHash: string;
-  lastVerified: string;
-  ownerId: string;
-  repoVisibility: string;
-  rustVersion: string;
-  canisterType: string;
-  dfxVersion: string;
-  optimizeCount: string;
-  buildWasmHash: string;
-  buildUrl: string;
+  isVerified?: boolean;
+  canisterId?: string;
+  name?: string;
+  repo?: string;
+  gitCommit?: string;
+  wasmHash?: string;
+  lastVerified?: string;
+  ownerId?: string;
+  repoVisibility?: string;
+  rustVersion?: string;
+  canisterType?: string;
+  dfxVersion?: string;
+  optimizeCount?: string;
+  buildWasmHash?: string;
+  buildUrl?: string;
 }
 
 interface PropTypes {
@@ -28,6 +28,9 @@ interface PropTypes {
   isSelected: boolean;
   setCanisterIdSelected: (canisterId: string) => void;
 }
+
+const getStatus = (isVerified?: boolean) =>
+  typeof isVerified === 'boolean' ? (isVerified ? 'green' : 'red') : isVerified;
 
 export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, isSelected, setCanisterIdSelected}) => {
   const onCollapse = useCallback(
@@ -44,17 +47,26 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
         onCollapse={onCollapse}
         rowId={verification.canisterId}
         showCollapseBtn
-        type={verification.isVerified ? 'green' : 'red'}>
-        <Core.CopyableText key={0}>{verification.canisterId}</Core.CopyableText>
-        <span key={1}>{verification.name}</span>
-        <span key={2}>{verification.repo}</span>
-        <Core.CopyableText color={'gray'} key={3}>
-          {verification.gitCommit}
-        </Core.CopyableText>
-        <Core.CopyableText color={'gray'} key={4}>
-          {verification.wasmHash}
-        </Core.CopyableText>
-        <span key={5}>{verification.lastVerified}</span>
+        showLoadingMask
+        type={getStatus(verification.isVerified)}>
+        <Core.LoadingMask key={0}>
+          <Core.CopyableText>{verification.canisterId}</Core.CopyableText>
+        </Core.LoadingMask>
+        <Core.LoadingMask key={1}>
+          <span>{verification.name}</span>
+        </Core.LoadingMask>
+        <Core.LoadingMask key={2}>
+          <span>{verification.repo}</span>
+        </Core.LoadingMask>
+        <Core.LoadingMask key={3}>
+          <Core.CopyableText color={'gray'}>{verification.gitCommit}</Core.CopyableText>
+        </Core.LoadingMask>
+        <Core.LoadingMask key={4}>
+          <Core.CopyableText color={'gray'}>{verification.wasmHash}</Core.CopyableText>
+        </Core.LoadingMask>
+        <Core.LoadingMask key={5}>
+          <span>{verification.lastVerified}</span>
+        </Core.LoadingMask>
       </TableRow>
       {isSelected && (
         <>

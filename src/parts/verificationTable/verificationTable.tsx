@@ -17,10 +17,10 @@ export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
         {useMemo(() => ['Canister ID', 'Name', 'Repo', 'Git Commit', 'IC Wasm Hash', 'Last Activity', ''], [])}
       </TableHeader>
       <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>
-        {verifications?.map(verification => (
+        {verifications?.map((verification, index) => (
           <VerificationRow
             isSelected={canisterIdSelected === verification.canisterId}
-            key={verification.canisterId}
+            key={verification.canisterId || index}
             setCanisterIdSelected={setCanisterIdSelected}
             verification={verification}
           />

@@ -16,6 +16,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
   onCollapse?: (id: string) => void;
   isSelected?: boolean;
   rowId?: string;
+  showLoadingMask?: boolean;
 }
 
 export const TableRow: React.FC<PropTypes> = ({
@@ -26,24 +27,37 @@ export const TableRow: React.FC<PropTypes> = ({
   showCollapseBtn,
   isSelected,
   onCollapse,
-  rowId
+  rowId,
+  showLoadingMask
 }) => {
   const onClick = useCallback(() => onCollapse && onCollapse(rowId as string), [rowId, onCollapse]);
   return (
     <StitchesTableRow css={css}>
-      {type && (
+      {typeof type === 'undefined' ? (
+        showLoadingMask && (
+          <td>
+            <Core.LoadingMask size={'dot'} />
+          </td>
+        )
+      ) : (
         <td>
           <Core.Dot type={type} />
         </td>
       )}
       {children.map(c => (override ? c : <td key={c.key}>{c}</td>))}
-      {showCollapseBtn && (
-        <td>
-          <Core.Button onClick={onClick} type={'text'}>
-            <Core.FontIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
-          </Core.Button>
-        </td>
-      )}
+      {typeof type === 'undefined'
+        ? showLoadingMask && (
+            <td>
+              <Core.LoadingMask size={'dot'} />
+            </td>
+          )
+        : showCollapseBtn && (
+            <td>
+              <Core.Button onClick={onClick} type={'text'}>
+                <Core.FontIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
+              </Core.Button>
+            </td>
+          )}
     </StitchesTableRow>
   );
 };

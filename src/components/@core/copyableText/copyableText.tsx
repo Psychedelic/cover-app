@@ -12,13 +12,13 @@ import {StitchesCopyableText} from './copyableText.styled';
 interface PropTypes extends React.ComponentProps<typeof StitchesCopyableText> {
   css?: CSS;
   showRaw?: boolean;
-  children: string;
+  children?: string;
 }
 
 export const CopyableText: React.FC<PropTypes> = React.memo(({children, css, color, showRaw}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const content = useRef(children);
+  const content = useRef(children || '');
 
   const onClick = useCallback(_ => {
     navigator.clipboard.writeText(content.current);

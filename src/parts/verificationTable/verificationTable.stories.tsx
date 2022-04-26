@@ -8,7 +8,7 @@ const meta: ComponentMeta<typeof VerificationTable> = {
 };
 export default meta;
 
-export const Example: ComponentStoryObj<typeof VerificationTable> = {
+export const WithData: ComponentStoryObj<typeof VerificationTable> = {
   args: {
     verifications: [
       {
@@ -63,5 +63,11 @@ export const Example: ComponentStoryObj<typeof VerificationTable> = {
         buildUrl: 'https://github.com/Psychedelic/cover/actions/runs/2096948851'
       }
     ]
+  }
+};
+
+export const LoadingState: ComponentStoryObj<typeof VerificationTable> = {
+  args: {
+    verifications: [{}, {}, {}, {}, {}]
   }
 };

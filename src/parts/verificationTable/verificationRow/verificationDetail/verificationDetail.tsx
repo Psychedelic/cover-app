@@ -4,7 +4,7 @@ import {Core} from '@/components';
 
 interface PropTypes {
   label: string;
-  value: string;
+  value?: string;
   isLink?: boolean;
   isTrim?: boolean;
 }
