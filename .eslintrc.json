@@ -22,8 +22,8 @@
   ],
   "rules": {
     "eqeqeq": ["error"],
-    "no-undefined": "off",
     "no-ternary": "off",
+    "no-nested-ternary": "off",
     "one-var": "off",
     "id-length": "off",
     "max-lines-per-function": ["error", {"max": 80}],
