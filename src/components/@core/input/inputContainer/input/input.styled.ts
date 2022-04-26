@@ -5,6 +5,7 @@ export const StitchesInput = styled('input', {
   all: 'unset',
   color: '$coverMediumWhite',
   width: '100%',
+  boxSizing: 'border-box',
   variants: {
     size: {
       small: {

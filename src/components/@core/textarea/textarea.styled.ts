@@ -12,5 +12,6 @@ export const StitchesTextarea = styled('textarea', {
   color: '$coverMediumWhite',
   lineHeight: '$20',
   fontSize: '$sm',
-  fontWeight: '$normal'
+  fontWeight: '$normal',
+  padding: '$15 $15 0 $15'
 });
