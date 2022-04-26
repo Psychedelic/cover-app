@@ -47,7 +47,8 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
         onCollapse={onCollapse}
         rowId={verification.canisterId}
         showCollapseBtn
-        showLoadingMask
+        showLoadingMaskBtn={typeof verification.isVerified === 'undefined'}
+        showLoadingMaskStatus={typeof verification.isVerified === 'undefined'}
         type={getStatus(verification.isVerified)}>
         {useMemo(
           () => [

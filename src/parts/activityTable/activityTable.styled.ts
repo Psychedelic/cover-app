@@ -5,9 +5,15 @@ export const tableBodyStyle = {
   },
   '& td:nth-of-type(3)': {
     textAlign: 'center',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    '& div': {
+      display: 'inline-flex'
+    }
   },
   '& td:nth-of-type(4)': {
-    textAlign: 'right'
+    textAlign: 'right',
+    '& div': {
+      display: 'inline-flex'
+    }
   }
 };

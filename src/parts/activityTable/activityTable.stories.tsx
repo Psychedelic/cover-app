@@ -8,7 +8,7 @@ const meta: ComponentMeta<typeof ActivityTable> = {
 };
 export default meta;
 
-export const Example: ComponentStoryObj<typeof ActivityTable> = {
+export const WithData: ComponentStoryObj<typeof ActivityTable> = {
   args: {
     activities: [
       {
@@ -52,5 +52,11 @@ export const Example: ComponentStoryObj<typeof ActivityTable> = {
         datetime: new Date(Date.now() - 60 * 1000 * 60 * 99999).toString()
       }
     ]
+  }
+};
+
+export const Loading: ComponentStoryObj<typeof ActivityTable> = {
+  args: {
+    activities: [{}, {}, {}, {}, {}, {}]
   }
 };
