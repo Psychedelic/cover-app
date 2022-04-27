@@ -76,6 +76,8 @@
           "@/*/",
           "assets/*/",
           "components/*/",
+          "contexts/*/",
+          "models/*/",
           "pages/*/",
           "parts/*/",
           "themes/*/",
@@ -83,7 +85,8 @@
         ]
       }
     ],
-    "@typescript-eslint/no-unused-vars": ["error"]
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-empty-function": "off"
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},
