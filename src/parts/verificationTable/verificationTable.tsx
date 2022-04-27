@@ -1,16 +1,23 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {TableContainer, TableContent, TableHeader} from '@/components';
+import {useVerificationContext} from '@/contexts';
+import {Verification} from '@/models';
 
-import {Verification, VerificationRow} from './verificationRow';
+import {VerificationRow} from './verificationRow';
 import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './verificationTable.styled';
 
 interface PropTypes {
-  verifications?: Verification[];
+  defaultVerifications?: Verification[];
 }
 
-export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
+export const VerificationTable: React.VFC<PropTypes> = ({defaultVerifications}) => {
   const [canisterIdSelected, setCanisterIdSelected] = useState('');
+  const {
+    state: {verifications = defaultVerifications},
+    dispatch
+  } = useVerificationContext();
+  useEffect(() => dispatch({type: 'fetch'}), [dispatch]);
   return (
     <TableContainer css={tableContainerStyle} paginated>
       <TableHeader css={tableHeaderStyle}>

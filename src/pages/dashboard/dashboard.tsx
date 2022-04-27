@@ -1,19 +1,22 @@
 import React from 'react';
 
+import {VerificationProvider} from '@/contexts';
 import {ActivityTable, PageContainer, StatsTable, VerificationTable} from '@/parts';
 
 import {ContentContainer, LeftContent, RightContent} from './dashboard.styled';
 
 export const Dashboard: React.VFC = () => (
-  <PageContainer>
-    <ContentContainer>
-      <LeftContent>
-        <VerificationTable verifications={[{}, {}, {}]} />
-      </LeftContent>
-      <RightContent>
-        <StatsTable />
-        <ActivityTable activities={[{}, {}, {}]} />
-      </RightContent>
-    </ContentContainer>
-  </PageContainer>
+  <VerificationProvider>
+    <PageContainer>
+      <ContentContainer>
+        <LeftContent>
+          <VerificationTable />
+        </LeftContent>
+        <RightContent>
+          <StatsTable />
+          <ActivityTable />
+        </RightContent>
+      </ContentContainer>
+    </PageContainer>
+  </VerificationProvider>
 );

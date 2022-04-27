@@ -10,7 +10,7 @@ export default meta;
 
 export const WithData: ComponentStoryObj<typeof VerificationTable> = {
   args: {
-    verifications: [
+    defaultVerifications: [
       {
         isVerified: true,
         canisterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
@@ -68,6 +68,6 @@ export const WithData: ComponentStoryObj<typeof VerificationTable> = {
 
 export const Loading: ComponentStoryObj<typeof VerificationTable> = {
   args: {
-    verifications: [{}, {}, {}]
+    defaultVerifications: [{}, {}, {}]
   }
 };
