@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
+import {TableContainer, TableContent, TableHeader, TableRow} from '@/components';
 
-import {tableBodyStyle} from './statsTable.styled';
+import {tableBodyStyle, tableContainerStyle} from './statsTable.styled';
 
 interface Stats {
   rustCanistersCount?: string;
@@ -23,18 +23,18 @@ const renderItems = (label: string, value?: string) => [
   </td>,
   <td key={1}>
     <div>
-      <Core.LoadingMask>
-        <div>{value}</div>
-      </Core.LoadingMask>
+      <div>{value}</div>
     </div>
   </td>
 ];
 
 export const StatsTable: React.VFC<PropTypes> = ({
-  stats: {rustCanistersCount, motokoCanistersCount, totalCanisters, buildSuccessCount} = {}
+  stats: {rustCanistersCount = '0', motokoCanistersCount = '0', totalCanisters = '0', buildSuccessCount = '0'} = {}
 }) => (
-  <TableContainer>
-    <TableHeader>{['Statistics']}</TableHeader>
+  <TableContainer css={tableContainerStyle}>
+    <TableHeader>
+      <th colSpan={2}>{'Statistics'}</th>
+    </TableHeader>
     <TableContent css={tableBodyStyle}>
       <TableRow override>{renderItems('Total Canisters', totalCanisters)}</TableRow>
       <TableRow override>{renderItems('-- Motoko Canisters', motokoCanistersCount)}</TableRow>

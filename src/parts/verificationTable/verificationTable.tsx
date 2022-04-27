@@ -14,7 +14,20 @@ export const VerificationTable: React.VFC<PropTypes> = ({verifications}) => {
   return (
     <TableContainer css={tableContainerStyle} paginated>
       <TableHeader css={tableHeaderStyle}>
-        {useMemo(() => ['Canister ID', 'Name', 'Repo', 'Git Commit', 'IC Wasm Hash', 'Last Activity', ''], [])}
+        {useMemo(
+          () => (
+            <>
+              <th>{'Canister ID'}</th>
+              <th>{'Name'}</th>
+              <th>{'Repo'}</th>
+              <th>{'Git Commit'}</th>
+              <th>{'IC Wasm Hash'}</th>
+              <th>{'Last Activity'}</th>
+              <th>{''}</th>
+            </>
+          ),
+          []
+        )}
       </TableHeader>
       <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>
         {verifications?.map((verification, index) => (

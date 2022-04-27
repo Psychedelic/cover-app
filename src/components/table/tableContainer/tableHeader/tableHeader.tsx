@@ -7,7 +7,7 @@ import {Core} from '@/components';
 import {StitchesTableHeader} from './tableHeader.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesTableHeader> {
-  children?: string[];
+  children?: React.ReactNode;
   css?: CSS;
 }
 
@@ -17,9 +17,7 @@ export const TableHeader: React.FC<PropTypes> = React.memo(({css, children}) => 
       <th>
         <Core.Dot type={'hollow'} />
       </th>
-      {children?.map(c => (
-        <th key={c}>{c}</th>
-      ))}
+      {children}
     </tr>
   </StitchesTableHeader>
 ));
