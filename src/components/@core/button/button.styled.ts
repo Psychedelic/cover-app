@@ -11,6 +11,9 @@ export const StitchesButton = styled('button', {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
+  '& a': {
+    all: 'unset'
+  },
   variants: {
     type: {
       main: {

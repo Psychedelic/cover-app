@@ -68,6 +68,10 @@ module.exports = {
         background-color: #171717;
         font-family: Monaco, sans-serif;
       }
+      a {
+        all: unset;
+        cursor: pointer;
+      }
     </style>
   `
 };

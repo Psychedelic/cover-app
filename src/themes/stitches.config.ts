@@ -88,5 +88,11 @@ export const globalStyles = defaultStitches.globalCss(
       fontFamily: typography.fonts.monaco,
       background: colors.coverEbony
     }
+  },
+  {
+    a: {
+      all: 'unset',
+      cursor: 'pointer'
+    }
   }
 );

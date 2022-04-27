@@ -18,5 +18,8 @@ export const StitchesPageMainHeader = styled('div', {
 export const StitchesPageSecondaryHeader = styled('div', {
   display: 'inline-flex',
   justifyContent: 'flex-end',
-  width: '350px'
+  width: '350px',
+  '& button': {
+    marginLeft: '10px'
+  }
 });

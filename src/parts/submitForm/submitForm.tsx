@@ -1,8 +1,10 @@
 import React from 'react';
 
 import {CSS} from '@stitches/react';
+import {Link} from 'react-router-dom';
 
 import {Core, Form} from '@/components';
+import {DASHBOARD_PATH} from '@/constants';
 
 import {StitchesSubmitForm} from './submitForm.styled';
 
@@ -25,10 +27,12 @@ export const SubmitForm: React.FC<PropTypes> = ({css}) => (
       <Form.Input label={'IC CDK Optimizer Needed'} />
       <Form.Input label={'Signature'} rows={3} textarea />
       <Form.Input label={'Public Key'} textarea />
-      <div className={'buttonGroup'}>
-        <Core.Button size={'large'} type={'outline'}>
-          {'Cancel'}
-        </Core.Button>
+      <div className={'formButtonGroup'}>
+        <Link to={DASHBOARD_PATH}>
+          <Core.Button size={'large'} type={'outline'}>
+            {'Cancel'}
+          </Core.Button>
+        </Link>
         <Core.Button size={'large'}>{'Submit Verification'}</Core.Button>
       </div>
     </Form.Container>
