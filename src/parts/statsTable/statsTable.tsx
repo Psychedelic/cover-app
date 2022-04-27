@@ -29,7 +29,12 @@ const renderItems = (label: string, value?: string) => [
 ];
 
 export const StatsTable: React.VFC<PropTypes> = ({
-  stats: {rustCanistersCount = '0', motokoCanistersCount = '0', totalCanisters = '0', buildSuccessCount = '0'} = {}
+  stats: {
+    rustCanistersCount = 'N/A',
+    motokoCanistersCount = 'N/A',
+    totalCanisters = 'N/A',
+    buildSuccessCount = 'N/A'
+  } = {}
 }) => (
   <TableContainer css={tableContainerStyle}>
     <TableHeader>

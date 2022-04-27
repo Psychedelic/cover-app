@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {TableContainer, TableContent, TableHeader} from '@/components';
-import {useVerificationContext} from '@/contexts';
+import {fetchVerifications, useVerificationContext} from '@/contexts';
 import {Verification} from '@/models';
 
 import {VerificationRow} from './verificationRow';
@@ -17,7 +17,9 @@ export const VerificationTable: React.VFC<PropTypes> = ({defaultVerifications}) 
     state: {verifications = defaultVerifications},
     dispatch
   } = useVerificationContext();
-  useEffect(() => dispatch({type: 'fetch'}), [dispatch]);
+  useEffect(() => {
+    fetchVerifications(dispatch);
+  }, [dispatch]);
   return (
     <TableContainer css={tableContainerStyle} paginated>
       <TableHeader css={tableHeaderStyle}>

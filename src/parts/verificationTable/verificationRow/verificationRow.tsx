@@ -1,6 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 
 import {Core, TableRow} from '@/components';
+import {Verification} from '@/models';
 
 import {VerificationDetail} from './verificationDetail';
 import {tableRowSelected} from './verificationRow.styled';
@@ -50,7 +51,7 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
               <Core.CopyableText color={'gray'}>{verification.wasmHash}</Core.CopyableText>
             </Core.LoadingMask>,
             <Core.LoadingMask key={5}>
-              <span>{verification.lastVerified}</span>
+              <span>{verification.lastActivity}</span>
             </Core.LoadingMask>
           ],
           [verification]

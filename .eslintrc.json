@@ -22,6 +22,7 @@
   ],
   "rules": {
     "eqeqeq": ["error"],
+    "camelcase": ["error", {"properties": "never"}],
     "no-ternary": "off",
     "no-nested-ternary": "off",
     "one-var": "off",
