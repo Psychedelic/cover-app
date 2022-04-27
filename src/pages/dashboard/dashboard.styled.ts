@@ -3,7 +3,8 @@ const {styled} = defaultStitches;
 
 export const ContentContainer = styled('div', {
   display: 'inline-flex',
-  columnGap: '$30'
+  columnGap: '$30',
+  justifyContent: 'center'
 });
 
 export const LeftContent = styled('div', {});

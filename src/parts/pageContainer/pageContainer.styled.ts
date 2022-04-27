@@ -5,7 +5,6 @@ export const StitchesPageContainer = styled('div', {
   display: 'inline-flex',
   flexDirection: 'column',
   width: '100%',
-  boxSizing: 'border-box',
-  padding: '$25',
+  padding: '$25 $0 $35 $0',
   rowGap: '$30'
 });

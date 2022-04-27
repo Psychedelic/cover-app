@@ -1,4 +1,5 @@
 export const tableContainerStyle = {
+  width: '700px',
   '& tbody': {
     '& tr:nth-of-type(n+2)': {
       borderTop: '1px solid $coverSilver'
