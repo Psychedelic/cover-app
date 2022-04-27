@@ -11,7 +11,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesFormInput> {
   css?: CSS;
   textarea?: boolean;
   label: string;
-  rows: number;
+  rows?: number;
 }
 
 export const FormInput: React.FC<PropTypes> = ({css, textarea, label, rows}) => {

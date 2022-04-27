@@ -10,7 +10,7 @@ export const StitchesFormInput = styled('div', {
     marginTop: '$5'
   },
   '& input': {
-    border: '1px solid #303030',
+    border: '1px solid $coverMediumGray',
     borderRadius: '$8',
     marginTop: '$5',
     padding: '0 $15'
