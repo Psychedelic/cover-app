@@ -7,13 +7,14 @@ export const tableBodyStyle = {
     textAlign: 'center',
     textDecoration: 'underline',
     '& div': {
-      display: 'inline-flex'
+      margin: '0 auto'
     }
   },
   '& td:nth-of-type(4)': {
     textAlign: 'right',
+    paddingRight: '$15',
     '& div': {
-      display: 'inline-flex'
-    }
+      float: 'right'
+    },
   }
 };

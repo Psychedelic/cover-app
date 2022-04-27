@@ -57,6 +57,6 @@ export const WithData: ComponentStoryObj<typeof ActivityTable> = {
 
 export const Loading: ComponentStoryObj<typeof ActivityTable> = {
   args: {
-    activities: [{}, {}, {}, {}, {}, {}]
+    activities: [{}, {}, {}, {}, {}, {}, {}, {}]
   }
 };
