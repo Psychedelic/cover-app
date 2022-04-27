@@ -68,6 +68,6 @@ export const WithData: ComponentStoryObj<typeof VerificationTable> = {
 
 export const Loading: ComponentStoryObj<typeof VerificationTable> = {
   args: {
-    verifications: [{}, {}, {}, {}, {}]
+    verifications: [{}, {}, {}]
   }
 };

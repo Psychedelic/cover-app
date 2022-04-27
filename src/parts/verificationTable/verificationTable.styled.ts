@@ -11,13 +11,17 @@ export const tableContainerStyle = {
       textDecoration: 'underline'
     },
     '& td:nth-of-type(8)': {
-      textAlign: 'center'
+      textAlign: 'center',
+      '& div': {
+        margin: '0 auto'
+      }
     },
     '& svg': {
       cursor: 'pointer'
     },
     '& td button': {
-      padding: '$0'
+      padding: '$0',
+      height: 'inherit'
     }
   }
 };
@@ -31,7 +35,7 @@ export const tableContentTransparent = {
 export const tableHeaderStyle = {
   '& th': {
     '&:last-of-type': {
-      width: '$25'
+      width: '$40'
     }
   }
 };

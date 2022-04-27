@@ -1,3 +1,7 @@
+export const tableContainerStyle = {
+  width: '350px'
+};
+
 export const tableBodyStyle = {
   '& td': {
     height: '1px',

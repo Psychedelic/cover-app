@@ -19,7 +19,7 @@ export const WithData: ComponentStoryObj<typeof StatsTable> = {
   }
 };
 
-export const Loading: ComponentStoryObj<typeof StatsTable> = {
+export const Default: ComponentStoryObj<typeof StatsTable> = {
   args: {
     stats: {}
   }
