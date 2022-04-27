@@ -8,7 +8,7 @@ const meta: ComponentMeta<typeof StatsTable> = {
 };
 export default meta;
 
-export const Example: ComponentStoryObj<typeof StatsTable> = {
+export const WithData: ComponentStoryObj<typeof StatsTable> = {
   args: {
     stats: {
       rustCanistersCount: '2,473',
@@ -16,5 +16,11 @@ export const Example: ComponentStoryObj<typeof StatsTable> = {
       totalCanisters: '6,296',
       buildSuccessCount: '4,012'
     }
+  }
+};
+
+export const Loading: ComponentStoryObj<typeof StatsTable> = {
+  args: {
+    stats: {}
   }
 };

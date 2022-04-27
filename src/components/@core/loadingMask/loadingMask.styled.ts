@@ -7,12 +7,12 @@ export const StitchesLoadingMask = styled('div', {
   variants: {
     size: {
       dot: {
-        width: '18px',
-        height: '18px'
+        width: '18px !important',
+        height: '18px !important'
       },
       cell: {
-        width: '90px',
-        height: '18px'
+        width: '90px !important',
+        height: '18px !important'
       }
     }
   },
