@@ -76,6 +76,11 @@ export const createCustomStitches = <Prefix, Media, Theme, ThemeMap, Utils>({
 export const defaultStitches = createCustomStitches();
 
 export const globalStyles = defaultStitches.globalCss(...opinionated, {
+  table: {
+    borderCollapse: 'collapse',
+    borderSpacing: 0,
+  }
+}, {
   html: {
     fontFamily: typography.fonts.monaco,
     background: colors.coverEbony
