@@ -15,6 +15,6 @@ export const tableBodyStyle = {
     paddingRight: '$15',
     '& div': {
       float: 'right'
-    },
+    }
   }
 };

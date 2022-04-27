@@ -6,7 +6,7 @@ export const tableBodyStyle = {
       width: '100%',
       display: 'inline-flex',
       alignItems: 'center',
-      boxSizing: 'border-box',
+      boxSizing: 'border-box'
     },
     '&:nth-of-type(1) div': {
       paddingLeft: '$10'
@@ -17,7 +17,7 @@ export const tableBodyStyle = {
     }
   },
   '& tr:nth-of-type(1) td:nth-of-type(2)': {
-    color: '$coverLightWhite',
+    color: '$coverLightWhite'
   },
   '& tr:nth-of-type(2) div > div': {
     borderTop: '1px solid $coverSilver'

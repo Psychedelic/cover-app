@@ -14,7 +14,7 @@ export const StitchesTableContainer = styled('div', {
       height: '$32',
       '& th, td': {
         textAlign: 'left',
-        verticalAlign: 'middle',
+        verticalAlign: 'middle'
       }
     }
   },

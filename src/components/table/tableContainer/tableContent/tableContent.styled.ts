@@ -8,6 +8,6 @@ export const StitchesTableContent = styled('tbody', {
       '& div': {
         margin: 'auto'
       }
-    },
+    }
   }
 });
