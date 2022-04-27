@@ -12,7 +12,7 @@ export const StitchesPageMainHeader = styled('div', {
   display: 'inline-flex',
   rowGap: '$10',
   columnGap: '$15',
-  width: '700px'
+  width: '850px'
 });
 
 export const StitchesPageSecondaryHeader = styled('div', {
