@@ -9,6 +9,13 @@ export const StitchesTableContainer = styled('div', {
     tableLayout: 'fixed',
     '& thead': {
       borderBottom: '1px solid $coverMediumGray'
+    },
+    '& tr': {
+      height: '$32',
+      '& th, td': {
+        textAlign: 'left',
+        verticalAlign: 'middle',
+      }
     }
   },
   color: '$coverLightGray',
