@@ -36,7 +36,7 @@ interface Context {
 
 const VerificationContext = React.createContext<Context>({state: {}, dispatch: () => {}});
 
-const verificationReducer = (state: State, action: Action): State => {
+const verificationReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'pendingFetch': {
       return {verifications: loadingVerifications};
@@ -66,8 +66,8 @@ export const fetchVerifications = async (dispatch: Dispatch<ReducerAction<typeof
   try {
     const aggregator = (
       await coverSDK.getAllVerifications({
-        page_index: 1n,
-        items_per_page: 18n
+        page_index: BigInt(1),
+        items_per_page: BigInt(18)
       })
     ).data.reduce(
       (data, v) => {

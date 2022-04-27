@@ -2,6 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 
 import {Core, TableRow} from '@/components';
 import {Verification} from '@/models';
+import {toGithubUrl} from '@/utils';
 
 import {VerificationDetail} from './verificationDetail';
 import {tableRowSelected} from './verificationRow.styled';
@@ -42,7 +43,9 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
               <span>{verification.name}</span>
             </Core.LoadingMask>,
             <Core.LoadingMask key={2}>
-              <span>{verification.repo}</span>
+              <a href={toGithubUrl(verification.repo)} rel={'noreferrer'} target={'_blank'}>
+                <span>{verification.repo}</span>
+              </a>
             </Core.LoadingMask>,
             <Core.LoadingMask key={3}>
               <Core.CopyableText color={'gray'}>{verification.gitCommit}</Core.CopyableText>
