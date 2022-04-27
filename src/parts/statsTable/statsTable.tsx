@@ -23,34 +23,34 @@ export const StatsTable: React.VFC<PropTypes> = ({
     <TableContent css={tableBodyStyle}>
       <TableRow override>
         <td colSpan={2}>
-          <div>{'Total Canisters'}</div>
+          <div><div>{'Total Canisters'}</div></div>
         </td>
         <td>
-          <div>{totalCanisters}</div>
+          <div><div>{totalCanisters}</div></div>
         </td>
       </TableRow>
       <TableRow override>
         <td colSpan={2}>
-          <div>{'-- Motoko Canisters'}</div>
+          <div><div>{'-- Motoko Canisters'}</div></div>
         </td>
         <td>
-          <div>{motokoCanistersCount}</div>
+          <div><div>{motokoCanistersCount}</div></div>
         </td>
       </TableRow>
       <TableRow override>
         <td colSpan={2}>
-          <div>{'-- Rust Canisters'}</div>
+          <div><div>{'-- Rust Canisters'}</div></div>
         </td>
         <td>
-          <div>{rustCanistersCount}</div>
+          <div><div>{rustCanistersCount}</div></div>
         </td>
       </TableRow>
       <TableRow override>
         <td colSpan={2}>
-          <div>{'Total Verified Canisters'}</div>
+          <div><div>{'Total Verified Canisters'}</div></div>
         </td>
         <td>
-          <div>{buildSuccessCount}</div>
+          <div><div>{buildSuccessCount}</div></div>
         </td>
       </TableRow>
     </TableContent>
