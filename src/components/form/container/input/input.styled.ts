@@ -2,6 +2,7 @@ import {defaultStitches} from '@/themes';
 const {styled} = defaultStitches;
 
 export const StitchesFormInput = styled('div', {
+  marginTop: '25px',
   '& label': {
     color: '$coverLightGray',
     fontSize: '$xs'

@@ -2,13 +2,13 @@ import React from 'react';
 
 import {CSS} from '@stitches/react';
 
-import {StitchesFormContainer} from './formContainer.styled';
+import {StitchesFormContainer} from './container.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesFormContainer> {
   css?: CSS;
-  children?: React.ReactElement;
+  children?: React.ReactElement[];
 }
 
-export const FormContainer: React.FC<PropTypes> = ({css, children}) => (
+export const Container: React.FC<PropTypes> = ({css, children}) => (
   <StitchesFormContainer css={css}>{children}</StitchesFormContainer>
 );

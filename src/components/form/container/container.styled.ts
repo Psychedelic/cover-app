@@ -1,9 +1,9 @@
 import {defaultStitches} from '@/themes';
 const {styled} = defaultStitches;
 
-export const StitchesFormContainer = styled('div', {
+export const StitchesFormContainer = styled('form', {
   backgroundColor: '$coverHeavyGray',
   borderRadius: '16px',
-  height: '1144px',
-  width: '610px'
+  width: '560px',
+  padding: '25px'
 });
