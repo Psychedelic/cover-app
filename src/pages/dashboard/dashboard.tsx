@@ -1,5 +1,19 @@
 import React from 'react';
 
-import {PageContainer} from '@/parts';
+import {ActivityTable, PageContainer, StatsTable, VerificationTable} from '@/parts';
 
-export const Dashboard: React.VFC = () => <PageContainer />;
+import {ContentContainer, LeftContent, RightContent} from './dashboard.styled';
+
+export const Dashboard: React.VFC = () => (
+  <PageContainer>
+    <ContentContainer>
+      <LeftContent>
+        <VerificationTable verifications={[{}, {}, {}]} />
+      </LeftContent>
+      <RightContent>
+        <StatsTable />
+        <ActivityTable activities={[{}, {}, {}]} />
+      </RightContent>
+    </ContentContainer>
+  </PageContainer>
+);
