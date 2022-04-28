@@ -2,7 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 
 import {Core, TableRow} from '@/components';
 import {Verification} from '@/models';
-import {toGithubUrl} from '@/utils';
+import {lastUrlSegment, mdy, toGithubUrl} from '@/utils';
 
 import {VerificationDetail} from './verificationDetail';
 import {tableRowSelected} from './verificationRow.styled';
@@ -42,9 +42,9 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
             <Core.LoadingMask key={1}>
               <span>{verification.name}</span>
             </Core.LoadingMask>,
-            <Core.LoadingMask key={2}>
+            <Core.LoadingMask key={2} nested={2}>
               <a href={toGithubUrl(verification.repo)} rel={'noreferrer'} target={'_blank'}>
-                <span>{verification.repo}</span>
+                <span>{lastUrlSegment(verification.repo)}</span>
               </a>
             </Core.LoadingMask>,
             <Core.LoadingMask key={3}>
@@ -54,7 +54,7 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
               <Core.CopyableText color={'gray'}>{verification.wasmHash}</Core.CopyableText>
             </Core.LoadingMask>,
             <Core.LoadingMask key={5}>
-              <span>{verification.lastActivity}</span>
+              <span>{mdy(verification.lastActivity)}</span>
             </Core.LoadingMask>
           ],
           [verification]

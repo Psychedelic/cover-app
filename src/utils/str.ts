@@ -4,3 +4,5 @@ export const trim = (str?: string): string =>
 export const getNameFromLabel = (str: string): string => str.replaceAll(' ', '');
 
 export const toGithubUrl = (url?: string): string => (url ? `https://github.com/${url}` : '');
+
+export const lastUrlSegment = (url?: string): string => (url ? `/${url.split('/').pop() || ''}` : '');
