@@ -19,7 +19,11 @@ export const VerificationDetail: React.VFC<PropTypes> = ({label, value, isLink, 
     <td colSpan={2}>
       <div>
         {isTrim ? (
-          <Core.CopyableText>{value}</Core.CopyableText>
+          value ? (
+            <Core.CopyableText>{value}</Core.CopyableText>
+          ) : (
+            <span>{'N/A'}</span>
+          )
         ) : (
           <span>
             {isLink ? (
@@ -27,7 +31,7 @@ export const VerificationDetail: React.VFC<PropTypes> = ({label, value, isLink, 
                 {'View'}
               </a>
             ) : (
-              value
+              value || 'N/A'
             )}
           </span>
         )}

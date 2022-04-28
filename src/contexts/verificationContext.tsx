@@ -72,12 +72,12 @@ export const fetchVerifications = async (dispatch: Dispatch<ReducerAction<typeof
     ).data.reduce(
       (data, v) => {
         data.verifications.push(mapVerification(v));
-        data.hashesPromise.push(coverSDK.getICHash(v.canister_id));
+        data.hashPromises.push(coverSDK.getICHash(v.canister_id));
         return data;
       },
-      {verifications: [], hashesPromise: []} as {verifications: Verification[]; hashesPromise: Promise<string>[]}
+      {verifications: [], hashPromises: []} as {verifications: Verification[]; hashPromises: Promise<string>[]}
     );
-    (await Promise.all(aggregator.hashesPromise)).forEach((hash, i) => {
+    (await Promise.all(aggregator.hashPromises)).forEach((hash, i) => {
       aggregator.verifications[i].wasmHash = hash;
       aggregator.verifications[i].isVerified = hash === aggregator.verifications[i].buildWasmHash;
     });
