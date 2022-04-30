@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {TableContainer, TableContent, TableHeader} from '@/components';
 import {fetchVerifications, useVerificationContext} from '@/contexts';
@@ -14,14 +14,20 @@ interface PropTypes {
 export const VerificationTable: React.VFC<PropTypes> = ({defaultVerifications}) => {
   const [canisterIdSelected, setCanisterIdSelected] = useState('');
   const {
-    state: {verifications = defaultVerifications},
+    state: {verifications = defaultVerifications, totalPage},
     dispatch
   } = useVerificationContext();
   useEffect(() => {
     fetchVerifications(dispatch);
   }, [dispatch]);
+  const onPageChanged = useCallback(
+    pageNum => {
+      fetchVerifications(dispatch, pageNum);
+    },
+    [dispatch]
+  );
   return (
-    <TableContainer css={tableContainerStyle} paginated>
+    <TableContainer css={tableContainerStyle} lastPage={totalPage} onPageChanged={onPageChanged} paginated>
       <TableHeader css={tableHeaderStyle}>
         <>
           <th>{'Canister ID'}</th>

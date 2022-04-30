@@ -6,6 +6,9 @@ export const StitchesInput = styled('input', {
   color: '$coverMediumWhite',
   width: '100%',
   boxSizing: 'border-box',
+  '&[disabled]': {
+    color: '$coverWhiteOpacity'
+  },
   variants: {
     size: {
       small: {
