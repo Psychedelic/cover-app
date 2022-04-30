@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 
 import {faCaretSquareDown, faCaretSquareRight} from '@fortawesome/free-solid-svg-icons';
-import {CSS, VariantProps} from '@stitches/react';
+import {CSS} from '@stitches/react';
 
 import {Core} from '@/components';
 
@@ -9,7 +9,7 @@ import {StitchesTableRow} from './tableRow.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
   css?: CSS;
-  type?: VariantProps<typeof Core.Dot>;
+  type?: 'green' | 'yellow' | 'red';
   children: React.ReactElement[];
   override?: boolean;
   showCollapseBtn?: boolean;
