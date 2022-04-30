@@ -4,4 +4,3 @@ export * from './input';
 export * from './copyableText';
 export * from './fontIcon';
 export * from './loadingMask';
-export * from './textarea';
