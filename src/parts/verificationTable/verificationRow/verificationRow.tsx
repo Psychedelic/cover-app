@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 
 import {Core, TableRow} from '@/components';
 import {Verification} from '@/models';
@@ -16,7 +16,7 @@ interface PropTypes {
 const getStatus = (isVerified?: boolean) =>
   typeof isVerified === 'boolean' ? (isVerified ? 'green' : 'red') : isVerified;
 
-export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, isSelected, setCanisterIdSelected}) => {
+export const VerificationRow: React.VFC<PropTypes> = ({verification, isSelected, setCanisterIdSelected}) => {
   const onCollapse = useCallback(
     (canisterId: string) => {
       setCanisterIdSelected(isSelected ? '' : canisterId);
@@ -34,31 +34,28 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
         showLoadingMaskBtn={typeof verification.isVerified === 'undefined'}
         showLoadingMaskStatus={typeof verification.isVerified === 'undefined'}
         type={getStatus(verification.isVerified)}>
-        {useMemo(
-          () => [
-            <Core.LoadingMask key={0}>
-              <Core.CopyableText>{verification.canisterId}</Core.CopyableText>
-            </Core.LoadingMask>,
-            <Core.LoadingMask key={1}>
-              <span>{verification.name}</span>
-            </Core.LoadingMask>,
-            <Core.LoadingMask key={2} nested={2}>
-              <a href={toGithubUrl(verification.repo)} rel={'noreferrer'} target={'_blank'}>
-                <span>{lastUrlSegment(verification.repo)}</span>
-              </a>
-            </Core.LoadingMask>,
-            <Core.LoadingMask key={3}>
-              <Core.CopyableText color={'gray'}>{verification.gitCommit}</Core.CopyableText>
-            </Core.LoadingMask>,
-            <Core.LoadingMask key={4}>
-              <Core.CopyableText color={'gray'}>{verification.wasmHash}</Core.CopyableText>
-            </Core.LoadingMask>,
-            <Core.LoadingMask key={5}>
-              <span>{mdy(verification.lastActivity)}</span>
-            </Core.LoadingMask>
-          ],
-          [verification]
-        )}
+        {[
+          <Core.LoadingMask key={0}>
+            <Core.CopyableText>{verification.canisterId}</Core.CopyableText>
+          </Core.LoadingMask>,
+          <Core.LoadingMask key={1}>
+            <span>{verification.name}</span>
+          </Core.LoadingMask>,
+          <Core.LoadingMask key={2} nested={2}>
+            <a href={toGithubUrl(verification.repo)} rel={'noreferrer'} target={'_blank'}>
+              <span>{lastUrlSegment(verification.repo)}</span>
+            </a>
+          </Core.LoadingMask>,
+          <Core.LoadingMask key={3}>
+            <Core.CopyableText color={'gray'}>{verification.gitCommit}</Core.CopyableText>
+          </Core.LoadingMask>,
+          <Core.LoadingMask key={4}>
+            <Core.CopyableText color={'gray'}>{verification.wasmHash}</Core.CopyableText>
+          </Core.LoadingMask>,
+          <Core.LoadingMask key={5}>
+            <span>{mdy(verification.lastActivity)}</span>
+          </Core.LoadingMask>
+        ]}
       </TableRow>
       {isSelected && (
         <>
@@ -82,4 +79,4 @@ export const VerificationRow: React.VFC<PropTypes> = React.memo(({verification, 
       )}
     </>
   );
-});
+};
