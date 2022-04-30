@@ -15,7 +15,7 @@ interface PropTypes {
   activities?: Activity[];
 }
 
-const activityStatus = {
+const activityStatus: {[key: string]: 'red' | 'yellow' | 'green'} = {
   Success: 'green',
   Pending: 'yellow',
   Failed: 'red'

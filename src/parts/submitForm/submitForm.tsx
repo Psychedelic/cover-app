@@ -3,7 +3,7 @@ import React from 'react';
 import {CSS} from '@stitches/react';
 import {Link} from 'react-router-dom';
 
-import {Core, Form} from '@/components';
+import {Core, FormContainer, FormInput} from '@/components';
 import {DASHBOARD_PATH} from '@/constants';
 
 import {StitchesSubmitForm} from './submitForm.styled';
@@ -14,19 +14,19 @@ interface PropTypes extends React.ComponentProps<typeof StitchesSubmitForm> {
 
 export const SubmitForm: React.FC<PropTypes> = ({css}) => (
   <StitchesSubmitForm css={css}>
-    <Form.Container>
+    <FormContainer>
       <h3>{'Submit Verification'}</h3>
-      <Form.Input label={'User Principal ID'} />
-      <Form.Input label={'Canister Principal ID'} />
-      <Form.Input label={'Canister Name'} />
-      <Form.Input label={'Github Repo'} />
-      <Form.Input label={'Git Commit Hash'} />
-      <Form.Input label={'User Access Token'} />
-      <Form.Input label={'Rust Version'} />
-      <Form.Input label={'DFX Version'} />
-      <Form.Input label={'IC CDK Optimizer Needed'} />
-      <Form.Input label={'Signature'} rows={3} textarea />
-      <Form.Input label={'Public Key'} textarea />
+      <FormInput label={'User Principal ID'} />
+      <FormInput label={'Canister Principal ID'} />
+      <FormInput label={'Canister Name'} />
+      <FormInput label={'Github Repo'} />
+      <FormInput label={'Git Commit Hash'} />
+      <FormInput label={'User Access Token'} />
+      <FormInput label={'Rust Version'} />
+      <FormInput label={'DFX Version'} />
+      <FormInput label={'IC CDK Optimizer Needed'} />
+      <FormInput label={'Signature'} rows={3} textarea />
+      <FormInput label={'Public Key'} textarea />
       <div className={'formButtonGroup'}>
         <Link to={DASHBOARD_PATH}>
           <Core.Button size={'large'} type={'outline'}>
@@ -35,6 +35,6 @@ export const SubmitForm: React.FC<PropTypes> = ({css}) => (
         </Link>
         <Core.Button size={'large'}>{'Submit Verification'}</Core.Button>
       </div>
-    </Form.Container>
+    </FormContainer>
   </StitchesSubmitForm>
 );
