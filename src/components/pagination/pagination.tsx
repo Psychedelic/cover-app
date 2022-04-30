@@ -59,7 +59,7 @@ export const Pagination: React.VFC<PropTypes> = React.memo(({css, defaultPage = 
         ),
         [isFirstPage, onBtnClick]
       )}
-      <input defaultValue={defaultPage} onBlur={onBlur} onChange={onChange} ref={inputRef} />
+      <Core.Input defaultValue={defaultPage} onBlur={onBlur} onChange={onChange} ref={inputRef} />
       {useMemo(
         () => (
           <Core.Button onClick={onBtnClick} ref={rightBtn} type={'outline'}>
