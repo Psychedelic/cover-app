@@ -5,7 +5,7 @@ import {CSS} from '@stitches/react';
 import {Core} from '@/components';
 import {getNameFromLabel} from '@/utils';
 
-import {StitchesFormInput} from './input.styled';
+import {StitchesFormInput} from './formInput.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesFormInput> {
   css?: CSS;
@@ -14,7 +14,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesFormInput> {
   rows?: number;
 }
 
-export const Input: React.FC<PropTypes> = ({css, textarea, label, rows}) => {
+export const FormInput: React.FC<PropTypes> = ({css, textarea, label, rows}) => {
   const name = getNameFromLabel(label);
   return (
     <StitchesFormInput css={css}>
