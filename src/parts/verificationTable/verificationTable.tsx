@@ -30,7 +30,7 @@ export const VerificationTable: React.VFC<PropTypes> = ({defaultVerifications}) 
           <th>{'Git Commit'}</th>
           <th>{'IC Wasm Hash'}</th>
           <th>{'Last Activity'}</th>
-          <th>{''}</th>
+          <th />
         </>
       </TableHeader>
       <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>

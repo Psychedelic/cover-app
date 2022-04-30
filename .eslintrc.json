@@ -22,7 +22,6 @@
   ],
   "rules": {
     "eqeqeq": ["error"],
-    "camelcase": ["error", {"properties": "never"}],
     "no-ternary": "off",
     "no-nested-ternary": "off",
     "one-var": "off",
@@ -42,7 +41,6 @@
     "semi": ["error", "always"],
     "max-len": ["error", {"code": 120, "ignoreComments": true, "ignoreTrailingComments": true}],
     "react/jsx-filename-extension": ["error", {"extensions": [".tsx"]}],
-    "react/jsx-sort-default-props": "off",
     "react/prop-types": "off",
     "react/require-default-props": "off",
     "react/jsx-curly-brace-presence": [
@@ -64,8 +62,6 @@
         "alphabetize": {"order": "asc", "caseInsensitive": false}
       }
     ],
-    "react/no-unused-prop-types": "off",
-    "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-max-depth": ["error", {"max": 4}],
     "no-restricted-imports": [
@@ -77,6 +73,7 @@
           "@/*/",
           "assets/*/",
           "components/*/",
+          "constants/*/",
           "contexts/*/",
           "models/*/",
           "pages/*/",
@@ -86,12 +83,12 @@
         ]
       }
     ],
-    "@typescript-eslint/no-unused-vars": ["error"],
-    "@typescript-eslint/no-empty-function": "off"
+    "@typescript-eslint/no-unused-vars": ["error"]
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},
-    {"files": ["*.styled.*", "*.stories.*"], "rules": {"sonarjs/no-duplicate-string": "off"}}
+    {"files": ["*.styled.*", "*.stories.*"], "rules": {"sonarjs/no-duplicate-string": "off"}},
+    {"files": ["*/contexts/*"], "rules": {"camelcase": "off", "@typescript-eslint/no-empty-function": "off"}}
   ],
   "settings": {
     "import/resolver": {"node": {"extensions": [".ts", ".tsx"]}, "typescript": {}}

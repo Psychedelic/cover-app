@@ -1,6 +1,7 @@
 export const searchBarStyled = {
+  color: '$coverLightGray',
   '& input': {
-    color: '$coverLightWhite'
+    color: 'inherit'
   },
   '& button': {
     padding: '$0',
@@ -19,7 +20,5 @@ export const searchBarStyled = {
 
 export const hasValueStyled = {
   ...searchBarStyled,
-  '& svg': {
-    color: '$coverLightWhite'
-  }
+  color: '$coverLightWhite'
 };
