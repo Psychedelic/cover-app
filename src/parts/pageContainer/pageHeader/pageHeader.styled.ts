@@ -5,7 +5,10 @@ export const StitchesPageHeaderContainer = styled('header', {
   display: 'inline-flex',
   justifyContent: 'center',
   columnGap: '$30',
-  width: '100%'
+  width: '100%',
+  '& div:first-child a:first-child': {
+    display: 'contents'
+  }
 });
 
 export const StitchesPageMainHeader = styled('div', {

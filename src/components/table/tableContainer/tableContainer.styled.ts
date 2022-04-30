@@ -17,7 +17,8 @@ export const StitchesTableContainer = styled('div', {
         verticalAlign: 'middle',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
-        textOverflow: 'ellipsis'
+        textOverflow: 'ellipsis',
+        fontWeight: '$normal'
       }
     }
   },
