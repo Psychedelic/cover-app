@@ -11,13 +11,14 @@ import {StitchesPagination} from './pagination.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesPagination> {
   css?: CSS;
-  defaultPage?: string;
+  defaultPage?: number;
   onPageChanged?: (toPage: number) => void;
   lastPage?: number;
 }
 
-export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1', onPageChanged, lastPage}) => {
-  const [isFirstPage, setIsFirstPage] = useState(defaultPage === '1');
+export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = 1, onPageChanged, lastPage = 1}) => {
+  const [isFirstPage, setIsFirstPage] = useState(defaultPage === 1);
+  const [isLastPage, setIsLastPage] = useState(defaultPage === lastPage);
   const recentValue = useRef(defaultPage);
   const leftBtn = useRef(null);
   const rightBtn = useRef(null);
@@ -26,19 +27,20 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1', onPage
   const onBlur = useCallback(
     _ => {
       if (inputRef.current) {
-        (inputRef.current as HTMLInputElement).value = recentValue.current;
-        setIsFirstPage(recentValue.current === '1');
-        onPageChanged && onPageChanged(parseInt(recentValue.current, 10));
+        (inputRef.current as HTMLInputElement).value = String(recentValue.current);
+        setIsFirstPage(recentValue.current === 1);
+        setIsLastPage(recentValue.current === lastPage);
+        onPageChanged && onPageChanged(recentValue.current);
       }
     },
-    [onPageChanged]
+    [onPageChanged, lastPage]
   );
 
   const onChange = useCallback(_ => {
     if (inputRef.current) {
       const value = (inputRef.current as HTMLInputElement).value;
       if (isPositiveNum(value)) {
-        recentValue.current = value;
+        recentValue.current = parseInt(value, 10);
       }
     }
   }, []);
@@ -47,14 +49,15 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1', onPage
     ({target}) => {
       const isMinus = leftBtn.current && (leftBtn.current as HTMLButtonElement).contains(target);
       if (inputRef.current) {
-        const newValue = parseInt(recentValue.current, 10) + (isMinus ? -1 : 1);
+        const newValue = recentValue.current + (isMinus ? -1 : 1);
         (inputRef.current as HTMLInputElement).value = `${newValue}`;
-        recentValue.current = `${newValue}`;
-        setIsFirstPage(newValue === 1);
-        onPageChanged && onPageChanged(parseInt(recentValue.current, 10));
+        recentValue.current = newValue;
+        setIsFirstPage(recentValue.current === 1);
+        setIsLastPage(recentValue.current === lastPage);
+        onPageChanged && onPageChanged(recentValue.current);
       }
     },
-    [onPageChanged]
+    [onPageChanged, lastPage]
   );
 
   return (
@@ -69,11 +72,7 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = '1', onPage
         onChange={onChange}
         ref={inputRef}
       />
-      <Core.Button
-        disabled={parseInt(recentValue.current, 10) === lastPage}
-        onClick={onBtnClick}
-        ref={rightBtn}
-        type={'outline'}>
+      <Core.Button disabled={isLastPage} onClick={onBtnClick} ref={rightBtn} type={'outline'}>
         <FontAwesomeIcon icon={faChevronRight} />
       </Core.Button>
     </StitchesPagination>

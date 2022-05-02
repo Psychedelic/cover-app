@@ -8,6 +8,13 @@ const meta: ComponentMeta<typeof Pagination> = {
 };
 export default meta;
 
-export const Example: ComponentStoryObj<typeof Pagination> = {
+export const Default: ComponentStoryObj<typeof Pagination> = {
   args: {}
+};
+
+export const WithPages: ComponentStoryObj<typeof Pagination> = {
+  args: {
+    defaultPage: 2,
+    lastPage: 5
+  }
 };
