@@ -41,7 +41,7 @@ export const VerificationRow: React.VFC<PropTypes> = ({verification, isSelected,
           <Core.LoadingMask key={1}>
             <span>{verification.name}</span>
           </Core.LoadingMask>,
-          <Core.LoadingMask key={2} nested={2}>
+          <Core.LoadingMask depth={2} key={2}>
             <a href={toGithubUrl(verification.repo)} rel={'noreferrer'} target={'_blank'}>
               <span>{lastUrlSegment(verification.repo)}</span>
             </a>

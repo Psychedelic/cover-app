@@ -11,11 +11,11 @@ import {StitchesCopyableText} from './copyableText.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesCopyableText> {
   css?: CSS;
-  showRaw?: boolean;
+  rawText?: boolean;
   children?: string;
 }
 
-export const CopyableText: React.FC<PropTypes> = ({children, css, color, showRaw}) => {
+export const CopyableText: React.FC<PropTypes> = ({children, css, color, rawText}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const content = useRef(children || '');
@@ -43,7 +43,7 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color, showRaw
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
-      {showRaw ? children : trim(children)}
+      {rawText ? children : trim(children)}
       {(isClicked || isHovered) && ' '}
       {isClicked ? <FontAwesomeIcon icon={faCheck} /> : isHovered && <FontAwesomeIcon icon={faCopy} />}
     </StitchesCopyableText>

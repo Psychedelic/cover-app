@@ -4,15 +4,15 @@ import {StitchesLoadingMask} from './loadingMask.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesLoadingMask> {
   children?: React.ReactElement;
-  nested?: number;
+  depth?: number;
 }
 
-export const LoadingMask: React.FC<PropTypes> = ({children, size, nested = 1}) => {
-  let count = 0;
+export const LoadingMask: React.FC<PropTypes> = ({children, size, depth = 1}) => {
+  let depthCount = 0;
   let child = children;
-  while (count !== nested) {
+  while (depthCount !== depth) {
     child = child?.props?.children;
-    count += 1;
+    depthCount += 1;
   }
   return child ? (children as React.ReactElement) : <StitchesLoadingMask size={size} />;
 };
