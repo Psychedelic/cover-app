@@ -24,12 +24,16 @@ interface FetchVerificationsAction extends ActionBase {
 }
 interface GetByCanisterIdAction extends ActionBase {
   type: 'getByCanisterId';
-  payload?: Verification;
+  payload: {
+    verifications: Verification[];
+    currentCanisterIdSelected: string;
+  };
 }
 interface State {
   verifications?: Verification[];
   atPage?: number;
   totalPage?: number;
+  currentCanisterIdSelected?: string;
 }
 interface Context {
   state: State;
@@ -51,7 +55,10 @@ const verificationReducer = (_: State, action: Action): State => {
       };
     }
     case 'getByCanisterId': {
-      return {verifications: action.payload ? [action.payload] : []};
+      return {
+        verifications: action.payload.verifications,
+        currentCanisterIdSelected: action.payload.currentCanisterIdSelected
+      };
     }
     default: {
       throw new Error(`Unhandled action type: ${(action as ActionBase).type}`);
@@ -79,11 +86,10 @@ export const fetchVerifications = async (
       page_index: BigInt(pageNum),
       items_per_page: BigInt(18)
     });
-    const verifications = await mapFullVerification(result.data);
     dispatch({
       type: 'fetchVerifications',
       payload: {
-        verifications,
+        verifications: await mapFullVerification(result.data),
         atPage: pageNum,
         totalPage: parseInt(result.total_pages.toString(10), 10)
       }
@@ -95,13 +101,18 @@ export const fetchVerifications = async (
 
 export const getByCanisterId = async (
   dispatch: Dispatch<ReducerAction<typeof verificationReducer>>,
-  canisterId: string
+  canisterId: Principal
 ) => {
   dispatch({type: 'pending'});
   try {
-    const result = await coverSDK.getVerificationByCanisterId(Principal.fromText(canisterId));
-    const payload = result && (await mapFullVerification([result]))[0];
-    dispatch({type: 'getByCanisterId', payload});
+    const result = await coverSDK.getVerificationByCanisterId(canisterId);
+    dispatch({
+      type: 'getByCanisterId',
+      payload: {
+        verifications: result ? await mapFullVerification([result]) : [],
+        currentCanisterIdSelected: canisterId.toText()
+      }
+    });
   } catch (e) {
     dispatch({type: 'pending'});
   }
