@@ -17,6 +17,7 @@ export const colors = {
 
   coverSilver: '#222222',
 
+  coverSuperLightGray: '#1D1D1D',
   coverLightGray: '#656565',
   coverGray: '#434343',
   coverMediumGray: '#303030',
