@@ -36,14 +36,17 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = 1, onPageCh
     [onPageChanged, lastPage]
   );
 
-  const onChange = useCallback(_ => {
-    if (inputRef.current) {
-      const value = (inputRef.current as HTMLInputElement).value;
-      if (isPositiveNum(value)) {
-        recentValue.current = parseInt(value, 10);
+  const onChange = useCallback(
+    _ => {
+      if (inputRef.current) {
+        const value = (inputRef.current as HTMLInputElement).value;
+        if (isPositiveNum(value)) {
+          recentValue.current = Math.min(parseInt(value, 10), lastPage);
+        }
       }
-    }
-  }, []);
+    },
+    [lastPage]
+  );
 
   const onBtnClick = useCallback(
     ({target}) => {
