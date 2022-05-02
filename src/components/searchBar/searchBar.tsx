@@ -7,7 +7,11 @@ import {Core} from '@/components';
 
 import {hasValueStyled, searchBarStyled} from './searchBar.styled';
 
-export const SearchBar: React.VFC = () => {
+interface PropTypes {
+  onBlur?: (value: string) => void;
+}
+
+export const SearchBar: React.VFC<PropTypes> = ({onBlur}) => {
   const [hasValue, setHasValue] = useState(false);
   const searchBarRef = useRef(null);
 
@@ -26,11 +30,27 @@ export const SearchBar: React.VFC = () => {
     }
   }, []);
 
+  const onBlurInternal = useCallback(
+    _ => {
+      if (onBlur && searchBarRef.current) {
+        const searchBar = searchBarRef.current as HTMLInputElement;
+        onBlur(searchBar.value);
+      }
+    },
+    [onBlur]
+  );
+
   const containerStyled = hasValue ? hasValueStyled : searchBarStyled;
 
   return (
     <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
-      <Core.Input onInput={onInput} placeholder={'Search by Canister ID'} ref={searchBarRef} size={'small'} />
+      <Core.Input
+        onBlur={onBlurInternal}
+        onInput={onInput}
+        placeholder={'Search by Canister ID'}
+        ref={searchBarRef}
+        size={'small'}
+      />
       {hasValue && (
         <Core.Button onClick={onClick} type={'text'}>
           <FontAwesomeIcon icon={faXmark} size={'lg'} />
