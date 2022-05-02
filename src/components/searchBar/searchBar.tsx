@@ -5,21 +5,28 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core} from '@/components';
 
-import {hasValueStyled, searchBarStyled} from './searchBar.styled';
+import {hasErrorStyled, hasValueStyled, searchBarStyled} from './searchBar.styled';
 
 interface PropTypes {
   onBlur?: (value: string) => void;
+  validation?: (value: string) => boolean;
 }
 
-export const SearchBar: React.VFC<PropTypes> = ({onBlur}) => {
+export const SearchBar: React.VFC<PropTypes> = ({onBlur, validation}) => {
   const [hasValue, setHasValue] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const searchBarRef = useRef(null);
 
-  const onInput = useCallback(_ => {
-    if (searchBarRef.current) {
-      setHasValue((searchBarRef.current as HTMLInputElement).value !== '');
-    }
-  }, []);
+  const onInput = useCallback(
+    _ => {
+      if (searchBarRef.current) {
+        const value = (searchBarRef.current as HTMLInputElement).value;
+        setHasValue(value !== '');
+        validation && setHasError(value !== '' && !validation(value));
+      }
+    },
+    [validation]
+  );
 
   const onClick = useCallback(() => {
     if (searchBarRef.current) {
@@ -27,6 +34,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlur}) => {
       searchBar.value = '';
       searchBar.focus();
       setHasValue(false);
+      setHasError(false);
     }
   }, []);
 
@@ -34,13 +42,14 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlur}) => {
     _ => {
       if (onBlur && searchBarRef.current) {
         const searchBar = searchBarRef.current as HTMLInputElement;
-        onBlur(searchBar.value);
+        // Only trigger `onBlur` when `validation` is passed
+        !hasError && onBlur(searchBar.value);
       }
     },
-    [onBlur]
+    [onBlur, hasError]
   );
 
-  const containerStyled = hasValue ? hasValueStyled : searchBarStyled;
+  const containerStyled = hasError ? hasErrorStyled : hasValue ? hasValueStyled : searchBarStyled;
 
   return (
     <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>

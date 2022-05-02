@@ -22,3 +22,9 @@ export const hasValueStyled = {
   ...searchBarStyled,
   color: '$coverLightWhite'
 };
+
+export const hasErrorStyled = {
+  ...searchBarStyled,
+  border: '1px solid $coverRed',
+  color: '$coverRed'
+};
