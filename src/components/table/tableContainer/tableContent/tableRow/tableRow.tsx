@@ -19,6 +19,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
   rowId?: string;
   showLoadingMaskStatus?: boolean;
   showLoadingMaskBtn?: boolean;
+  disableCollapseBtn?: boolean;
 }
 
 export const TableRow: React.FC<PropTypes> = ({
@@ -31,7 +32,8 @@ export const TableRow: React.FC<PropTypes> = ({
   onCollapse,
   rowId,
   showLoadingMaskStatus,
-  showLoadingMaskBtn
+  showLoadingMaskBtn,
+  disableCollapseBtn
 }) => {
   const onClick = useCallback(() => onCollapse && onCollapse(rowId as string), [rowId, onCollapse]);
   return (
@@ -55,7 +57,7 @@ export const TableRow: React.FC<PropTypes> = ({
       ) : (
         showCollapseBtn && (
           <td>
-            <Core.Button onClick={onClick} type={'text'}>
+            <Core.Button disabled={disableCollapseBtn} onClick={onClick} type={'text'}>
               <FontAwesomeIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
             </Core.Button>
           </td>
