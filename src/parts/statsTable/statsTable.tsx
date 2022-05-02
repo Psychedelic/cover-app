@@ -1,18 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+
+import {Stats} from '@psychedelic/cover';
 
 import {TableContainer, TableContent, TableHeader, TableRow} from '@/components';
+import {coverSDK} from '@/utils';
 
 import {tableBodyStyle, tableContainerStyle} from './statsTable.styled';
 
-interface Stats {
-  rustCanistersCount?: string;
-  motokoCanistersCount?: string;
+interface Statistic {
   totalCanisters?: string;
+  motokoCanistersCount?: string;
+  rustCanistersCount?: string;
   buildSuccessCount?: string;
 }
 
 interface PropTypes {
-  stats?: Stats;
+  statistic?: Statistic;
 }
 
 const renderItems = (label: string, value?: string) => [
@@ -28,23 +31,41 @@ const renderItems = (label: string, value?: string) => [
   </td>
 ];
 
+const mapStats = (s: Stats): Statistic => ({
+  totalCanisters: s.total_canisters.toString(),
+  motokoCanistersCount: s.motoko_canisters_count.toString(),
+  rustCanistersCount: s.rust_canisters_count.toString(),
+  buildSuccessCount: s.build_success_count.toString()
+});
+
 export const StatsTable: React.VFC<PropTypes> = ({
-  stats: {
-    rustCanistersCount = 'N/A',
-    motokoCanistersCount = 'N/A',
-    totalCanisters = 'N/A',
-    buildSuccessCount = 'N/A'
-  } = {}
-}) => (
-  <TableContainer css={tableContainerStyle}>
-    <TableHeader>
-      <th colSpan={2}>{'Statistics'}</th>
-    </TableHeader>
-    <TableContent css={tableBodyStyle}>
-      <TableRow override>{renderItems('Total Canisters', totalCanisters)}</TableRow>
-      <TableRow override>{renderItems('-- Motoko Canisters', motokoCanistersCount)}</TableRow>
-      <TableRow override>{renderItems('-- Rust Canisters', rustCanistersCount)}</TableRow>
-      <TableRow override>{renderItems('Total Verified Canisters', buildSuccessCount)}</TableRow>
-    </TableContent>
-  </TableContainer>
-);
+  statistic = {
+    totalCanisters: 'N/A',
+    motokoCanistersCount: 'N/A',
+    rustCanistersCount: 'N/A',
+    buildSuccessCount: 'N/A'
+  }
+}) => {
+  const [stats, setStats] = useState(statistic);
+
+  useEffect(() => {
+    (async () => {
+      const s = await coverSDK.getVerificationStats();
+      setStats(mapStats(s));
+    })();
+  }, []);
+
+  return (
+    <TableContainer css={tableContainerStyle}>
+      <TableHeader>
+        <th colSpan={2}>{'Statistics'}</th>
+      </TableHeader>
+      <TableContent css={tableBodyStyle}>
+        <TableRow override>{renderItems('Total Canisters', stats.totalCanisters)}</TableRow>
+        <TableRow override>{renderItems('-- Motoko Canisters', stats.motokoCanistersCount)}</TableRow>
+        <TableRow override>{renderItems('-- Rust Canisters', stats.rustCanistersCount)}</TableRow>
+        <TableRow override>{renderItems('Build Success Canisters', stats.buildSuccessCount)}</TableRow>
+      </TableContent>
+    </TableContainer>
+  );
+};
