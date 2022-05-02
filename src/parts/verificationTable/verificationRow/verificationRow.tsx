@@ -11,12 +11,18 @@ interface PropTypes {
   verification: Verification;
   isSelected: boolean;
   setCanisterIdSelected: (canisterId: string) => void;
+  disableCollapseBtn?: boolean;
 }
 
 const getStatus = (isVerified?: boolean) =>
   typeof isVerified === 'boolean' ? (isVerified ? 'green' : 'red') : isVerified;
 
-export const VerificationRow: React.VFC<PropTypes> = ({verification, isSelected, setCanisterIdSelected}) => {
+export const VerificationRow: React.VFC<PropTypes> = ({
+  verification,
+  isSelected,
+  setCanisterIdSelected,
+  disableCollapseBtn
+}) => {
   const onCollapse = useCallback(
     (canisterId: string) => {
       setCanisterIdSelected(isSelected ? '' : canisterId);
@@ -27,6 +33,7 @@ export const VerificationRow: React.VFC<PropTypes> = ({verification, isSelected,
     <>
       <TableRow
         css={isSelected ? tableRowSelected : {}}
+        disableCollapseBtn={disableCollapseBtn}
         isSelected={isSelected}
         onCollapse={onCollapse}
         rowId={verification.canisterId}
