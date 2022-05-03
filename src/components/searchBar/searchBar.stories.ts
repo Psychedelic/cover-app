@@ -8,6 +8,12 @@ const meta: ComponentMeta<typeof SearchBar> = {
 };
 export default meta;
 
-export const Example: ComponentStoryObj<typeof SearchBar> = {
+export const NoValidation: ComponentStoryObj<typeof SearchBar> = {
   args: {}
+};
+
+export const WithValidation: ComponentStoryObj<typeof SearchBar> = {
+  args: {
+    validation: () => false
+  }
 };
