@@ -1,4 +1,4 @@
-import React, {Dispatch, ReducerAction, useMemo} from 'react';
+import React, {Dispatch, ReducerAction, useCallback, useEffect, useMemo, useRef} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {Verification as CanisterVerification} from '@psychedelic/cover';
@@ -69,8 +69,24 @@ const verificationReducer = (_: State, action: Action): State => {
 const VerificationContext = React.createContext<Context>({state: {}, dispatch: () => {}});
 
 export const VerificationProvider: React.FC = ({children}) => {
+  const isMounted = useRef<boolean | undefined>();
   const [state, dispatch] = React.useReducer(verificationReducer, {});
-  const value = useMemo(() => ({state, dispatch}), [state]);
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  });
+  const dispatchWrapper = useCallback((action: Action) => {
+    isMounted.current !== false && dispatch(action);
+  }, []);
+  const value = useMemo(
+    () => ({
+      state,
+      dispatch: dispatchWrapper
+    }),
+    [state, dispatchWrapper]
+  );
   return <VerificationContext.Provider value={value}>{children}</VerificationContext.Provider>;
 };
 

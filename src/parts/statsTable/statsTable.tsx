@@ -49,10 +49,14 @@ export const StatsTable: React.VFC<PropTypes> = ({
   const [stats, setStats] = useState(statistic);
 
   useEffect(() => {
+    let isMounted = true;
     (async () => {
       const s = await coverSDK.getVerificationStats();
-      setStats(mapStats(s));
+      isMounted && setStats(mapStats(s));
     })();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
