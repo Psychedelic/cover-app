@@ -32,7 +32,7 @@ export const PageHeader: React.VFC = () => {
         <Link to={DASHBOARD_PATH}>
           <img alt={'logo'} src={logo} />
         </Link>
-        <SearchBar disabled={getCurrentPath() !== DASHBOARD_PATH} onBlur={onBlur} validation={isPrincipal} />
+        <SearchBar disabled={getCurrentPath() !== DASHBOARD_PATH} onBlurOrEnter={onBlur} validation={isPrincipal} />
         <Core.Button size={'medium'} type={'text'}>
           {'Blog'}
         </Core.Button>

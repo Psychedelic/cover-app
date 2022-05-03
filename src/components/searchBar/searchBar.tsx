@@ -8,12 +8,12 @@ import {Core} from '@/components';
 import {hasErrorStyled, hasValueStyled, searchBarStyled} from './searchBar.styled';
 
 interface PropTypes {
-  onBlur?: (value: string) => void;
+  onBlurOrEnter?: (value: string) => void;
   validation?: (value: string) => boolean;
   disabled?: boolean;
 }
 
-export const SearchBar: React.VFC<PropTypes> = ({onBlur, validation, disabled}) => {
+export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disabled}) => {
   const [hasValue, setHasValue] = useState(false);
   const [hasError, setHasError] = useState(false);
   const searchBarRef = useRef(null);
@@ -39,15 +39,26 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlur, validation, disabled}) 
     }
   }, []);
 
-  const onBlurInternal = useCallback(
+  const onBlur = useCallback(
     _ => {
-      if (onBlur && searchBarRef.current) {
+      if (onBlurOrEnter && searchBarRef.current) {
         const searchBar = searchBarRef.current as HTMLInputElement;
-        // Only trigger `onBlur` when `validation` is passed
-        !hasError && onBlur(searchBar.value);
+        // Only trigger `onBlurOrEnter` when `validation` is passed
+        !hasError && onBlurOrEnter(searchBar.value);
       }
     },
-    [onBlur, hasError]
+    [onBlurOrEnter, hasError]
+  );
+
+  const onEnter = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' && onBlurOrEnter && searchBarRef.current) {
+        const searchBar = searchBarRef.current as HTMLInputElement;
+        // Only trigger `onBlurOrEnter` when `validation` is passed
+        !hasError && onBlurOrEnter(searchBar.value);
+      }
+    },
+    [onBlurOrEnter, hasError]
   );
 
   const containerStyled = hasError ? hasErrorStyled : hasValue ? hasValueStyled : searchBarStyled;
@@ -56,8 +67,9 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlur, validation, disabled}) 
     <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
       <Core.Input
         disabled={disabled}
-        onBlur={onBlurInternal}
+        onBlur={onBlur}
         onInput={onInput}
+        onKeyPress={onEnter}
         placeholder={'Search by Canister ID'}
         ref={searchBarRef}
         size={'small'}

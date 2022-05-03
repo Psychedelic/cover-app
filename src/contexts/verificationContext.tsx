@@ -6,13 +6,13 @@ import {Verification as CanisterVerification} from '@psychedelic/cover';
 import {Verification} from '@/models';
 import {capitalize, coverSDK} from '@/utils';
 
-type Action = PendingFetchAction | FetchVerificationsAction | FetchByCanisterIdAction;
+type Action = FetchPendingAction | FetchVerificationsAction | FetchByCanisterIdAction;
 interface ActionBase<T = unknown> {
   type: string;
   payload?: T;
 }
-interface PendingFetchAction extends ActionBase {
-  type: 'pendingFetch';
+interface FetchPendingAction extends ActionBase {
+  type: 'fetchPending';
 }
 interface FetchVerificationsAction extends ActionBase {
   type: 'fetchVerifications';
@@ -44,7 +44,7 @@ const loadingVerifications = Array<Verification>(18).fill({});
 
 const verificationReducer = (_: State, action: Action): State => {
   switch (action.type) {
-    case 'pendingFetch': {
+    case 'fetchPending': {
       return {verifications: loadingVerifications};
     }
     case 'fetchVerifications': {
@@ -96,7 +96,7 @@ export const fetchVerifications = async (
   dispatch: Dispatch<ReducerAction<typeof verificationReducer>>,
   pageNum = 1
 ) => {
-  dispatch({type: 'pendingFetch'});
+  dispatch({type: 'fetchPending'});
   try {
     const result = await coverSDK.getAllVerifications({
       page_index: BigInt(pageNum),
@@ -111,7 +111,7 @@ export const fetchVerifications = async (
       }
     });
   } catch (e) {
-    dispatch({type: 'pendingFetch'});
+    dispatch({type: 'fetchPending'});
   }
 };
 
@@ -119,7 +119,7 @@ export const fetchByCanisterId = async (
   dispatch: Dispatch<ReducerAction<typeof verificationReducer>>,
   currentCanisterId: Principal
 ) => {
-  dispatch({type: 'pendingFetch'});
+  dispatch({type: 'fetchPending'});
   try {
     const result = await coverSDK.getVerificationByCanisterId(currentCanisterId);
     dispatch({
@@ -130,7 +130,7 @@ export const fetchByCanisterId = async (
       }
     });
   } catch (e) {
-    dispatch({type: 'pendingFetch'});
+    dispatch({type: 'fetchPending'});
   }
 };
 
