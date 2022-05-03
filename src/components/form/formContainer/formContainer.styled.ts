@@ -5,5 +5,5 @@ export const StitchesFormContainer = styled('form', {
   backgroundColor: '$coverHeavyGray',
   borderRadius: '16px',
   width: '560px',
-  padding: '25px'
+  padding: '$25'
 });

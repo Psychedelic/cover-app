@@ -8,7 +8,8 @@ export const StitchesSubmitForm = styled('div', {
   justifyContent: 'center',
   '& h3': {
     color: '$coverWhite',
-    fontSize: '22px'
+    fontSize: '22px',
+    margin: '$0'
   },
   '& button': {
     marginLeft: '13px'
