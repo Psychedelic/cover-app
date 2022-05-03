@@ -6,13 +6,13 @@ import {Verification as CanisterVerification} from '@psychedelic/cover';
 import {Verification} from '@/models';
 import {capitalize, coverSDK} from '@/utils';
 
-type Action = PendingFetchAction | FetchVerificationsAction | GetByCanisterIdAction;
+type Action = PendingFetchAction | FetchVerificationsAction | FetchByCanisterIdAction;
 interface ActionBase<T = unknown> {
   type: string;
   payload?: T;
 }
 interface PendingFetchAction extends ActionBase {
-  type: 'pending';
+  type: 'pendingFetch';
 }
 interface FetchVerificationsAction extends ActionBase {
   type: 'fetchVerifications';
@@ -22,18 +22,18 @@ interface FetchVerificationsAction extends ActionBase {
     totalPage: number;
   };
 }
-interface GetByCanisterIdAction extends ActionBase {
-  type: 'getByCanisterId';
+interface FetchByCanisterIdAction extends ActionBase {
+  type: 'fetchByCanisterId';
   payload: {
     verifications: Verification[];
-    currentCanisterIdSelected: string;
+    currentCanisterId: string;
   };
 }
 interface State {
   verifications?: Verification[];
   atPage?: number;
   totalPage?: number;
-  currentCanisterIdSelected?: string;
+  currentCanisterId?: string;
 }
 interface Context {
   state: State;
@@ -44,7 +44,7 @@ const loadingVerifications = Array<Verification>(18).fill({});
 
 const verificationReducer = (_: State, action: Action): State => {
   switch (action.type) {
-    case 'pending': {
+    case 'pendingFetch': {
       return {verifications: loadingVerifications};
     }
     case 'fetchVerifications': {
@@ -54,10 +54,10 @@ const verificationReducer = (_: State, action: Action): State => {
         totalPage: action.payload.totalPage
       };
     }
-    case 'getByCanisterId': {
+    case 'fetchByCanisterId': {
       return {
         verifications: action.payload.verifications,
-        currentCanisterIdSelected: action.payload.currentCanisterIdSelected
+        currentCanisterId: action.payload.currentCanisterId
       };
     }
     default: {
@@ -80,7 +80,7 @@ export const fetchVerifications = async (
   dispatch: Dispatch<ReducerAction<typeof verificationReducer>>,
   pageNum = 1
 ) => {
-  dispatch({type: 'pending'});
+  dispatch({type: 'pendingFetch'});
   try {
     const result = await coverSDK.getAllVerifications({
       page_index: BigInt(pageNum),
@@ -95,26 +95,26 @@ export const fetchVerifications = async (
       }
     });
   } catch (e) {
-    dispatch({type: 'pending'});
+    dispatch({type: 'pendingFetch'});
   }
 };
 
-export const getByCanisterId = async (
+export const fetchByCanisterId = async (
   dispatch: Dispatch<ReducerAction<typeof verificationReducer>>,
-  canisterId: Principal
+  currentCanisterId: Principal
 ) => {
-  dispatch({type: 'pending'});
+  dispatch({type: 'pendingFetch'});
   try {
-    const result = await coverSDK.getVerificationByCanisterId(canisterId);
+    const result = await coverSDK.getVerificationByCanisterId(currentCanisterId);
     dispatch({
-      type: 'getByCanisterId',
+      type: 'fetchByCanisterId',
       payload: {
         verifications: result ? await mapFullVerification([result]) : [],
-        currentCanisterIdSelected: canisterId.toText()
+        currentCanisterId: currentCanisterId.toText()
       }
     });
   } catch (e) {
-    dispatch({type: 'pending'});
+    dispatch({type: 'pendingFetch'});
   }
 };
 

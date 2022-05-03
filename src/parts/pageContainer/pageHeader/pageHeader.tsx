@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import {logo} from '@/assets';
 import {Core, SearchBar} from '@/components';
 import {DASHBOARD_PATH, SUBMIT_PATH} from '@/constants';
-import {fetchVerifications, getByCanisterId, useVerificationContext} from '@/contexts';
+import {fetchVerifications, fetchByCanisterId, useVerificationContext} from '@/contexts';
 import {getCurrentPath, isPrincipal} from '@/utils';
 
 import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
@@ -19,7 +19,7 @@ export const PageHeader: React.VFC = () => {
       // Only difference value each time is called can be dispatched
       if (value !== recentValue.current) {
         isPrincipal(value)
-          ? getByCanisterId(dispatch, Principal.fromText(value))
+          ? fetchByCanisterId(dispatch, Principal.fromText(value))
           : value === '' && fetchVerifications(dispatch);
         recentValue.current = value;
       }

@@ -14,7 +14,7 @@ interface PropTypes {
 export const VerificationTable: React.VFC<PropTypes> = ({defaultVerifications}) => {
   const [canisterIdSelected, setCanisterIdSelected] = useState('');
   const {
-    state: {verifications = defaultVerifications, totalPage, currentCanisterIdSelected = ''},
+    state: {verifications = defaultVerifications, totalPage, currentCanisterId = ''},
     dispatch
   } = useVerificationContext();
   useEffect(() => {
@@ -42,8 +42,8 @@ export const VerificationTable: React.VFC<PropTypes> = ({defaultVerifications}) 
       <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>
         {verifications?.map((verification, index) => (
           <VerificationRow
-            disableCollapseBtn={Boolean(currentCanisterIdSelected)}
-            isSelected={(currentCanisterIdSelected || canisterIdSelected) === verification.canisterId}
+            disableCollapseBtn={Boolean(currentCanisterId)}
+            isSelected={(currentCanisterId || canisterIdSelected) === verification.canisterId}
             key={verification.canisterId || index}
             setCanisterIdSelected={setCanisterIdSelected}
             verification={verification}
