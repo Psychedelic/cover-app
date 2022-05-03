@@ -32,7 +32,7 @@ export const PageHeader: React.VFC = () => {
         <Link to={DASHBOARD_PATH}>
           <img alt={'logo'} src={logo} />
         </Link>
-        <SearchBar onBlur={onBlur} validation={isPrincipal} />
+        <SearchBar disabled={getCurrentPath() !== DASHBOARD_PATH} onBlur={onBlur} validation={isPrincipal} />
         <Core.Button size={'medium'} type={'text'}>
           {'Blog'}
         </Core.Button>
@@ -42,7 +42,7 @@ export const PageHeader: React.VFC = () => {
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
         <Link to={SUBMIT_PATH}>
-          <Core.Button disabled={getCurrentPath() === SUBMIT_PATH}>{'Submit Verification'}</Core.Button>
+          <Core.Button disabled={getCurrentPath() !== DASHBOARD_PATH}>{'Submit Verification'}</Core.Button>
         </Link>
         <Core.Button>{'Connect to Plug'}</Core.Button>
       </StitchesPageSecondaryHeader>

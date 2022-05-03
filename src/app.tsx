@@ -4,6 +4,7 @@ import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 
 import {globalStyles} from '@/themes';
 
+import {DASHBOARD_PATH, SUBMIT_PATH} from './constants';
 import {Dashboard, SubmitVerification} from './pages';
 
 export const App: React.VFC = () => {
@@ -11,9 +12,9 @@ export const App: React.VFC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<SubmitVerification />} path={'/submit'} />
-        <Route element={<Dashboard />} path={'/'} />
-        <Route element={<Navigate to={'/'} />} path={'*'} />
+        <Route element={<SubmitVerification />} path={SUBMIT_PATH} />
+        <Route element={<Dashboard />} path={DASHBOARD_PATH} />
+        <Route element={<Navigate to={DASHBOARD_PATH} />} path={'*'} />
       </Routes>
     </BrowserRouter>
   );
