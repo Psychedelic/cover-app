@@ -10,9 +10,10 @@ import {hasErrorStyled, hasValueStyled, searchBarStyled} from './searchBar.style
 interface PropTypes {
   onBlur?: (value: string) => void;
   validation?: (value: string) => boolean;
+  disabled?: boolean;
 }
 
-export const SearchBar: React.VFC<PropTypes> = ({onBlur, validation}) => {
+export const SearchBar: React.VFC<PropTypes> = ({onBlur, validation, disabled}) => {
   const [hasValue, setHasValue] = useState(false);
   const [hasError, setHasError] = useState(false);
   const searchBarRef = useRef(null);
@@ -54,6 +55,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlur, validation}) => {
   return (
     <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
       <Core.Input
+        disabled={disabled}
         onBlur={onBlurInternal}
         onInput={onInput}
         placeholder={'Search by Canister ID'}
