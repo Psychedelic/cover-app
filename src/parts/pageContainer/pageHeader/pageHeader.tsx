@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import {logo} from '@/assets';
 import {Core, SearchBar} from '@/components';
 import {DASHBOARD_PATH, SUBMIT_PATH} from '@/constants';
-import {fetchVerifications, fetchByCanisterId, useVerificationContext} from '@/contexts';
+import {fetchByCanisterId, fetchVerifications, useVerificationContext} from '@/contexts';
 import {getCurrentPath, isPrincipal} from '@/utils';
 
 import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';

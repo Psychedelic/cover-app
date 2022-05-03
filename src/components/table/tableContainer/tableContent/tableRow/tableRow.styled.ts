@@ -5,7 +5,7 @@ export const StitchesTableRow = styled('tr', {
   '& button[disabled]': {
     opacity: 0.3,
     '& svg': {
-      cursor: 'default',
+      cursor: 'default'
     }
   }
 });
