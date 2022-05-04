@@ -9,14 +9,13 @@ export const StitchesSubmitForm = styled('div', {
   '& h3': {
     color: '$coverWhite',
     fontSize: '22px',
-    margin: '$0'
+    margin: '0 0 $10 0'
   },
   '& button': {
     marginLeft: '13px'
   },
   '& .formButtonGroup': {
     display: 'flex',
-    justifyContent: 'flex-end',
-    marginTop: '25px'
+    justifyContent: 'flex-end'
   }
 });

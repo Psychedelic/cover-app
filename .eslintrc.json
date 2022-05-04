@@ -43,6 +43,7 @@
     "react/jsx-filename-extension": ["error", {"extensions": [".tsx"]}],
     "react/prop-types": "off",
     "react/require-default-props": "off",
+    "react/display-name": "off",
     "react/jsx-curly-brace-presence": [
       "error",
       {"props": "always", "children": "always", "propElementValues": "always"}
@@ -83,7 +84,8 @@
         ]
       }
     ],
-    "@typescript-eslint/no-unused-vars": ["error"]
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "sonarjs/no-duplicate-string": ["error", 5]
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},
