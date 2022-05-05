@@ -1,17 +1,18 @@
 import React, {useCallback, useRef} from 'react';
 
+import {Cover} from '@psychedelic/cover';
 import {CSS} from '@stitches/react';
 import {Link} from 'react-router-dom';
 
 import {Core, FormContainer, FormInput, FormInputHandler} from '@/components';
 import {DASHBOARD_PATH} from '@/constants';
 import {
-  coverSDK,
   isFrom1To10,
   isNotEmpty,
   isPrincipal,
   isValidHexFormat,
   isValidRepoFormat,
+  isValidTimestamp,
   isValidVersionFormat
 } from '@/utils';
 
@@ -31,6 +32,7 @@ const useRefs = () => ({
   rustVersion: useRef<FormInputHandler | null>(null),
   dfxVersion: useRef<FormInputHandler | null>(null),
   optimizeCount: useRef<FormInputHandler | null>(null),
+  timestamp: useRef<FormInputHandler | null>(null),
   signature: useRef<FormInputHandler | null>(null),
   publicKey: useRef<FormInputHandler | null>(null)
 });
@@ -47,7 +49,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         return result;
       }, false);
       if (!hasError) {
-        coverSDK.build({
+        Cover.anonymousBuild({
           owner_id: refs.ownerId.current?.value() as string,
           canister_id: refs.canisterId.current?.value() as string,
           canister_name: refs.canisterId.current?.value() as string,
@@ -56,7 +58,10 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
           repo_access_token: refs.repoAccessToken.current?.value() as string,
           rust_version: refs.rustVersion.current?.value() as string,
           dfx_version: refs.dfxVersion.current?.value() as string,
-          optimize_count: parseInt(refs.optimizeCount.current?.value() as string, 10)
+          optimize_count: parseInt(refs.optimizeCount.current?.value() as string, 10),
+          timestamp: parseInt(refs.timestamp.current?.value() as string, 10),
+          signature: refs.signature.current?.value() as string,
+          public_key: refs.publicKey.current?.value() as string
         });
       }
     },
@@ -127,6 +132,13 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
           ref={refs.optimizeCount}
           required
           validations={[isFrom1To10]}
+        />
+        <FormInput
+          errorMessage={'Invalid timestamp format. Example: 1651742769039'}
+          label={'Timestamp'}
+          ref={refs.timestamp}
+          required
+          validations={[isValidTimestamp]}
         />
         <FormInput
           errorMessage={'Invalid hex format. Example: f01f'}
