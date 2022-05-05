@@ -15,4 +15,4 @@ export const isValidRepoFormat = (str: string) => /^[^ /]+\/[^ /]+$/u.test(str);
 
 export const isValidHexFormat = (str: string) => /^(?:[A-Fa-f0-9]{2})+$/u.test(str);
 
-export const isValidVersionFormat = (str: string) => /^[0-9]+.[0-9]+.[0-9]+$/u.test(str);
+export const isValidVersionFormat = (str: string) => /^[0-9]+\.[0-9]+\.[0-9]+$/u.test(str);

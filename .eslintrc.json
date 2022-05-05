@@ -22,11 +22,12 @@
   ],
   "rules": {
     "eqeqeq": ["error"],
+    "camelcase": "off",
     "no-ternary": "off",
     "no-nested-ternary": "off",
     "one-var": "off",
     "id-length": "off",
-    "max-lines-per-function": ["error", {"max": 120}],
+    "max-lines-per-function": ["error", {"max": 150}],
     "sort-keys": "off",
     "sort-vars": "off",
     "no-magic-numbers": "off",
@@ -86,12 +87,13 @@
       }
     ],
     "@typescript-eslint/no-unused-vars": ["error"],
-    "sonarjs/no-duplicate-string": ["error", 5]
+    "sonarjs/no-duplicate-string": ["error", 5],
+    "sonarjs/cognitive-complexity": ["error", 20]
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},
     {"files": ["*.styled.*", "*.stories.*"], "rules": {"sonarjs/no-duplicate-string": "off"}},
-    {"files": ["*/contexts/*"], "rules": {"camelcase": "off", "@typescript-eslint/no-empty-function": "off"}}
+    {"files": ["*/contexts/*"], "rules": {"@typescript-eslint/no-empty-function": "off"}}
   ],
   "settings": {
     "import/resolver": {"node": {"extensions": [".ts", ".tsx"]}, "typescript": {}}

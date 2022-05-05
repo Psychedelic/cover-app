@@ -3,7 +3,7 @@ import React, {useCallback, useImperativeHandle, useRef, useState} from 'react';
 import {CSS} from '@stitches/react';
 
 import {Core} from '@/components';
-import {getNameFromLabel} from '@/utils';
+import {getNameFromLabel, isNotEmpty} from '@/utils';
 
 import {StitchesFormInput} from './formInput.styled';
 
@@ -12,19 +12,21 @@ interface PropTypes extends React.ComponentProps<typeof StitchesFormInput> {
   textarea?: boolean;
   label: string;
   rows?: number;
+  required?: boolean;
   validations?: [(value: string) => boolean];
   errorMessage?: string;
 }
 
 export interface FormInputHandler {
   hasError: () => boolean;
+  value: () => string;
 }
 
 const hasErrorUtil = (validations: [(value: string) => boolean], value: string): boolean =>
   validations.reduce((result, validation) => result || !validation(value), false as boolean);
 
 export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
-  ({css, textarea, label, rows, validations, errorMessage}, ref) => {
+  ({css, textarea, label, rows, required, validations, errorMessage}, ref) => {
     const [hasError, setHasError] = useState(false);
     const inputRef = useRef(null);
     const onInputOrBlur = useCallback(
@@ -43,14 +45,15 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
         hasError: () => {
           if (inputRef.current && validations) {
             const value = (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value;
-            const hashError = hasErrorUtil(validations, value);
-            setHasError(hashError);
-            return hashError;
+            const isGotError = (Boolean(required) || isNotEmpty(value)) && hasErrorUtil(validations, value);
+            setHasError(isGotError);
+            return isGotError;
           }
           return false;
-        }
+        },
+        value: () => (inputRef.current ? (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value : '')
       }),
-      [validations]
+      [validations, required]
     );
     return (
       <StitchesFormInput css={css} hasError={hasError ? 'true' : 'false'}>
