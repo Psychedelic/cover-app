@@ -40,7 +40,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
     useImperativeHandle(
       ref,
       () => ({
-        hasError() {
+        hasError: () => {
           if (inputRef.current && validations) {
             const value = (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value;
             const hashError = hasErrorUtil(validations, value);

@@ -14,17 +14,17 @@ interface PropTypes extends React.ComponentProps<typeof StitchesSubmitForm> {
 }
 
 export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
-  const ownerId = useRef(null);
-  const canisterId = useRef(null);
-  const canisterName = useRef(null);
-  const repoUrl = useRef(null);
-  const commitHash = useRef(null);
-  const repoAccessToken = useRef(null);
-  const rustVersion = useRef(null);
-  const dfxVersion = useRef(null);
-  const optimizeCount = useRef(null);
-  const signature = useRef(null);
-  const publicKey = useRef(null);
+  const ownerId = useRef(null),
+    canisterId = useRef(null),
+    canisterName = useRef(null),
+    repoUrl = useRef(null),
+    commitHash = useRef(null),
+    repoAccessToken = useRef(null),
+    rustVersion = useRef(null),
+    dfxVersion = useRef(null),
+    optimizeCount = useRef(null),
+    signature = useRef(null),
+    publicKey = useRef(null);
   const onSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     [
