@@ -117,6 +117,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
           errorMessage={'Invalid version format. Example 0.9.3'}
           label={'Rust Version'}
           ref={refs.rustVersion}
+          validationIf={[value => parseInt(refs.optimizeCount.current?.value() as string, 10) > 0]}
           validations={[isValidVersionFormat]}
         />
         <FormInput
