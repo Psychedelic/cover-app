@@ -13,18 +13,17 @@ export const StitchesFormInput = styled('div', {
     fontSize: '$xs',
     fontWeight: '$normal'
   },
-  '& textarea': {
+  '& textarea, input': {
     border: '1px solid $coverMediumGray',
     borderRadius: '$8',
     fontSize: '$sm',
-    fontWeight: '$normal'
+    fontWeight: '$normal',
+    '&::placeholder': {
+      color: '$coverLightGray'
+    }
   },
   '& input': {
-    border: '1px solid $coverMediumGray',
-    borderRadius: '$8',
-    padding: '0 $15',
-    fontSize: '$sm',
-    fontWeight: '$normal'
+    padding: '0 $15'
   },
   '& span': {
     fontSize: '$xs'

@@ -59,9 +59,22 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
       <StitchesFormInput css={css} hasError={hasError ? 'true' : 'false'}>
         <label htmlFor={name}>{label}</label>
         {textarea ? (
-          <Core.Textarea name={name} onBlur={onInputOrBlur} onInput={onInputOrBlur} ref={inputRef} rows={rows} />
+          <Core.Textarea
+            name={name}
+            onBlur={onInputOrBlur}
+            onInput={onInputOrBlur}
+            placeholder={`Enter ${label}`}
+            ref={inputRef}
+            rows={rows}
+          />
         ) : (
-          <Core.Input name={name} onBlur={onInputOrBlur} onInput={onInputOrBlur} ref={inputRef} />
+          <Core.Input
+            name={name}
+            onBlur={onInputOrBlur}
+            onInput={onInputOrBlur}
+            placeholder={`Enter ${label}`}
+            ref={inputRef}
+          />
         )}
         {hasError && <span>{errorMessage}</span>}
       </StitchesFormInput>
