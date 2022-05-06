@@ -77,7 +77,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
   );
   return (
     <StitchesSubmitForm css={css} onSubmit={onSubmit}>
-      <FormContainer>
+      <FormContainer autoComplete={'off'}>
         <h3>{'Submit Verification'}</h3>
         <FormInput
           errorMessage={'Invalid principal format.'}
