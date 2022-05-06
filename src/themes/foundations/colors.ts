@@ -26,5 +26,7 @@ export const colors = {
 
   coverGradientGray: 'linear-gradient(90deg, #2E2E2E 0%, #242424 100%)',
 
-  coverBlue: '#0092FE'
+  coverBlue: '#0092FE',
+
+  coverBackgroundOverlay: '#0D0D0D99'
 };
