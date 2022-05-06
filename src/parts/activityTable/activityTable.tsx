@@ -57,8 +57,8 @@ export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
         <th colSpan={2}>{'Recent Activities'}</th>
       </TableHeader>
       <TableContent css={tableBodyStyle}>
-        {activities?.map(({buildStatus, canisterId, datetime}) => (
-          <ActivityRow buildStatus={buildStatus} canisterId={canisterId} dateTime={datetime} key={datetime} />
+        {activities?.map(({buildStatus, canisterId, datetime}, index) => (
+          <ActivityRow buildStatus={buildStatus} canisterId={canisterId} dateTime={datetime} key={datetime || index} />
         ))}
       </TableContent>
     </TableContainer>
