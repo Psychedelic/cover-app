@@ -1,6 +1,6 @@
 {
   "canisters": {
-    "cover-app": {
+    "cover-app-dev": {
       "frontend": {
         "entrypoint": "dist/index.html"
       },
