@@ -23,6 +23,7 @@ export const StitchesOverlay = styled(AlertDialogPrimitive.Overlay, {
 });
 
 export const StitchesContent = styled(AlertDialogPrimitive.Content, {
+  color: '$coverLightGray',
   backgroundColor: '$coverHeavyGray',
   borderRadius: 16,
   position: 'fixed',
@@ -48,7 +49,7 @@ export const StitchesTitle = styled(AlertDialogPrimitive.Title, {
   lineHeight: '23px'
 });
 
-export const StitchesDescription = styled(AlertDialogPrimitive.Description, {
+export const StitchesDescription = styled('div', {
   marginBottom: '$25',
   color: '$coverLightGray',
   fontSize: '$sm',
