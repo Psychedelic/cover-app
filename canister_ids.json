@@ -1,5 +1,8 @@
 {
   "cover-app-dev": {
     "ic": "gdji2-3yaaa-aaaam-qaeja-cai"
+  },
+  "cover-app-prod": {
+    "ic": "mzsvw-zqaaa-aaaam-qafqq-cai"
   }
 }

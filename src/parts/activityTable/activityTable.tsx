@@ -26,7 +26,7 @@ export const mapActivity = (activity: CanisterActivity): Activity => ({
 export const mapActivityList = (activityList: CanisterActivity[]): Activity[] => activityList.map(a => mapActivity(a));
 
 const fetchActivity = (pageNum = 1): Promise<ActivitiesPagination> =>
-  coverSDK.getActivities({page_index: BigInt(pageNum), items_per_page: 12n});
+  coverSDK.getActivities({page_index: BigInt(pageNum), items_per_page: BigInt(12)});
 
 const emptyList = Array<Activity>(12).fill({});
 

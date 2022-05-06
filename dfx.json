@@ -6,6 +6,13 @@
       },
       "source": ["dist"],
       "type": "assets"
+    },
+    "cover-app-prod": {
+      "frontend": {
+        "entrypoint": "dist/index.html"
+      },
+      "source": ["dist"],
+      "type": "assets"
     }
   },
   "defaults": {
