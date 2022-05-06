@@ -18,6 +18,7 @@ export const StitchesFormInput = styled('div', {
     borderRadius: '$8',
     fontSize: '$sm',
     fontWeight: '$normal',
+    wordBreak: 'break-all',
     '&::placeholder': {
       color: '$coverLightGray'
     }
