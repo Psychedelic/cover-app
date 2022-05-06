@@ -2,8 +2,6 @@ import {defaultStitches} from '@/themes';
 const {styled} = defaultStitches;
 
 export const StitchesDot = styled('span', {
-  width: '$dot',
-  height: '$dot',
   borderRadius: '$dot',
   display: 'inline-block',
   variants: {
@@ -23,6 +21,19 @@ export const StitchesDot = styled('span', {
         border: '1px solid $coverYellow',
         backgroundColor: '$coverYellow'
       }
+    },
+    size: {
+      normal: {
+        width: '$dot',
+        height: '$dot'
+      },
+      large: {
+        width: '17px',
+        height: '17px'
+      }
     }
+  },
+  defaultVariants: {
+    size: 'normal'
   }
 });
