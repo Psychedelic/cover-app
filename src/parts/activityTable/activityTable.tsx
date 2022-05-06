@@ -1,48 +1,66 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
-import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
-import {getDuration} from '@/utils';
+import {ActivitiesPagination, Activity as CanisterActivity} from '@psychedelic/cover';
+
+import {TableContainer, TableContent, TableHeader} from '@/components';
+import {ActivityRow} from '@/parts';
+import {coverSDK} from '@/utils';
 
 import {tableBodyStyle, tableContainerStyle} from './activityTable.styled';
 
 interface Activity {
-  status?: 'Success' | 'Pending' | 'Failed';
+  buildStatus?: 'Success' | 'Pending' | 'Error' | 'Building';
   canisterId?: string;
   datetime?: string;
 }
-
 interface PropTypes {
-  activities?: Activity[];
+  activity?: Activity[];
 }
 
-const activityStatus: {[key: string]: 'red' | 'yellow' | 'green'} = {
-  Success: 'green',
-  Pending: 'yellow',
-  Failed: 'red'
-};
+export const mapActivity = (activity: CanisterActivity): Activity => ({
+  buildStatus: Object.keys(activity.build_status)[0] as 'Success' | 'Pending' | 'Error' | 'Building',
+  canisterId: activity.canister_id.toString(),
+  datetime: activity.create_at
+});
 
-export const ActivityTable: React.VFC<PropTypes> = ({activities}) => (
-  <TableContainer css={tableContainerStyle} paginated>
-    <TableHeader>
-      <th colSpan={2}>{'Recent Activity'}</th>
-    </TableHeader>
-    <TableContent css={tableBodyStyle}>
-      {activities?.map(({status, canisterId, datetime}, index) => (
-        <TableRow
-          key={datetime || index}
-          showLoadingMaskStatus={typeof status === 'undefined'}
-          type={status && activityStatus[status]}>
-          <Core.LoadingMask key={0}>
-            <span>{status}</span>
-          </Core.LoadingMask>
-          <Core.LoadingMask key={1}>
-            <Core.CopyableText>{canisterId}</Core.CopyableText>
-          </Core.LoadingMask>
-          <Core.LoadingMask key={2}>
-            <span>{datetime && getDuration(datetime)}</span>
-          </Core.LoadingMask>
-        </TableRow>
-      ))}
-    </TableContent>
-  </TableContainer>
-);
+export const mapActivityList = (activityList: CanisterActivity[]): Activity[] => activityList.map(a => mapActivity(a));
+
+const fetchActivity = (pageNum = 1): Promise<ActivitiesPagination> =>
+  coverSDK.getActivities({page_index: BigInt(pageNum), items_per_page: 12n});
+
+const emptyList = Array<Activity>(12).fill({});
+
+export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
+  const [activities, setActivities] = useState(activity);
+  const [lastPage, setLastPage] = useState(1);
+
+  useEffect(() => {
+    (async () => {
+      const activityPagination = await fetchActivity();
+      setLastPage(Number(activityPagination.total_pages));
+      setActivities(mapActivityList(activityPagination.data));
+    })();
+  }, []);
+
+  const onPageChange = useCallback(pageNum => {
+    setActivities(emptyList);
+    (async () => {
+      const activityPagination = await fetchActivity(pageNum);
+      setActivities(mapActivityList(activityPagination.data));
+      setLastPage(Number(activityPagination.total_pages));
+    })();
+  }, []);
+
+  return (
+    <TableContainer css={tableContainerStyle} lastPage={lastPage} onPageChanged={onPageChange} paginated>
+      <TableHeader>
+        <th colSpan={2}>{'Recent Activities'}</th>
+      </TableHeader>
+      <TableContent css={tableBodyStyle}>
+        {activities?.map(({buildStatus, canisterId, datetime}) => (
+          <ActivityRow buildStatus={buildStatus} canisterId={canisterId} dateTime={datetime} key={datetime} />
+        ))}
+      </TableContent>
+    </TableContainer>
+  );
+};

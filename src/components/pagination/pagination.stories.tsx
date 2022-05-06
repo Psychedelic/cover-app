@@ -15,6 +15,6 @@ export const Default: ComponentStoryObj<typeof Pagination> = {
 export const WithPages: ComponentStoryObj<typeof Pagination> = {
   args: {
     defaultPage: 2,
-    lastPage: 5
+    lastPage: 50
   }
 };
