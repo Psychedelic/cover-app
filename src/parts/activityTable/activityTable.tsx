@@ -35,11 +35,15 @@ export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
   const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {
+    let isMounted = true;
     (async () => {
       const activityPagination = await fetchActivity();
-      setLastPage(Number(activityPagination.total_pages));
-      setActivities(mapActivityList(activityPagination.data));
+      isMounted && setLastPage(Number(activityPagination.total_pages));
+      isMounted && setActivities(mapActivityList(activityPagination.data));
     })();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const onPageChange = useCallback(pageNum => {
@@ -58,7 +62,12 @@ export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
       </TableHeader>
       <TableContent css={tableBodyStyle}>
         {activities?.map(({buildStatus, canisterId, datetime}, index) => (
-          <ActivityRow buildStatus={buildStatus} canisterId={canisterId} dateTime={datetime} key={datetime || index} />
+          <ActivityRow
+            buildStatus={buildStatus}
+            canisterId={canisterId}
+            dateTime={datetime}
+            key={(datetime && canisterId && `${datetime}${canisterId}`) || index}
+          />
         ))}
       </TableContent>
     </TableContainer>
