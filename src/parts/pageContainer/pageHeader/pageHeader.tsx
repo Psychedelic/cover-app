@@ -34,10 +34,14 @@ export const PageHeader: React.VFC = () => {
         </Link>
         <SearchBar disabled={getCurrentPath() !== DASHBOARD_PATH} onBlurOrEnter={onBlur} validation={isPrincipal} />
         <Core.Button size={'medium'} type={'text'}>
-          {'Blog'}
+          <a href={'https://medium.com/@cover_ois'} rel={'noreferrer'} target={'_blank'}>
+            {'Blog'}
+          </a>
         </Core.Button>
         <Core.Button size={'medium'} type={'text'}>
-          {'Docs'}
+          <a href={'https://docs.covercode.ooo/'} rel={'noreferrer'} target={'_blank'}>
+            {'Docs'}
+          </a>
         </Core.Button>
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
