@@ -25,10 +25,12 @@ export const mapActivity = (activity: CanisterActivity): Activity => ({
 
 export const mapActivityList = (activityList: CanisterActivity[]): Activity[] => activityList.map(a => mapActivity(a));
 
-const fetchActivity = (pageNum = 1): Promise<ActivitiesPagination> =>
-  coverSDK.getActivities({page_index: BigInt(pageNum), items_per_page: BigInt(12)});
+const ITEMS_PER_PAGE = 12;
 
-const emptyList = Array<Activity>(12).fill({});
+const fetchActivity = (pageNum = 1): Promise<ActivitiesPagination> =>
+  coverSDK.getActivities({page_index: BigInt(pageNum), items_per_page: BigInt(ITEMS_PER_PAGE)});
+
+const emptyList = Array<Activity>(ITEMS_PER_PAGE).fill({});
 
 export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
   const [activities, setActivities] = useState(activity);

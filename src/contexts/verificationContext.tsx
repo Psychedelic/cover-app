@@ -34,30 +34,35 @@ interface State {
   atPage?: number;
   totalPage?: number;
   currentCanisterId?: string;
+  disablePaginated?: boolean;
 }
 interface Context {
   state: State;
   dispatch: (action: Action) => void;
 }
 
-const loadingVerifications = Array<Verification>(18).fill({});
+const ITEMS_PER_PAGE = 18;
+
+const loadingVerifications = Array<Verification>(ITEMS_PER_PAGE).fill({});
 
 const verificationReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
-      return {verifications: loadingVerifications};
+      return {verifications: loadingVerifications, disablePaginated: true};
     }
     case 'fetchVerifications': {
       return {
         verifications: action.payload.verifications,
         atPage: action.payload.atPage,
-        totalPage: action.payload.totalPage
+        totalPage: action.payload.totalPage,
+        disablePaginated: false
       };
     }
     case 'fetchByCanisterId': {
       return {
         verifications: action.payload.verifications,
-        currentCanisterId: action.payload.currentCanisterId
+        currentCanisterId: action.payload.currentCanisterId,
+        disablePaginated: true
       };
     }
     default: {
@@ -100,7 +105,7 @@ export const fetchVerifications = async (
   try {
     const result = await coverSDK.getAllVerifications({
       page_index: BigInt(pageNum),
-      items_per_page: BigInt(18)
+      items_per_page: BigInt(ITEMS_PER_PAGE)
     });
     dispatch({
       type: 'fetchVerifications',
