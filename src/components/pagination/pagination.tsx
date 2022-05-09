@@ -14,7 +14,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesPagination> {
   defaultPage?: number;
   onPageChanged?: (toPage: number) => void;
   lastPage?: number;
-  disablePaginated: boolean;
+  disablePaginated?: boolean;
 }
 
 export const Pagination: React.VFC<PropTypes> = ({

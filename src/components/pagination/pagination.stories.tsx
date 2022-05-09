@@ -18,3 +18,11 @@ export const WithPages: ComponentStoryObj<typeof Pagination> = {
     lastPage: 50
   }
 };
+
+export const ForceDisable: ComponentStoryObj<typeof Pagination> = {
+  args: {
+    defaultPage: 40,
+    lastPage: 50,
+    disablePaginated: true
+  }
+};
