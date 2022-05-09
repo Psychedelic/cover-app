@@ -45,7 +45,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
-    "@psychedelic/cover": "0.0.10",
+    "@psychedelic/cover": "0.0.11",
     "@radix-ui/react-alert-dialog": "^0.1.7",
     "@stitches/react": "^1.2.7",
     "react": "^17.0.2",

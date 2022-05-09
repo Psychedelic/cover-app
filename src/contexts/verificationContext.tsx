@@ -157,10 +157,13 @@ const mapFullVerification = async (data: CanisterVerification[]): Promise<Verifi
       acc.hashPromises.push(coverSDK.getICHash(v.canister_id));
       return acc;
     },
-    {verifications: [], hashPromises: []} as {verifications: Verification[]; hashPromises: Promise<string>[]}
+    {verifications: [], hashPromises: []} as {
+      verifications: Verification[];
+      hashPromises: Promise<string | undefined>[];
+    }
   );
   (await Promise.all(aggregator.hashPromises)).forEach((hash, i) => {
-    aggregator.verifications[i].wasmHash = hash;
+    aggregator.verifications[i].wasmHash = hash || 'N/A';
     aggregator.verifications[i].isVerified = hash === aggregator.verifications[i].buildWasmHash;
   });
   return aggregator.verifications;
