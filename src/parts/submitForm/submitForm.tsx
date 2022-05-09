@@ -122,14 +122,14 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
           validations={[isNotEmpty]}
         />
         <FormInput
-          errorMessage={'Invalid version format. Example 0.9.3'}
+          errorMessage={'Invalid version format. Example 1.60.0'}
           label={'Rust Version'}
           ref={inputRefs.rustVersion}
           validationIf={[value => parseInt(value, 10) > 0]}
           validations={[isValidVersionFormat]}
         />
         <FormInput
-          errorMessage={'Invalid version format. Example 0.9.3'}
+          errorMessage={'Invalid version format. Example 0.9.2'}
           label={'DFX Version'}
           ref={inputRefs.dfxVersion}
           required
