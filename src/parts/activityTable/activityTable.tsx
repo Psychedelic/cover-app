@@ -33,6 +33,7 @@ const emptyList = Array<Activity>(12).fill({});
 export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
   const [activities, setActivities] = useState(activity);
   const [lastPage, setLastPage] = useState(1);
+  const [disablePaginated, setDisablePaginated] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -48,15 +49,22 @@ export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
 
   const onPageChange = useCallback(pageNum => {
     setActivities(emptyList);
+    setDisablePaginated(true);
     (async () => {
       const activityPagination = await fetchActivity(pageNum);
       setActivities(mapActivityList(activityPagination.data));
+      setDisablePaginated(false);
       setLastPage(Number(activityPagination.total_pages));
     })();
   }, []);
 
   return (
-    <TableContainer css={tableContainerStyle} lastPage={lastPage} onPageChanged={onPageChange} paginated>
+    <TableContainer
+      css={tableContainerStyle}
+      disablePaginated={disablePaginated}
+      lastPage={lastPage}
+      onPageChanged={onPageChange}
+      paginated>
       <TableHeader>
         <th colSpan={2}>{'Recent Activities'}</th>
       </TableHeader>

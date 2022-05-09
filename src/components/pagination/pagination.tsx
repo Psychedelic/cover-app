@@ -14,9 +14,16 @@ interface PropTypes extends React.ComponentProps<typeof StitchesPagination> {
   defaultPage?: number;
   onPageChanged?: (toPage: number) => void;
   lastPage?: number;
+  disablePaginated: boolean;
 }
 
-export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = 1, onPageChanged, lastPage = 1}) => {
+export const Pagination: React.VFC<PropTypes> = ({
+  css,
+  defaultPage = 1,
+  onPageChanged,
+  lastPage = 1,
+  disablePaginated
+}) => {
   const [isFirstPage, setIsFirstPage] = useState(defaultPage === 1);
   const [isLastPage, setIsLastPage] = useState(defaultPage === lastPage);
 
@@ -31,19 +38,16 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = 1, onPageCh
   }, [lastPage]);
 
   const isPageChanged = useCallback(
-    (s: string): boolean => {
-      if (isPositiveNum(s)) {
-        const currentPage = recentValue.current;
-        const requestedPage = Number.parseInt(s, 10);
-        recentValue.current = Math.min(lastPage, Number.parseInt(s, 10));
-        if (requestedPage <= lastPage && requestedPage !== currentPage) {
-          return true;
-        }
-        if (requestedPage > lastPage && currentPage !== lastPage) {
-          return true;
-        }
-      }
+    (newVal: string): boolean => {
+      if (isPositiveNum(newVal)) {
+        const oldVal = recentValue.current;
 
+        // Fall back to the last page.
+        recentValue.current = Math.min(lastPage, Number.parseInt(newVal, 10));
+
+        // Still in range, but the page has changed.
+        return recentValue.current <= lastPage && recentValue.current !== oldVal;
+      }
       return false;
     },
     [lastPage]
@@ -80,11 +84,16 @@ export const Pagination: React.VFC<PropTypes> = ({css, defaultPage = 1, onPageCh
 
   return (
     <StitchesPagination css={css}>
-      <Core.Button disabled={isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
+      <Core.Button disabled={disablePaginated || isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </Core.Button>
-      <Core.Input defaultValue={defaultPage} disabled={lastPage === 1} onBlur={onBlur} ref={inputRef} />
-      <Core.Button disabled={isLastPage} onClick={onBtnClick} ref={rightBtn} type={'outline'}>
+      <Core.Input
+        defaultValue={defaultPage}
+        disabled={disablePaginated || lastPage === 1}
+        onBlur={onBlur}
+        ref={inputRef}
+      />
+      <Core.Button disabled={disablePaginated || isLastPage} onClick={onBtnClick} ref={rightBtn} type={'outline'}>
         <FontAwesomeIcon icon={faChevronRight} />
       </Core.Button>
     </StitchesPagination>

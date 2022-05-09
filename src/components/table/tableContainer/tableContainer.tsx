@@ -11,11 +11,19 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableContainer> 
   paginated?: boolean;
   onPageChanged?: (toPage: number) => void;
   lastPage?: number;
+  disablePaginated: boolean;
 }
 
-export const TableContainer: React.FC<PropTypes> = ({css, children, paginated, onPageChanged, lastPage}) => (
+export const TableContainer: React.FC<PropTypes> = ({
+  css,
+  children,
+  paginated,
+  onPageChanged,
+  lastPage,
+  disablePaginated
+}) => (
   <StitchesTableContainer css={css}>
     <table>{children}</table>
-    {paginated && <Pagination lastPage={lastPage} onPageChanged={onPageChanged} />}
+    {paginated && <Pagination disablePaginated={disablePaginated} lastPage={lastPage} onPageChanged={onPageChanged} />}
   </StitchesTableContainer>
 );
