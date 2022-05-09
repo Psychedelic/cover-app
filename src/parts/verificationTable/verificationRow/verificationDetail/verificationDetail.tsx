@@ -18,22 +18,22 @@ export const VerificationDetail: React.VFC<PropTypes> = ({label, value, isLink, 
     </td>
     <td colSpan={2}>
       <div>
-        {isTrim ? (
-          value ? (
+        {value ? (
+          isTrim ? (
             <Core.CopyableText>{value}</Core.CopyableText>
           ) : (
-            <span>{'N/A'}</span>
+            <span>
+              {isLink ? (
+                <a href={value} rel={'noreferrer'} target={'_blank'}>
+                  {'View'}{' '}
+                </a>
+              ) : (
+                value
+              )}
+            </span>
           )
         ) : (
-          <span>
-            {isLink ? (
-              <a href={value} rel={'noreferrer'} target={'_blank'}>
-                {'View'}
-              </a>
-            ) : (
-              value || 'N/A'
-            )}
-          </span>
+          <span>{'N/A'}</span>
         )}
       </div>
     </td>
