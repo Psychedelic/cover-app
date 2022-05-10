@@ -2,7 +2,7 @@ import React, {useCallback, useImperativeHandle, useState} from 'react';
 
 import {Core} from '@/components';
 
-import {StitchesBtnGroup} from './errorDialog.styled';
+import {StitchesBtnGroup} from './successDialog.styled';
 
 interface PropTypes {
   cancelContent?: string;
@@ -11,13 +11,13 @@ interface PropTypes {
   onAction?: () => void;
 }
 
-export interface ErrorDialogHandler {
+export interface SuccessDialogHandler {
   open: (option?: {title?: string; description?: React.ReactNode; showActionBtn?: boolean}) => void;
   close: () => void;
 }
 
-export const ErrorDialog = React.forwardRef<ErrorDialogHandler, PropTypes>(
-  ({cancelContent = 'Cancel', actionContent = 'Retry', open, onAction}, ref) => {
+export const SuccessDialog = React.forwardRef<SuccessDialogHandler, PropTypes>(
+  ({cancelContent = 'Cancel', actionContent = 'Ok', open, onAction}, ref) => {
     const [isOpen, setIsOpen] = useState(open);
     const [showActionBtn, setShowActionBtn] = useState(false);
     const [title, setTitle] = useState('');
@@ -44,20 +44,10 @@ export const ErrorDialog = React.forwardRef<ErrorDialogHandler, PropTypes>(
       <Core.AlertDialog open={isOpen}>
         <Core.AlertDialogContent>
           <Core.AlertDialogTitle>
-            <Core.Dot size={'large'} type={'red'} />
-            {title || ' We ran into an issue'}
+            <Core.Dot size={'large'} type={'green'} />
+            {title || ' Success'}
           </Core.AlertDialogTitle>
-          <Core.AlertDialogDescription>
-            {description || (
-              <>
-                {'Please retry the submission, if this issue persists report in our '}
-                <a href={'https://discord.gg/yVEcEzmrgm'} rel={'noreferrer'} target={'_blank'}>
-                  {'Discord'}
-                </a>
-                {'.'}
-              </>
-            )}
-          </Core.AlertDialogDescription>
+          <Core.AlertDialogDescription>{description || 'Congrats!'}</Core.AlertDialogDescription>
           <StitchesBtnGroup>
             <Core.AlertDialogCancel asChild>
               <Core.Button onClick={onCancelClick} size={'large'} type={'outline'}>

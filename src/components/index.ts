@@ -5,3 +5,4 @@ export * from './pagination';
 export * from './form';
 export * from './errorDialog';
 export * from './infoDialog';
+export * from './successDialog';

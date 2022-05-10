@@ -12,7 +12,9 @@ import {
   FormInput,
   FormInputHandler,
   InfoDialog,
-  InfoDialogHandler
+  InfoDialogHandler,
+  SuccessDialog,
+  SuccessDialogHandler
 } from '@/components';
 import {DASHBOARD_PATH} from '@/constants';
 import {
@@ -66,12 +68,13 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
   const inputRefs = useInputRefs();
   const errDialogRef = useRef<ErrorDialogHandler>(null);
   const infoDialogRef = useRef<InfoDialogHandler>(null);
+  const successDialogRef = useRef<SuccessDialogHandler>(null);
   const navigate = useNavigate();
   const goToDashboard = useCallback(() => navigate(DASHBOARD_PATH), [navigate]);
   const onSubmit = useCallback(
     (event?: React.FormEvent) => {
       event?.preventDefault();
-      handleSubmit(inputRefs, infoDialogRef, errDialogRef);
+      handleSubmit(inputRefs, {infoDialogRef, errDialogRef, successDialogRef});
     },
     [inputRefs]
   );
@@ -195,7 +198,8 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
           <Core.Button size={'large'}>{'Submit Verification'}</Core.Button>
         </div>
       </FormContainer>
-      <InfoDialog actionContent={'Go back to Dashboard'} onAction={goToDashboard} ref={infoDialogRef} />
+      <SuccessDialog actionContent={'Go back to Dashboard'} onAction={goToDashboard} ref={successDialogRef} />
+      <InfoDialog ref={infoDialogRef} />
       <ErrorDialog
         actionContent={'Retry Verification'}
         cancelContent={'Close'}
@@ -206,11 +210,13 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
   );
 };
 
-const handleSubmit = (
-  inputRefs: InputRefs,
-  infoDialogRef: React.RefObject<InfoDialogHandler>,
-  errDialogRef: React.RefObject<ErrorDialogHandler>
-) => {
+interface DialogRefs {
+  infoDialogRef: React.RefObject<InfoDialogHandler>;
+  errDialogRef: React.RefObject<ErrorDialogHandler>;
+  successDialogRef: React.RefObject<SuccessDialogHandler>;
+}
+
+const handleSubmit = (inputRefs: InputRefs, {infoDialogRef, errDialogRef, successDialogRef}: DialogRefs) => {
   const hasError = Object.values(inputRefs).reduce((result, ref) => {
     if (ref.current) {
       return ref.current.hasError() || result;
@@ -218,6 +224,11 @@ const handleSubmit = (
     return result;
   }, false);
   if (!hasError) {
+    infoDialogRef.current?.open({
+      title: 'Submission Processing',
+      description: 'Your submission is processing, please allow some time for the verification to finish.'
+    });
+
     coverAnonymousBuild({
       owner_id: inputRefs.ownerId.current?.value() as string,
       canister_id: inputRefs.canisterId.current?.value() as string,
@@ -233,12 +244,13 @@ const handleSubmit = (
       public_key: inputRefs.publicKey.current?.value() as string
     })
       .then(() =>
-        infoDialogRef.current?.open({
+        successDialogRef.current?.open({
           description: 'Congrats!!! You have submitted verification successfully',
           showActionBtn: true
         })
       )
-      .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler));
+      .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
+      .finally(() => infoDialogRef.current?.close());
   }
 };
 

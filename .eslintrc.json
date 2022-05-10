@@ -88,7 +88,8 @@
     ],
     "@typescript-eslint/no-unused-vars": ["error"],
     "sonarjs/no-duplicate-string": ["error", 5],
-    "sonarjs/cognitive-complexity": ["error", 20]
+    "sonarjs/cognitive-complexity": ["error", 20],
+    "promise/catch-or-return": ["error", {"allowFinally": true}]
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},
