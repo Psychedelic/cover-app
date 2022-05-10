@@ -16,7 +16,7 @@ export interface InfoDialogHandler {
     title?: string;
     description?: React.ReactNode;
     showActionBtn?: boolean;
-    showCloseBtn?: boolean;
+    showCancelBtn?: boolean;
   }) => void;
   close: () => void;
 }
@@ -25,7 +25,7 @@ export const InfoDialog = React.forwardRef<InfoDialogHandler, PropTypes>(
   ({cancelContent = 'Cancel', actionContent = 'Ok', open, onAction}, ref) => {
     const [isOpen, setIsOpen] = useState(open);
     const [showActionBtn, setShowActionBtn] = useState(false);
-    const [showCloseBtn, setShowCloseBtn] = useState(false);
+    const [showCancelBtn, setShowCancelBtn] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState<React.ReactNode>();
     useImperativeHandle(ref, () => ({
@@ -34,7 +34,7 @@ export const InfoDialog = React.forwardRef<InfoDialogHandler, PropTypes>(
         setTitle((option.title as string) && ` ${option.title}`);
         setDescription(option.description);
         setShowActionBtn(Boolean(option.showActionBtn));
-        setShowCloseBtn(Boolean(option.showCloseBtn));
+        setShowCancelBtn(Boolean(option.showCancelBtn));
       },
       close: () => {
         setIsOpen(false);
@@ -56,7 +56,7 @@ export const InfoDialog = React.forwardRef<InfoDialogHandler, PropTypes>(
           </Core.AlertDialogTitle>
           <Core.AlertDialogDescription>{description || 'Info'}</Core.AlertDialogDescription>
           <StitchesBtnGroup>
-            {showCloseBtn && (
+            {showCancelBtn && (
               <Core.AlertDialogCancel asChild>
                 <Core.Button onClick={onCancelClick} size={'large'} type={'outline'}>
                   {cancelContent}
