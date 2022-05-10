@@ -15,6 +15,10 @@ export const tableBodyStyle = {
   '& td:nth-of-type(3)': {
     textAlign: 'center',
     textDecoration: 'underline',
+    '& :hover': {
+      textDecoration: 'underline',
+      textDecorationColor: '$coverBlue'
+    },
     '& div': {
       width: '70px !important',
       margin: '0 auto'
