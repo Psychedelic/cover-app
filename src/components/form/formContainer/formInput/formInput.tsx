@@ -6,6 +6,7 @@ import {Core} from '@/components';
 import {getNameFromLabel, isNotEmpty} from '@/utils';
 
 import {StitchesFormInput} from './formInput.styled';
+import {InfoTooltip} from './infoTooltip';
 
 type InputValidations = [(value: string) => boolean];
 
@@ -18,6 +19,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesFormInput> {
   validations?: InputValidations;
   validationIf?: InputValidations;
   errorMessage?: string;
+  infoTooltip?: string;
 }
 
 export interface FormInputHandler {
@@ -29,7 +31,7 @@ const isValidateFailed = (validations: [(value: string) => boolean], value: stri
   validations.reduce((result, validation) => result || !validation(value), false as boolean);
 
 export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
-  ({css, textarea, label, rows, required, validations, validationIf, errorMessage}, ref) => {
+  ({css, textarea, label, rows, required, validations, validationIf, errorMessage, infoTooltip}, ref) => {
     const [hasError, setHasError] = useState(false);
     const inputRef = useRef(null);
     const onInputOrBlur = useCallback(
@@ -65,7 +67,10 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
     );
     return (
       <StitchesFormInput css={css} hasError={hasError ? 'true' : 'false'}>
-        <label htmlFor={name}>{label}</label>
+        <div>
+          <label htmlFor={name}>{label}</label>
+          {infoTooltip && <InfoTooltip info={infoTooltip} />}
+        </div>
         {textarea ? (
           <Core.Textarea
             name={name}

@@ -81,6 +81,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         <h3>{'Submit Verification'}</h3>
         <FormInput
           errorMessage={'Invalid principal format.'}
+          infoTooltip={'The owner (controller) principal ID associated with the canister'}
           label={'Owner Principal ID'}
           ref={inputRefs.ownerId}
           required
@@ -88,6 +89,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid principal format.'}
+          infoTooltip={'The canister ID associated with this verification'}
           label={'Canister Principal ID'}
           ref={inputRefs.canisterId}
           required
@@ -95,6 +97,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Required.'}
+          infoTooltip={'The canister name defined in your dfx.json and canister_ids.json'}
           label={'Canister Name'}
           ref={inputRefs.canisterName}
           required
@@ -102,6 +105,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid repo url format. Example: psychedelic/cover'}
+          infoTooltip={'The git repository of the canister in format {server}/{repo}'}
           label={'Repo URL'}
           ref={inputRefs.repoUrl}
           required
@@ -109,6 +113,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid hex format. Example: f01f'}
+          infoTooltip={'The git commit hash associated with the git repository in hex format'}
           label={'Commit Hash'}
           ref={inputRefs.commitHash}
           required
@@ -116,6 +121,9 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Required.'}
+          infoTooltip={
+            'Personal Access Token of a github account that is an OWNER or has TRIAGE permission to the canister repo'
+          }
           label={'Repo Access Token'}
           ref={inputRefs.repoAccessToken}
           required
@@ -123,6 +131,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid version format. Example 1.60.0'}
+          infoTooltip={'Rust stable version to build the canister; skip this field if using Motoko'}
           label={'Rust Version'}
           ref={inputRefs.rustVersion}
           validationIf={[value => parseInt(value, 10) > 0]}
@@ -130,6 +139,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid version format. Example 0.9.2'}
+          infoTooltip={'Dfx version to deploy/build the canister'}
           label={'DFX Version'}
           ref={inputRefs.dfxVersion}
           required
@@ -137,6 +147,10 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid number. Only support positive number from 0-10'}
+          infoTooltip={
+            'The times you want to optimize your wasm. After the first time, ' +
+            'the wasm will not be significantly smaller anymore. If times > 0, you must specify the rust version'
+          }
           label={'IC CDK Optimizer'}
           ref={inputRefs.optimizeCount}
           required
@@ -144,6 +158,10 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid timestamp format. Example: 1651742769039'}
+          infoTooltip={
+            'The timestamp in UNIX epoch format is also a challenge to sign by your identity, ' +
+            'and the signature will be expired after 5 minutes.'
+          }
           label={'Timestamp'}
           ref={inputRefs.timestamp}
           required
@@ -151,6 +169,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid hex format. Example: f01f'}
+          infoTooltip={'The signature is signed with the timestamp being the message'}
           label={'Signature'}
           ref={inputRefs.signature}
           required
@@ -160,6 +179,7 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
         />
         <FormInput
           errorMessage={'Invalid hex format. Example: f01f'}
+          infoTooltip={'The public key that associated with the owner principal ID'}
           label={'Public Key'}
           ref={inputRefs.publicKey}
           required
