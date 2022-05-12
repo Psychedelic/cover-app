@@ -1,5 +1,6 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
-import {StitchesContent, StitchesTrigger, StitchesArrow} from './tooltip.styled';
+
+import {StitchesArrow, StitchesContent, StitchesTrigger} from './tooltip.styled';
 
 export const TooltipProvider = TooltipPrimitive.Provider;
 export const TooltipRoot = TooltipPrimitive.Root;
