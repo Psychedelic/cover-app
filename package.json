@@ -2,6 +2,9 @@
   "name": "cover-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=14.18.2"
+  },
   "devDependencies": {
     "@storybook/addon-a11y": "^6.5.0-beta.1",
     "@storybook/addon-essentials": "^6.5.0-beta.1",
