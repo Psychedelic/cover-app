@@ -12,8 +12,8 @@ jobs:
       - name: Setup Node environment
         uses: actions/setup-node@v3.0.0
         with:
-          node-version: ">=14.18.2"
-          cache: "npm"
+          node-version: '>=14.18.2'
+          cache: 'npm'
       - run: npm ci
       - name: Prettier check
         run: npm run prettier:check
