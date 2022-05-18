@@ -48,7 +48,7 @@ export const PageHeader: React.VFC = () => {
         <Link to={SUBMIT_PATH}>
           <Core.Button disabled={getCurrentPath() !== DASHBOARD_PATH}>{'Submit Verification'}</Core.Button>
         </Link>
-        <Core.Button>{'Connect to Plug'}</Core.Button>
+        <Core.Button disabled>{'Connect to Plug'}</Core.Button>
       </StitchesPageSecondaryHeader>
     </StitchesPageHeaderContainer>
   );
