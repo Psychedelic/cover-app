@@ -18,16 +18,23 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
   const [hasError, setHasError] = useState(false);
   const searchBarRef = useRef(null);
 
-  const onInput = useCallback(
-    _ => {
-      if (searchBarRef.current) {
-        const value = (searchBarRef.current as HTMLInputElement).value;
-        setHasValue(value !== '');
-        validation && setHasError(value !== '' && !validation(value));
-      }
-    },
-    [validation]
-  );
+  const search = useCallback(() => {
+    if (onBlurOrEnter && searchBarRef.current && validation) {
+      const value = (searchBarRef.current as HTMLInputElement).value;
+      const hasErr = value !== '' && !validation(value);
+      setHasError(hasErr);
+      // Only trigger `onBlurOrEnter` when `validation` is passed
+      !hasErr && onBlurOrEnter(value);
+    }
+  }, [onBlurOrEnter, validation]);
+
+  const onInput = useCallback(_ => {
+    if (searchBarRef.current) {
+      const value = (searchBarRef.current as HTMLInputElement).value;
+      setHasValue(value !== '');
+      setHasError(false);
+    }
+  }, []);
 
   const onClick = useCallback(() => {
     if (searchBarRef.current) {
@@ -39,26 +46,15 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
     }
   }, []);
 
-  const onBlur = useCallback(
-    _ => {
-      if (onBlurOrEnter && searchBarRef.current) {
-        const searchBar = searchBarRef.current as HTMLInputElement;
-        // Only trigger `onBlurOrEnter` when `validation` is passed
-        !hasError && onBlurOrEnter(searchBar.value);
-      }
-    },
-    [onBlurOrEnter, hasError]
-  );
+  const onBlur = useCallback(search, [search]);
 
   const onEnter = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' && onBlurOrEnter && searchBarRef.current) {
-        const searchBar = searchBarRef.current as HTMLInputElement;
-        // Only trigger `onBlurOrEnter` when `validation` is passed
-        !hasError && onBlurOrEnter(searchBar.value);
+      if (e.key === 'Enter') {
+        search();
       }
     },
-    [onBlurOrEnter, hasError]
+    [search]
   );
 
   const containerStyled = hasError ? hasErrorStyled : hasValue ? hasValueStyled : searchBarStyled;
