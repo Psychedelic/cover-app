@@ -34,7 +34,8 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
   ({css, textarea, label, rows, required, validations, validationIf, errorMessage, infoTooltip}, ref) => {
     const [hasError, setHasError] = useState(false);
     const inputRef = useRef(null);
-    const onInputOrBlur = useCallback(
+
+    const onBlur = useCallback(
       _ => {
         if (inputRef.current && validations) {
           const value = (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value;
@@ -43,6 +44,11 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
       },
       [validations]
     );
+
+    const onInput = useCallback(_ => {
+      setHasError(false);
+    }, []);
+
     const name = getNameFromLabel(label);
     useImperativeHandle(
       ref,
@@ -65,6 +71,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
       }),
       [required, validations, validationIf]
     );
+
     return (
       <StitchesFormInput css={css} hasError={hasError ? 'true' : 'false'}>
         <div>
@@ -74,20 +81,14 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
         {textarea ? (
           <Core.Textarea
             name={name}
-            onBlur={onInputOrBlur}
-            onInput={onInputOrBlur}
+            onBlur={onBlur}
+            onInput={onInput}
             placeholder={`Enter ${label}`}
             ref={inputRef}
             rows={rows}
           />
         ) : (
-          <Core.Input
-            name={name}
-            onBlur={onInputOrBlur}
-            onInput={onInputOrBlur}
-            placeholder={`Enter ${label}`}
-            ref={inputRef}
-          />
+          <Core.Input name={name} onBlur={onBlur} onInput={onInput} placeholder={`Enter ${label}`} ref={inputRef} />
         )}
         {hasError && <span>{errorMessage}</span>}
       </StitchesFormInput>
