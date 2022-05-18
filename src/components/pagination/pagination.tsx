@@ -37,7 +37,7 @@ export const Pagination: React.VFC<PropTypes> = ({
     setIsLastPage(recentValue.current === lastPage);
   }, [lastPage]);
 
-  const isPageChanged = useCallback(
+  const shouldRerender = useCallback(
     (newVal: string): boolean => {
       if (isPositiveNum(newVal)) {
         const oldVal = recentValue.current;
@@ -53,19 +53,18 @@ export const Pagination: React.VFC<PropTypes> = ({
     [lastPage]
   );
 
-  const onBlur = useCallback(
-    _ => {
-      if (inputRef.current) {
-        if (isPageChanged((inputRef.current as HTMLInputElement).value)) {
-          onPageChanged && onPageChanged(recentValue.current);
-        }
-        (inputRef.current as HTMLInputElement).value = String(recentValue.current);
-        setIsFirstPage(recentValue.current === 1);
-        setIsLastPage(recentValue.current === lastPage);
+  const pageChangeHandler = useCallback(() => {
+    if (inputRef.current) {
+      if (shouldRerender((inputRef.current as HTMLInputElement).value)) {
+        onPageChanged && onPageChanged(recentValue.current);
       }
-    },
-    [isPageChanged, lastPage, onPageChanged]
-  );
+      (inputRef.current as HTMLInputElement).value = String(recentValue.current);
+      setIsFirstPage(recentValue.current === 1);
+      setIsLastPage(recentValue.current === lastPage);
+    }
+  }, [shouldRerender, lastPage, onPageChanged]);
+
+  const onBlur = useCallback(pageChangeHandler, [pageChangeHandler]);
 
   const onBtnClick = useCallback(
     ({target}) => {
@@ -82,6 +81,15 @@ export const Pagination: React.VFC<PropTypes> = ({
     [onPageChanged, lastPage]
   );
 
+  const onEnter = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        pageChangeHandler();
+      }
+    },
+    [pageChangeHandler]
+  );
+
   return (
     <StitchesPagination css={css}>
       <Core.Button disabled={disablePaginated || isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
@@ -91,6 +99,7 @@ export const Pagination: React.VFC<PropTypes> = ({
         defaultValue={defaultPage}
         disabled={disablePaginated || lastPage === 1}
         onBlur={onBlur}
+        onKeyPress={onEnter}
         ref={inputRef}
       />
       <Core.Button disabled={disablePaginated || isLastPage} onClick={onBtnClick} ref={rightBtn} type={'outline'}>
