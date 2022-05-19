@@ -19,7 +19,7 @@ const activityStatus: {[key: string]: 'red' | 'yellow' | 'green'} = {
 export const ActivityRow: React.FC<PropTypes> = ({buildStatus, canisterId, dateTime}) => (
   <TableRow
     showLoadingMaskStatus={typeof buildStatus === 'undefined'}
-    type={buildStatus ? activityStatus[buildStatus] : null}>
+    type={buildStatus && activityStatus[buildStatus]}>
     <Core.LoadingMask key={0}>
       <span>{buildStatus}</span>
     </Core.LoadingMask>
@@ -27,7 +27,7 @@ export const ActivityRow: React.FC<PropTypes> = ({buildStatus, canisterId, dateT
       <Core.CopyableText>{canisterId}</Core.CopyableText>
     </Core.LoadingMask>
     <Core.LoadingMask key={2}>
-      <span>{dateTime ? getDuration(dateTime) : null}</span>
+      <span>{dateTime && getDuration(dateTime)}</span>
     </Core.LoadingMask>
   </TableRow>
 );

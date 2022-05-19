@@ -56,20 +56,20 @@ export const InfoDialog = React.forwardRef<InfoDialogHandler, PropTypes>(
           </Core.AlertDialogTitle>
           <Core.AlertDialogDescription>{description || 'Info'}</Core.AlertDialogDescription>
           <StitchesBtnGroup>
-            {showCancelBtn ? (
+            {showCancelBtn && (
               <Core.AlertDialogCancel asChild>
                 <Core.Button onClick={onCancelClick} size={'large'} type={'outline'}>
                   {cancelContent}
                 </Core.Button>
               </Core.AlertDialogCancel>
-            ) : null}
-            {showActionBtn ? (
+            )}
+            {showActionBtn && (
               <Core.AlertDialogAction asChild>
                 <Core.Button onClick={onActionClick} size={'large'} type={'main'}>
                   {actionContent}
                 </Core.Button>
               </Core.AlertDialogAction>
-            ) : null}
+            )}
           </StitchesBtnGroup>
         </Core.AlertDialogContent>
       </Core.AlertDialog>

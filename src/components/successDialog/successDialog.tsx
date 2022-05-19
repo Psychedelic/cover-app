@@ -54,13 +54,13 @@ export const SuccessDialog = React.forwardRef<SuccessDialogHandler, PropTypes>(
                 {cancelContent}
               </Core.Button>
             </Core.AlertDialogCancel>
-            {showActionBtn ? (
+            {showActionBtn && (
               <Core.AlertDialogAction asChild>
                 <Core.Button onClick={onActionClick} size={'large'} type={'main'}>
                   {actionContent}
                 </Core.Button>
               </Core.AlertDialogAction>
-            ) : null}
+            )}
           </StitchesBtnGroup>
         </Core.AlertDialogContent>
       </Core.AlertDialog>

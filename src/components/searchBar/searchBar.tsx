@@ -70,11 +70,11 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
         ref={searchBarRef}
         size={'small'}
       />
-      {hasValue ? (
+      {hasValue && (
         <Core.Button onClick={onClick} type={'text'}>
           <FontAwesomeIcon icon={faXmark} size={'lg'} />
         </Core.Button>
-      ) : null}
+      )}
     </Core.InputContainer>
   );
 };
