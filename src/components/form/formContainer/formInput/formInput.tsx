@@ -76,7 +76,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
       <StitchesFormInput css={css} hasError={hasError ? 'true' : 'false'}>
         <div>
           <label htmlFor={name}>{label}</label>
-          {infoTooltip && <InfoTooltip info={infoTooltip} />}
+          {infoTooltip ? <InfoTooltip info={infoTooltip} /> : null}
         </div>
         {textarea ? (
           <Core.Textarea
@@ -90,7 +90,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
         ) : (
           <Core.Input name={name} onBlur={onBlur} onInput={onInput} placeholder={`Enter ${label}`} ref={inputRef} />
         )}
-        {hasError && <span>{errorMessage}</span>}
+        {hasError ? <span>{errorMessage}</span> : null}
       </StitchesFormInput>
     );
   }

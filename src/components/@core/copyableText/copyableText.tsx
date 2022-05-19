@@ -44,7 +44,7 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color, rawText
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
       {rawText ? children : trim(children)}
-      {(isClicked || isHovered) && ' '}
+      {isClicked || isHovered ? ' ' : null}
       {isClicked ? <FontAwesomeIcon icon={faCheck} /> : isHovered && <FontAwesomeIcon icon={faCopy} />}
     </StitchesCopyableText>
   );

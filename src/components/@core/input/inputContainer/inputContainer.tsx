@@ -14,7 +14,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesInputContainer> 
 
 export const InputContainer: React.FC<PropTypes> = ({size, bg, css, children, icon, iconColor}) => (
   <StitchesInputContainer bg={bg} css={css} size={size}>
-    {icon && <FontAwesomeIcon color={iconColor} icon={icon} />}
+    {icon ? <FontAwesomeIcon color={iconColor} icon={icon} /> : null}
     {children}
   </StitchesInputContainer>
 );

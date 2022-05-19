@@ -64,7 +64,7 @@ export const VerificationRow: React.VFC<PropTypes> = ({
           </Core.LoadingMask>
         ]}
       </TableRow>
-      {isSelected && (
+      {isSelected ? (
         <>
           <TableRow override>
             <VerificationDetail isTrim label={'Owner Principal ID'} value={verification.ownerId} />
@@ -83,7 +83,7 @@ export const VerificationRow: React.VFC<PropTypes> = ({
             <VerificationDetail isLink label={'Build Result'} value={verification.buildUrl} />
           </TableRow>
         </>
-      )}
+      ) : null}
     </>
   );
 };

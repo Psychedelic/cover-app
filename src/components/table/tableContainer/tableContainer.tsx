@@ -24,6 +24,8 @@ export const TableContainer: React.FC<PropTypes> = ({
 }) => (
   <StitchesTableContainer css={css}>
     <table>{children}</table>
-    {paginated && <Pagination disablePaginated={disablePaginated} lastPage={lastPage} onPageChanged={onPageChanged} />}
+    {paginated ? (
+      <Pagination disablePaginated={disablePaginated} lastPage={lastPage} onPageChanged={onPageChanged} />
+    ) : null}
   </StitchesTableContainer>
 );
