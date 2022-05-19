@@ -20,7 +20,7 @@ export const CopyableText: React.FC<PropTypes> = ({children, css, color, rawText
   const [isHovered, setIsHovered] = useState(false);
   const content = useRef(children || '');
 
-  const onClick = useCallback(_ => {
+  const onClick = useCallback<React.ReactEventHandler>(_ => {
     navigator.clipboard.writeText(content.current);
     setIsClicked(true);
     setTimeout(() => {

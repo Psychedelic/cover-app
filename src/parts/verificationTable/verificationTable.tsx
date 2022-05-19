@@ -21,7 +21,7 @@ export const VerificationTable: React.VFC<PropTypes> = ({defaultVerifications}) 
     fetchVerifications(dispatch);
   }, [dispatch]);
   const onPageChanged = useCallback(
-    pageNum => {
+    (pageNum: number) => {
       fetchVerifications(dispatch, pageNum);
     },
     [dispatch]

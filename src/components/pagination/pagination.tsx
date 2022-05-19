@@ -66,9 +66,9 @@ export const Pagination: React.VFC<PropTypes> = ({
 
   const onBlur = useCallback(pageChangeHandler, [pageChangeHandler]);
 
-  const onBtnClick = useCallback(
+  const onBtnClick = useCallback<React.ReactEventHandler>(
     ({target}) => {
-      const isMinus = leftBtn.current && (leftBtn.current as HTMLButtonElement).contains(target);
+      const isMinus = leftBtn.current && (leftBtn.current as HTMLButtonElement).contains(target as Node);
       if (inputRef.current) {
         const newValue = recentValue.current + (isMinus ? -1 : 1);
         (inputRef.current as HTMLInputElement).value = `${newValue}`;

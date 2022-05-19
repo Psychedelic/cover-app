@@ -5,7 +5,7 @@ import {ActivityTable, PageContainer, StatsTable, VerificationTable} from '@/par
 
 import {ContentContainer, LeftContent, RightContent} from './dashboard.styled';
 
-export const Dashboard: React.VFC = () => (
+export const Dashboard: React.FC = () => (
   <VerificationProvider>
     <PageContainer>
       <ContentContainer>

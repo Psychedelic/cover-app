@@ -35,7 +35,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
     const [hasError, setHasError] = useState(false);
     const inputRef = useRef(null);
 
-    const onBlur = useCallback(
+    const onBlur = useCallback<React.ReactEventHandler>(
       _ => {
         if (inputRef.current && validations) {
           const value = (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value;
@@ -45,7 +45,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
       [validations]
     );
 
-    const onInput = useCallback(_ => {
+    const onInput = useCallback<React.ReactEventHandler>(_ => {
       setHasError(false);
     }, []);
 
