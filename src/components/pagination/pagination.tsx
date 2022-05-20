@@ -37,7 +37,7 @@ export const Pagination: React.VFC<PropTypes> = ({
     setIsLastPage(recentValue.current === lastPage);
   }, [lastPage]);
 
-  const shouldRerender = useCallback(
+  const isPageChanged = useCallback(
     (newVal: string): boolean => {
       if (isPositiveNum(newVal)) {
         const oldVal = recentValue.current;
@@ -55,14 +55,14 @@ export const Pagination: React.VFC<PropTypes> = ({
 
   const pageChangeHandler = useCallback(() => {
     if (inputRef.current) {
-      if (shouldRerender((inputRef.current as HTMLInputElement).value)) {
+      if (isPageChanged((inputRef.current as HTMLInputElement).value)) {
         onPageChanged && onPageChanged(recentValue.current);
       }
       (inputRef.current as HTMLInputElement).value = String(recentValue.current);
       setIsFirstPage(recentValue.current === 1);
       setIsLastPage(recentValue.current === lastPage);
     }
-  }, [shouldRerender, lastPage, onPageChanged]);
+  }, [isPageChanged, lastPage, onPageChanged]);
 
   const onBlur = useCallback(pageChangeHandler, [pageChangeHandler]);
 
