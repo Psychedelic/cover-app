@@ -67,6 +67,7 @@
     ],
     "react/react-in-jsx-scope": "off",
     "react/jsx-max-depth": ["error", {"max": 4}],
+    "react/jsx-no-leaked-render": "off",
     "no-restricted-imports": [
       "error",
       {

@@ -32,7 +32,7 @@ const fetchActivity = (pageNum = 1): Promise<ActivitiesPagination> =>
 
 const emptyList = Array<Activity>(ITEMS_PER_PAGE).fill({});
 
-export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
+export const ActivityTable: React.FC<PropTypes> = ({activity = emptyList}) => {
   const [activities, setActivities] = useState(activity);
   const [lastPage, setLastPage] = useState(1);
   const [disablePaginated, setDisablePaginated] = useState(false);
@@ -49,7 +49,7 @@ export const ActivityTable: React.VFC<PropTypes> = ({activity = emptyList}) => {
     };
   }, []);
 
-  const onPageChange = useCallback(pageNum => {
+  const onPageChange = useCallback((pageNum: number) => {
     setActivities(emptyList);
     setDisablePaginated(true);
     (async () => {

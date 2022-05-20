@@ -73,7 +73,7 @@ const verificationReducer = (_: State, action: Action): State => {
 
 const VerificationContext = React.createContext<Context>({state: {}, dispatch: () => {}});
 
-export const VerificationProvider: React.FC = ({children}) => {
+export const VerificationProvider: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
   const isMounted = useRef<boolean | undefined>();
   const [state, dispatch] = React.useReducer(verificationReducer, {});
   useEffect(() => {

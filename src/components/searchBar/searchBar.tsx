@@ -28,7 +28,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
     }
   }, [onBlurOrEnter, validation]);
 
-  const onInput = useCallback(_ => {
+  const onInput = useCallback<React.ReactEventHandler>(_ => {
     if (searchBarRef.current) {
       const value = (searchBarRef.current as HTMLInputElement).value;
       setHasValue(value !== '');
