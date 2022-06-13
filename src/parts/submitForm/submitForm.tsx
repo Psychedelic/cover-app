@@ -123,14 +123,11 @@ export const SubmitForm: React.VFC<PropTypes> = ({css}) => {
           validations={[isValidHexFormat]}
         />
         <FormInput
-          errorMessage={'Required.'}
           infoTooltip={
             'Personal Access Token of a github account that is an OWNER or has TRIAGE permission to the canister repo'
           }
           label={'Repo Access Token'}
           ref={inputRefs.repoAccessToken}
-          required
-          validations={[isNotEmpty]}
         />
         <FormInput
           errorMessage={'Invalid version format. Example 1.60.0'}
