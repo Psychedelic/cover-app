@@ -78,6 +78,14 @@ export const defaultStitches = createCustomStitches();
 export const globalStyles = defaultStitches.globalCss(
   ...opinionated,
   {
+    '@font-face': {
+      fontFamily: 'Monaco',
+      fontStyle: 'normal',
+      fontWeight: 'normal',
+      src: 'local("Monaco"), url("src/assets/Monaco.woff") format("woff");'
+    }
+  },
+  {
     table: {
       borderCollapse: 'collapse',
       borderSpacing: 0
