@@ -82,7 +82,7 @@ export const globalStyles = defaultStitches.globalCss(
       fontFamily: 'Monaco',
       fontStyle: 'normal',
       fontWeight: 'normal',
-      src: 'local("Monaco"), url("src/assets/Monaco.woff") format("woff");'
+      src: 'local("Monaco"), url("Monaco.woff") format("woff");'
     }
   },
   {

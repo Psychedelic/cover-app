@@ -66,11 +66,17 @@ module.exports = {
       }
       html {
         background-color: #171717;
-        font-family: Monaco, sans-serif;
+        font-family: Monaco, monospace;
       }
       a {
         all: unset;
         cursor: pointer;
+      }
+      @font-face {
+        font-family: 'Monaco';
+        font-style: 'normal';
+        font-weight: 'normal';
+        src: local("Monaco"), url("Monaco.woff") format("woff");
       }
     </style>
   `
