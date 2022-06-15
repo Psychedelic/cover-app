@@ -66,7 +66,7 @@ module.exports = {
       }
       html {
         background-color: #171717;
-        font-family: Monaco, sans-serif;
+        font-family: Monaco, monospace;
       }
       a {
         all: unset;

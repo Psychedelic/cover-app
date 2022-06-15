@@ -12,7 +12,7 @@ export const typography = {
   },
 
   fonts: {
-    monaco: `'Monaco', sans-serif;`
+    monaco: `'Monaco', monospace;`
   },
 
   fontSizes: {
