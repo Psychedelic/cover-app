@@ -72,6 +72,12 @@ module.exports = {
         all: unset;
         cursor: pointer;
       }
+      @font-face {
+        font-family: 'Monaco';
+        font-style: 'normal';
+        font-weight: 'normal';
+        src: local("Monaco"), url("Monaco.woff") format("woff");
+      }
     </style>
   `
 };
