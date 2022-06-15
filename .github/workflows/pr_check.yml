@@ -2,7 +2,7 @@ name: PR check
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
   format_lint_test_build:
