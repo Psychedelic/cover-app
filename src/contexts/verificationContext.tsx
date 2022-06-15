@@ -6,6 +6,11 @@ import {Verification as CanisterVerification} from '@psychedelic/cover';
 import {Verification} from '@/models';
 import {capitalize, coverSDK} from '@/utils';
 
+/*
+ * ========================================================================================================
+ * ACTION INTERFACES
+ * ========================================================================================================
+ */
 type Action = FetchPendingAction | FetchVerificationsAction | FetchByCanisterIdAction;
 interface ActionBase<T = unknown> {
   type: string;
@@ -29,6 +34,12 @@ interface FetchByCanisterIdAction extends ActionBase {
     currentCanisterId: string;
   };
 }
+
+/*
+ * ========================================================================================================
+ * STATE
+ * ========================================================================================================
+ */
 interface State {
   verifications?: Verification[];
   atPage?: number;
@@ -36,15 +47,43 @@ interface State {
   currentCanisterId?: string;
   disablePaginated?: boolean;
 }
+
+/*
+ * ========================================================================================================
+ * CONTEXT
+ * ========================================================================================================
+ */
 interface Context {
   state: State;
   dispatch: (action: Action) => void;
 }
+const VerificationContext = React.createContext<Context>({
+  state: {},
+  dispatch: () => {
+    // Do nothing.
+  }
+});
+export const useVerificationContext = () => React.useContext(VerificationContext);
 
+/*
+ * ========================================================================================================
+ * DEFAULT PAGE SIZE
+ * ========================================================================================================
+ */
 const ITEMS_PER_PAGE = 18;
 
+/*
+ * ========================================================================================================
+ * DEFAULT LOADING MASK
+ * ========================================================================================================
+ */
 const loadingVerifications = Array<Verification>(ITEMS_PER_PAGE).fill({});
 
+/*
+ * ========================================================================================================
+ * REDUCER
+ * ========================================================================================================
+ */
 const verificationReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
@@ -71,8 +110,11 @@ const verificationReducer = (_: State, action: Action): State => {
   }
 };
 
-const VerificationContext = React.createContext<Context>({state: {}, dispatch: () => {}});
-
+/*
+ * ========================================================================================================
+ * PROVIDER
+ * ========================================================================================================
+ */
 export const VerificationProvider: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
   const isMounted = useRef<boolean | undefined>();
   const [state, dispatch] = React.useReducer(verificationReducer, {});
@@ -95,8 +137,11 @@ export const VerificationProvider: React.FC<React.PropsWithChildren<unknown>> = 
   return <VerificationContext.Provider value={value}>{children}</VerificationContext.Provider>;
 };
 
-export const useVerificationContext = () => React.useContext(VerificationContext);
-
+/*
+ * ========================================================================================================
+ * ACTIONS
+ * ========================================================================================================
+ */
 export const fetchVerifications = async (
   dispatch: Dispatch<ReducerAction<typeof verificationReducer>>,
   pageNum = 1
@@ -139,6 +184,11 @@ export const fetchByCanisterId = async (
   }
 };
 
+/*
+ * ========================================================================================================
+ * MAPPER
+ * ========================================================================================================
+ */
 const mapPartialVerification = (data: CanisterVerification): Verification => ({
   canisterId: data.canister_id.toText(),
   name: data.canister_name,
