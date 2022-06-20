@@ -2,20 +2,28 @@ import {defaultStitches} from '@/themes';
 
 const {styled} = defaultStitches;
 
-export const StitchesSubmitForm = styled('div', {
+export const StitchesMultiStepForm = styled('div', {
   marginTop: '15px',
   display: 'flex',
   justifyContent: 'center',
-  '& h3': {
+  '& .header': {
     color: '$coverWhite',
     fontSize: '22px',
-    margin: '0 0 $10 0'
+    margin: '0 0 $10 0',
+    '& button': {
+      margin: 0,
+      padding: '0 15px 0 0',
+      color: '$coverWhite'
+    }
   },
   '& button': {
     marginLeft: '13px'
   },
   '& .formButtonGroup': {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    '> button': {
+      width: '200px'
+    }
   }
 });

@@ -20,6 +20,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesFormInput> {
   validationIf?: InputValidations;
   errorMessage?: string;
   infoTooltip?: string;
+  defaultValue?: string;
 }
 
 export interface FormInputHandler {
@@ -31,7 +32,7 @@ const isValidateFailed = (validations: [(value: string) => boolean], value: stri
   validations.reduce((result, validation) => result || !validation(value), false as boolean);
 
 export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
-  ({css, textarea, label, rows, required, validations, validationIf, errorMessage, infoTooltip}, ref) => {
+  ({css, defaultValue, textarea, label, rows, required, validations, validationIf, errorMessage, infoTooltip}, ref) => {
     const [hasError, setHasError] = useState(false);
     const inputRef = useRef(null);
 
@@ -80,6 +81,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
         </div>
         {textarea ? (
           <Core.Textarea
+            defaultValue={defaultValue}
             name={name}
             onBlur={onBlur}
             onInput={onInput}
@@ -88,7 +90,14 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
             rows={rows}
           />
         ) : (
-          <Core.Input name={name} onBlur={onBlur} onInput={onInput} placeholder={`Enter ${label}`} ref={inputRef} />
+          <Core.Input
+            defaultValue={defaultValue}
+            name={name}
+            onBlur={onBlur}
+            onInput={onInput}
+            placeholder={`Enter ${label}`}
+            ref={inputRef}
+          />
         )}
         {hasError && <span>{errorMessage}</span>}
       </StitchesFormInput>
