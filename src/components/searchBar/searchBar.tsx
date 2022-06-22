@@ -57,7 +57,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
     [search]
   );
 
-  const containerStyled = hasError ? hasErrorStyled : hasValue ? hasValueStyled : searchBarStyled;
+  const containerStyled = hasError ? hasErrorStyled : hasValue && !disabled ? hasValueStyled : searchBarStyled;
 
   return (
     <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
@@ -71,7 +71,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
         size={'small'}
       />
       {hasValue && (
-        <Core.Button onClick={onClick} type={'text'}>
+        <Core.Button disabled={disabled} onClick={onClick} type={'text'}>
           <FontAwesomeIcon icon={faXmark} size={'lg'} />
         </Core.Button>
       )}
