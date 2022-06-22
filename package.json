@@ -61,12 +61,13 @@
     "stitches-normalize-css": "^1.2.0"
   },
   "scripts": {
+    "git": "node gitInfo.js",
     "prettier:check": "prettier --check .",
     "prettier": "prettier --write .",
     "lint:check": "eslint .",
     "lint": "eslint . --fix",
     "clean": "rm -rf node_modules build dist package-lock.json yarn.lock",
-    "prebuild": "npm run prettier:check && npm run lint:check",
+    "prebuild": "npm run prettier:check && npm run lint:check && npm run git",
     "build": "tsc && vite build --mode ${MODE:=production}",
     "dev": "vite",
     "preview": "vite preview",

@@ -6,3 +6,4 @@ export * from './loadingMask';
 export * from './alertDialog';
 export * from './tooltip';
 export * from './popover';
+export * from './gitInfo';
