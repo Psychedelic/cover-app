@@ -40,6 +40,7 @@ export const VerificationRow: React.VFC<PropTypes> = ({
         showCollapseBtn
         showLoadingMaskBtn={typeof verification.isVerified === 'undefined'}
         showLoadingMaskStatus={typeof verification.isVerified === 'undefined'}
+        statusAsIcon
         type={getStatus(verification.isVerified)}>
         {[
           <Core.LoadingMask key={0}>

@@ -6,17 +6,17 @@ import {ActivityTable, PageContainer, StatsTable, VerificationTable} from '@/par
 import {ContentContainer, LeftContent, RightContent} from './dashboard.styled';
 
 export const Dashboard: React.FC = () => (
-  <PageContainer>
-    <ContentContainer>
-      <LeftContent>
-        <VerificationProvider>
+  <VerificationProvider>
+    <PageContainer>
+      <ContentContainer>
+        <LeftContent>
           <VerificationTable />
-        </VerificationProvider>
-      </LeftContent>
-      <RightContent>
-        <StatsTable />
-        <ActivityTable />
-      </RightContent>
-    </ContentContainer>
-  </PageContainer>
+        </LeftContent>
+        <RightContent>
+          <StatsTable />
+          <ActivityTable />
+        </RightContent>
+      </ContentContainer>
+    </PageContainer>
+  </VerificationProvider>
 );

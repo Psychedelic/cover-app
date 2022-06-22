@@ -31,3 +31,24 @@ export const Yellow: ComponentStoryObj<typeof Dot> = {
     type: 'yellow'
   }
 };
+
+export const GreenIcon: ComponentStoryObj<typeof Dot> = {
+  args: {
+    type: 'green',
+    asIcon: true
+  }
+};
+
+export const RedIcon: ComponentStoryObj<typeof Dot> = {
+  args: {
+    type: 'red',
+    asIcon: true
+  }
+};
+
+export const YellowIcon: ComponentStoryObj<typeof Dot> = {
+  args: {
+    type: 'yellow',
+    asIcon: true
+  }
+};

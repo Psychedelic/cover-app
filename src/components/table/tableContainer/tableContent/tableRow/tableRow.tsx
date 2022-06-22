@@ -11,6 +11,7 @@ import {StitchesTableRow} from './tableRow.styled';
 interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
   css?: CSS;
   type?: 'green' | 'yellow' | 'red';
+  statusAsIcon?: boolean;
   children: React.ReactElement[];
   override?: boolean;
   showCollapseBtn?: boolean;
@@ -26,6 +27,7 @@ export const TableRow: React.FC<PropTypes> = ({
   css,
   children,
   type,
+  statusAsIcon,
   override,
   showCollapseBtn,
   isSelected,
@@ -45,7 +47,7 @@ export const TableRow: React.FC<PropTypes> = ({
       ) : (
         type && (
           <td>
-            <Core.Dot type={type} />
+            <Core.Dot asIcon={statusAsIcon} type={type} />
           </td>
         )
       )}
