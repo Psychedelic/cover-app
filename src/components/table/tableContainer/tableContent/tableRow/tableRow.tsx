@@ -47,7 +47,7 @@ export const TableRow: React.FC<PropTypes> = ({
       ) : (
         type && (
           <td>
-            <Core.Dot isIcon={statusAsIcon} type={type} />
+            <Core.Dot asIcon={statusAsIcon} type={type} />
           </td>
         )
       )}

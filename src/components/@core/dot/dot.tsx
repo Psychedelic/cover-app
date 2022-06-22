@@ -8,11 +8,11 @@ import {StitchesDot} from './dot.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesDot> {
   css?: CSS;
-  isIcon?: boolean;
+  asIcon?: boolean;
 }
 
-export const Dot: React.FC<PropTypes> = ({css, isIcon, type, size}) =>
-  isIcon ? (
+export const Dot: React.FC<PropTypes> = ({css, asIcon, type, size}) =>
+  asIcon ? (
     type === 'green' ? (
       <FontAwesomeIcon color={'#03BF00'} icon={faCheckCircle} size={'lg'} />
     ) : type === 'red' ? (
