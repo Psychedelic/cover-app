@@ -7,6 +7,9 @@ export const StitchesMultiStepForm = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   '& .header': {
+    display: 'inline-flex',
+    alignItems: 'center',
+    height: '34px',
     color: '$coverWhite',
     fontSize: '22px',
     margin: '0 0 $10 0',
