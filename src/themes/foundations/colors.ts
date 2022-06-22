@@ -23,6 +23,7 @@ export const colors = {
   coverMediumGray: '#303030',
   coverDarkGray: '#242424',
   coverHeavyGray: '#1C1C1C',
+  coverSocialIconGray: '#888E8F',
 
   coverGradientGray: 'linear-gradient(90deg, #2E2E2E 0%, #242424 100%)',
 

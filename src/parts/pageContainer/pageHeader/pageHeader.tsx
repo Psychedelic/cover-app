@@ -9,6 +9,7 @@ import {DASHBOARD_PATH, SUBMIT_PATH} from '@/constants';
 import {fetchByCanisterId, fetchVerifications, useVerificationContext} from '@/contexts';
 import {getCurrentPath, isPrincipal} from '@/utils';
 
+import {MenuItems} from './menuItems';
 import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
 
 export const PageHeader: React.VFC = () => {
@@ -33,22 +34,13 @@ export const PageHeader: React.VFC = () => {
           <img alt={'logo'} src={logo} />
         </Link>
         <SearchBar disabled={getCurrentPath() !== DASHBOARD_PATH} onBlurOrEnter={onBlur} validation={isPrincipal} />
-        <Core.Button size={'medium'} type={'text'}>
-          <a href={'https://medium.com/@cover_ois'} rel={'noreferrer'} target={'_blank'}>
-            {'Blog'}
-          </a>
-        </Core.Button>
-        <Core.Button size={'medium'} type={'text'}>
-          <a href={'https://docs.covercode.ooo/'} rel={'noreferrer'} target={'_blank'}>
-            {'Docs'}
-          </a>
-        </Core.Button>
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
         <Link to={SUBMIT_PATH}>
           <Core.Button disabled={getCurrentPath() !== DASHBOARD_PATH}>{'Submit Verification'}</Core.Button>
         </Link>
         <Core.Button disabled>{'Connect to Plug'}</Core.Button>
+        <MenuItems />
       </StitchesPageSecondaryHeader>
     </StitchesPageHeaderContainer>
   );
