@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {faDiscord, faTwitter} from '@fortawesome/free-brands-svg-icons';
 import {faBook, faNewspaper} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

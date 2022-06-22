@@ -1,4 +1,4 @@
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {Link} from 'react-router-dom';
@@ -12,16 +12,23 @@ import {getCurrentPath, isPrincipal} from '@/utils';
 import {MenuItems} from './menuItems';
 import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
 
-export const PageHeader: React.VFC = () => {
+export const PageHeader: React.FC = () => {
   const recentValue = useRef('');
+  const [isFetching, setIsFetching] = useState(false);
   const {dispatch} = useVerificationContext();
   const onBlur = useCallback(
     (value: string) => {
       // Only difference value each time is called can be dispatched
       if (value !== recentValue.current) {
+        setIsFetching(true);
         isPrincipal(value)
-          ? fetchByCanisterId(dispatch, Principal.fromText(value))
-          : value === '' && fetchVerifications(dispatch);
+          ? fetchByCanisterId(dispatch, Principal.fromText(value)).finally(() => {
+              setIsFetching(false);
+            })
+          : value === '' &&
+            fetchVerifications(dispatch).finally(() => {
+              setIsFetching(false);
+            });
         recentValue.current = value;
       }
     },
@@ -33,7 +40,11 @@ export const PageHeader: React.VFC = () => {
         <Link to={DASHBOARD_PATH}>
           <img alt={'logo'} src={logo} />
         </Link>
-        <SearchBar disabled={getCurrentPath() !== DASHBOARD_PATH} onBlurOrEnter={onBlur} validation={isPrincipal} />
+        <SearchBar
+          disabled={isFetching || getCurrentPath() !== DASHBOARD_PATH}
+          onBlurOrEnter={onBlur}
+          validation={isPrincipal}
+        />
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
         <Link to={SUBMIT_PATH}>
