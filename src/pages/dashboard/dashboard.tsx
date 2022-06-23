@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ActivityProvider, VerificationProvider} from '@/contexts';
+import {ActivityProvider, StatsProvider, VerificationProvider} from '@/contexts';
 import {ActivityTable, PageContainer, StatsTable, VerificationTable} from '@/parts';
 
 import {ContentContainer, LeftContent, RightContent} from './dashboard.styled';
@@ -13,7 +13,9 @@ export const Dashboard: React.FC = () => (
           <VerificationTable />
         </LeftContent>
         <RightContent>
-          <StatsTable />
+          <StatsProvider>
+            <StatsTable />
+          </StatsProvider>
           <ActivityProvider>
             <ActivityTable />
           </ActivityProvider>

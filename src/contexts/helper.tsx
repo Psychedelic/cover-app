@@ -29,7 +29,7 @@ interface Context<State, Action extends ActionBase> {
 export const createContext = <State, Action extends ActionBase>(state: State): React.Context<Context<State, Action>> =>
   React.createContext({
     state,
-    dispatch: (action: Action) => {
+    dispatch: (_: Action) => {
       // Do nothing.
     }
   });

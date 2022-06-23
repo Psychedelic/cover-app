@@ -10,7 +10,7 @@ export default meta;
 
 export const WithData: ComponentStoryObj<typeof StatsTable> = {
   args: {
-    statistic: {
+    defaultStats: {
       rustCanistersCount: '2,473',
       motokoCanistersCount: '3,823',
       totalCanisters: '6,296',

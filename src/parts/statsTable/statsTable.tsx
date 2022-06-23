@@ -1,21 +1,13 @@
-import React, {useEffect, useState} from 'react';
-
-import {Stats} from '@psychedelic/cover';
+import React, {useEffect} from 'react';
 
 import {TableContainer, TableContent, TableHeader, TableRow} from '@/components';
-import {coverSDK} from '@/utils';
+import {DEFAULT_STATS, fetchStats, useStatsContext} from '@/contexts';
+import {Stats} from '@/models';
 
 import {tableBodyStyle, tableContainerStyle} from './statsTable.styled';
 
-interface Statistic {
-  totalCanisters?: string;
-  motokoCanistersCount?: string;
-  rustCanistersCount?: string;
-  buildSuccessCount?: string;
-}
-
 interface PropTypes {
-  statistic?: Statistic;
+  defaultStats?: Stats;
 }
 
 const renderItems = (label: string, value?: string) => [
@@ -31,34 +23,14 @@ const renderItems = (label: string, value?: string) => [
   </td>
 ];
 
-const mapStats = (s: Stats): Statistic => ({
-  totalCanisters: s.total_canisters.toString(),
-  motokoCanistersCount: s.motoko_canisters_count.toString(),
-  rustCanistersCount: s.rust_canisters_count.toString(),
-  buildSuccessCount: s.build_success_count.toString()
-});
-
-export const StatsTable: React.VFC<PropTypes> = ({
-  statistic = {
-    totalCanisters: 'N/A',
-    motokoCanistersCount: 'N/A',
-    rustCanistersCount: 'N/A',
-    buildSuccessCount: 'N/A'
-  }
-}) => {
-  const [stats, setStats] = useState(statistic);
-
+export const StatsTable: React.VFC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
+  const {
+    state: {stats = defaultStats},
+    dispatch
+  } = useStatsContext();
   useEffect(() => {
-    let isMounted = true;
-    (async () => {
-      const s = await coverSDK.getVerificationStats();
-      isMounted && setStats(mapStats(s));
-    })();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
+    fetchStats(dispatch);
+  }, [dispatch]);
   return (
     <TableContainer css={tableContainerStyle}>
       <TableHeader>
