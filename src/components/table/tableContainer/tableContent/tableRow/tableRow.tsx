@@ -10,7 +10,7 @@ import {StitchesTableRow} from './tableRow.styled';
 
 interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
   css?: CSS;
-  type?: 'green' | 'yellow' | 'red';
+  kind?: 'green' | 'yellow' | 'red';
   statusAsIcon?: boolean;
   children: React.ReactElement[];
   override?: boolean;
@@ -26,7 +26,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
 export const TableRow: React.FC<PropTypes> = ({
   css,
   children,
-  type,
+  kind,
   statusAsIcon,
   override,
   showCollapseBtn,
@@ -45,9 +45,9 @@ export const TableRow: React.FC<PropTypes> = ({
           <Core.LoadingMask size={'dot'} />
         </td>
       ) : (
-        type && (
+        kind && (
           <td>
-            <Core.Dot asIcon={statusAsIcon} type={type} />
+            <Core.Dot asIcon={statusAsIcon} kind={kind} />
           </td>
         )
       )}
@@ -59,7 +59,7 @@ export const TableRow: React.FC<PropTypes> = ({
       ) : (
         showCollapseBtn && (
           <td>
-            <Core.Button disabled={disableCollapseBtn} onClick={onClick} type={'text'}>
+            <Core.Button disabled={disableCollapseBtn} kind={'text'} onClick={onClick}>
               <FontAwesomeIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
             </Core.Button>
           </td>

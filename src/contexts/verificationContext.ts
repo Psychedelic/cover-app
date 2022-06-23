@@ -1,4 +1,4 @@
-import React, {Dispatch, ReducerAction, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {Dispatch, ReducerAction} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {Verification as CanisterVerification} from '@psychedelic/cover';
@@ -6,16 +6,14 @@ import {Verification as CanisterVerification} from '@psychedelic/cover';
 import {Verification} from '@/models';
 import {capitalize, coverSDK} from '@/utils';
 
+import {ActionBase, createContext, createProvider} from './helper';
+
 /*
  * ========================================================================================================
  * ACTION INTERFACES
  * ========================================================================================================
  */
 type Action = FetchPendingAction | FetchVerificationsAction | FetchByCanisterIdAction;
-interface ActionBase<T = unknown> {
-  type: string;
-  payload?: T;
-}
 interface FetchPendingAction extends ActionBase {
   type: 'fetchPending';
 }
@@ -47,23 +45,15 @@ interface State {
   currentCanisterId?: string;
   disablePaginated?: boolean;
 }
+const INIT_STATE: State = {};
 
 /*
  * ========================================================================================================
  * CONTEXT
  * ========================================================================================================
  */
-interface Context {
-  state: State;
-  dispatch: (action: Action) => void;
-}
-const VerificationContext = React.createContext<Context>({
-  state: {},
-  dispatch: () => {
-    // Do nothing.
-  }
-});
-export const useVerificationContext = () => React.useContext(VerificationContext);
+const context = createContext<State, Action>(INIT_STATE);
+export const useVerificationContext = () => React.useContext(context);
 
 /*
  * ========================================================================================================
@@ -77,7 +67,7 @@ const ITEMS_PER_PAGE = 18;
  * DEFAULT LOADING MASK
  * ========================================================================================================
  */
-const loadingVerifications = Array<Verification>(ITEMS_PER_PAGE).fill({});
+export const DEFAULT_VERIFICATIONS = Array<Verification>(ITEMS_PER_PAGE).fill({});
 
 /*
  * ========================================================================================================
@@ -87,7 +77,7 @@ const loadingVerifications = Array<Verification>(ITEMS_PER_PAGE).fill({});
 const verificationReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
-      return {verifications: loadingVerifications, disablePaginated: true};
+      return {verifications: DEFAULT_VERIFICATIONS, disablePaginated: true};
     }
     case 'fetchVerifications': {
       return {
@@ -115,27 +105,7 @@ const verificationReducer = (_: State, action: Action): State => {
  * PROVIDER
  * ========================================================================================================
  */
-export const VerificationProvider: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
-  const isMounted = useRef<boolean | undefined>();
-  const [state, dispatch] = React.useReducer(verificationReducer, {});
-  useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  });
-  const dispatchWrapper = useCallback((action: Action) => {
-    isMounted.current !== false && dispatch(action);
-  }, []);
-  const value = useMemo(
-    () => ({
-      state,
-      dispatch: dispatchWrapper
-    }),
-    [state, dispatchWrapper]
-  );
-  return <VerificationContext.Provider value={value}>{children}</VerificationContext.Provider>;
-};
+export const VerificationProvider = createProvider(context, verificationReducer, INIT_STATE);
 
 /*
  * ========================================================================================================

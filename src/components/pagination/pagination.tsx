@@ -92,7 +92,7 @@ export const Pagination: React.VFC<PropTypes> = ({
 
   return (
     <StitchesPagination css={css}>
-      <Core.Button disabled={disablePaginated || isFirstPage} onClick={onBtnClick} ref={leftBtn} type={'outline'}>
+      <Core.Button disabled={disablePaginated || isFirstPage} kind={'outline'} onClick={onBtnClick} ref={leftBtn}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </Core.Button>
       <Core.Input
@@ -102,7 +102,7 @@ export const Pagination: React.VFC<PropTypes> = ({
         onKeyPress={onEnter}
         ref={inputRef}
       />
-      <Core.Button disabled={disablePaginated || isLastPage} onClick={onBtnClick} ref={rightBtn} type={'outline'}>
+      <Core.Button disabled={disablePaginated || isLastPage} kind={'outline'} onClick={onBtnClick} ref={rightBtn}>
         <FontAwesomeIcon icon={faChevronRight} />
       </Core.Button>
     </StitchesPagination>

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {TableContainer, TableContent, TableHeader} from '@/components';
-import {fetchVerifications, useVerificationContext} from '@/contexts';
+import {DEFAULT_VERIFICATIONS, fetchVerifications, useVerificationContext} from '@/contexts';
 import {Verification} from '@/models';
 
 import {VerificationRow} from './verificationRow';
@@ -11,7 +11,7 @@ interface PropTypes {
   defaultVerifications?: Verification[];
 }
 
-export const VerificationTable: React.VFC<PropTypes> = ({defaultVerifications}) => {
+export const VerificationTable: React.FC<PropTypes> = ({defaultVerifications = DEFAULT_VERIFICATIONS}) => {
   const [canisterIdSelected, setCanisterIdSelected] = useState('');
   const {
     state: {verifications = defaultVerifications, totalPage, currentCanisterId = '', disablePaginated},

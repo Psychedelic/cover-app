@@ -44,7 +44,7 @@ export const ErrorDialog = React.forwardRef<ErrorDialogHandler, PropTypes>(
       <Core.AlertDialog open={isOpen}>
         <Core.AlertDialogContent>
           <Core.AlertDialogTitle>
-            <Core.Dot size={'large'} type={'red'} />
+            <Core.Dot kind={'red'} size={'large'} />
             {title || ' We ran into an issue'}
           </Core.AlertDialogTitle>
           <Core.AlertDialogDescription>
@@ -60,13 +60,13 @@ export const ErrorDialog = React.forwardRef<ErrorDialogHandler, PropTypes>(
           </Core.AlertDialogDescription>
           <StitchesBtnGroup>
             <Core.AlertDialogCancel asChild>
-              <Core.Button onClick={onCancelClick} size={'large'} type={'outline'}>
+              <Core.Button kind={'outline'} onClick={onCancelClick} size={'large'}>
                 {cancelContent}
               </Core.Button>
             </Core.AlertDialogCancel>
             {showActionBtn && (
               <Core.AlertDialogAction asChild>
-                <Core.Button onClick={onActionClick} size={'large'} type={'main'}>
+                <Core.Button kind={'main'} onClick={onActionClick} size={'large'}>
                   {actionContent}
                 </Core.Button>
               </Core.AlertDialogAction>

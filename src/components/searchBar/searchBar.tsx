@@ -71,7 +71,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
         size={'small'}
       />
       {hasValue && (
-        <Core.Button disabled={disabled} onClick={onClick} type={'text'}>
+        <Core.Button disabled={disabled} kind={'text'} onClick={onClick}>
           <FontAwesomeIcon icon={faXmark} size={'lg'} />
         </Core.Button>
       )}

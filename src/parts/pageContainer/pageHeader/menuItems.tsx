@@ -1,4 +1,4 @@
-import {faDiscord, faTwitter} from '@fortawesome/free-brands-svg-icons';
+import {faDiscord, faGithub, faTwitter} from '@fortawesome/free-brands-svg-icons';
 import {faBook, faNewspaper} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -9,7 +9,7 @@ import {menuStyle, StitchesMenuIcon, StitchesMenuItem, StitchesMenuText} from '.
 export const MenuItems = () => (
   <Core.Popover>
     <Core.PopoverTrigger asChild>
-      <Core.Button css={menuStyle} type={'outline'}>
+      <Core.Button css={menuStyle} kind={'outline'}>
         {'...'}
       </Core.Button>
     </Core.PopoverTrigger>
@@ -51,6 +51,16 @@ export const MenuItems = () => (
         <StitchesMenuText>
           <a href={'https://discord.gg/yVEcEzmrgm'} rel={'noreferrer'} target={'_blank'}>
             {'Discord'}
+          </a>
+        </StitchesMenuText>
+      </StitchesMenuItem>
+      <StitchesMenuItem>
+        <StitchesMenuIcon>
+          <FontAwesomeIcon icon={faGithub} size={'lg'} />
+        </StitchesMenuIcon>
+        <StitchesMenuText>
+          <a href={'https://github.com/Psychedelic/cover'} rel={'noreferrer'} target={'_blank'}>
+            {'Github'}
           </a>
         </StitchesMenuText>
       </StitchesMenuItem>

@@ -11,7 +11,7 @@ export default meta;
 export const MediumMain: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Medium Main',
-    type: 'main',
+    kind: 'main',
     size: 'medium'
   }
 };
@@ -19,7 +19,7 @@ export const MediumMain: ComponentStoryObj<typeof Button> = {
 export const LargeMain: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Large Main',
-    type: 'main',
+    kind: 'main',
     size: 'large'
   }
 };
@@ -27,7 +27,7 @@ export const LargeMain: ComponentStoryObj<typeof Button> = {
 export const MediumOutline: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Medium Secondary',
-    type: 'outline',
+    kind: 'outline',
     size: 'medium'
   }
 };
@@ -35,7 +35,7 @@ export const MediumOutline: ComponentStoryObj<typeof Button> = {
 export const LargeOutline: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Large Secondary',
-    type: 'outline',
+    kind: 'outline',
     size: 'large'
   }
 };
@@ -43,7 +43,7 @@ export const LargeOutline: ComponentStoryObj<typeof Button> = {
 export const MediumText: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Medium Text',
-    type: 'text',
+    kind: 'text',
     size: 'medium'
   }
 };
@@ -51,7 +51,7 @@ export const MediumText: ComponentStoryObj<typeof Button> = {
 export const LargeText: ComponentStoryObj<typeof Button> = {
   args: {
     children: 'Large Text',
-    type: 'text',
+    kind: 'text',
     size: 'large'
   }
 };

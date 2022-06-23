@@ -35,13 +35,13 @@ export const VerificationRow: React.VFC<PropTypes> = ({
         css={isSelected ? tableRowSelected : {}}
         disableCollapseBtn={disableCollapseBtn}
         isSelected={isSelected}
+        kind={getStatus(verification.isVerified)}
         onCollapse={onCollapse}
         rowId={verification.canisterId}
         showCollapseBtn
         showLoadingMaskBtn={typeof verification.isVerified === 'undefined'}
         showLoadingMaskStatus={typeof verification.isVerified === 'undefined'}
-        statusAsIcon
-        type={getStatus(verification.isVerified)}>
+        statusAsIcon>
         {[
           <Core.LoadingMask key={0}>
             <Core.CopyableText>{verification.canisterId}</Core.CopyableText>

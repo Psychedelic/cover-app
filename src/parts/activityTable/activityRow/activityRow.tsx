@@ -18,8 +18,8 @@ const activityStatus: {[key: string]: 'red' | 'yellow' | 'green'} = {
 
 export const ActivityRow: React.FC<PropTypes> = ({buildStatus, canisterId, dateTime}) => (
   <TableRow
-    showLoadingMaskStatus={typeof buildStatus === 'undefined'}
-    type={buildStatus && activityStatus[buildStatus]}>
+    kind={buildStatus && activityStatus[buildStatus]}
+    showLoadingMaskStatus={typeof buildStatus === 'undefined'}>
     <Core.LoadingMask key={0}>
       <span>{buildStatus}</span>
     </Core.LoadingMask>

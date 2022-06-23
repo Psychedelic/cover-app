@@ -5,7 +5,7 @@ export const StitchesDot = styled('span', {
   borderRadius: '$dot',
   display: 'inline-block',
   variants: {
-    type: {
+    kind: {
       hollow: {
         border: '1px solid $coverLightGray'
       },

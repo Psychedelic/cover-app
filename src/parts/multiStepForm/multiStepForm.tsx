@@ -1,7 +1,6 @@
 import React, {MutableRefObject, useCallback, useRef, useState} from 'react';
 
 import {ErrorResponse} from '@psychedelic/cover';
-import {CSS} from '@stitches/react';
 import {useNavigate} from 'react-router-dom';
 
 import {
@@ -17,11 +16,6 @@ import {coverAnonymousBuild} from '@/utils';
 
 import {BuildInfo, BuildInfoStep} from './buildInfoStep';
 import {GeneralInfo, GeneralInfoStep} from './generalInfoStep';
-import {StitchesMultiStepForm} from './multiStepForm.styled';
-
-interface PropTypes extends React.ComponentProps<typeof StitchesMultiStepForm> {
-  css?: CSS;
-}
 
 interface InfoRefs {
   generalInfo: MutableRefObject<GeneralInfo | null>;
@@ -45,7 +39,7 @@ const useDialogRefs = (): DialogRefs => ({
   successDialog: useRef<SuccessDialogHandler>(null)
 });
 
-export const MultiStepForm: React.FC<PropTypes> = ({css}) => {
+export const MultiStepForm: React.FC = () => {
   const [steps, setSteps] = useState({generalInfoStep: true, buildInfoStep: false});
   const infoRefs = useInfoRefs();
   const dialogRefs = useDialogRefs();
@@ -76,7 +70,7 @@ export const MultiStepForm: React.FC<PropTypes> = ({css}) => {
     handleSubmit(infoRefs, dialogRefs);
   }, [infoRefs, dialogRefs]);
   return (
-    <StitchesMultiStepForm css={css}>
+    <>
       {steps.generalInfoStep ? (
         <GeneralInfoStep defaultValue={infoRefs.generalInfo.current} onCompleted={onCompletedGeneralInfoStep} />
       ) : (
@@ -94,7 +88,7 @@ export const MultiStepForm: React.FC<PropTypes> = ({css}) => {
         onAction={onSubmit}
         ref={dialogRefs.errDialog}
       />
-    </StitchesMultiStepForm>
+    </>
   );
 };
 

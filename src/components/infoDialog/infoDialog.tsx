@@ -51,21 +51,21 @@ export const InfoDialog = React.forwardRef<InfoDialogHandler, PropTypes>(
       <Core.AlertDialog open={isOpen}>
         <Core.AlertDialogContent>
           <Core.AlertDialogTitle>
-            <Core.Dot size={'large'} type={'yellow'} />
+            <Core.Dot kind={'yellow'} size={'large'} />
             {title || ' Information'}
           </Core.AlertDialogTitle>
           <Core.AlertDialogDescription>{description || 'Info'}</Core.AlertDialogDescription>
           <StitchesBtnGroup>
             {showCancelBtn && (
               <Core.AlertDialogCancel asChild>
-                <Core.Button onClick={onCancelClick} size={'large'} type={'outline'}>
+                <Core.Button kind={'outline'} onClick={onCancelClick} size={'large'}>
                   {cancelContent}
                 </Core.Button>
               </Core.AlertDialogCancel>
             )}
             {showActionBtn && (
               <Core.AlertDialogAction asChild>
-                <Core.Button onClick={onActionClick} size={'large'} type={'main'}>
+                <Core.Button kind={'main'} onClick={onActionClick} size={'large'}>
                   {actionContent}
                 </Core.Button>
               </Core.AlertDialogAction>

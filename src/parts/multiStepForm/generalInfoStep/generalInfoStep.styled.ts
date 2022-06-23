@@ -2,7 +2,7 @@ import {defaultStitches} from '@/themes';
 
 const {styled} = defaultStitches;
 
-export const StitchesMultiStepForm = styled('div', {
+export const StitchesGeneralInfoStep = styled('div', {
   marginTop: '15px',
   display: 'flex',
   justifyContent: 'center',

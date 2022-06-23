@@ -11,7 +11,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesDot> {
   asIcon?: boolean;
 }
 
-export const Dot: React.FC<PropTypes> = ({css, asIcon, type, size}) =>
+export const Dot: React.FC<PropTypes> = ({css, asIcon, kind: type, size}) =>
   asIcon ? (
     type === 'green' ? (
       <FontAwesomeIcon color={'#03BF00'} icon={faCheckCircle} size={'lg'} />
@@ -20,8 +20,8 @@ export const Dot: React.FC<PropTypes> = ({css, asIcon, type, size}) =>
     ) : type === 'yellow' ? (
       <FontAwesomeIcon color={'#FFDF00'} icon={faExclamationCircle} size={'lg'} />
     ) : (
-      <StitchesDot css={css} size={size} type={type} />
+      <StitchesDot css={css} kind={type} size={size} />
     )
   ) : (
-    <StitchesDot css={css} size={size} type={type} />
+    <StitchesDot css={css} kind={type} size={size} />
   );

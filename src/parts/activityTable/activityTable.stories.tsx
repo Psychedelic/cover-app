@@ -10,7 +10,7 @@ export default meta;
 
 export const WithData: ComponentStoryObj<typeof ActivityTable> = {
   args: {
-    activity: [
+    defaultActivity: [
       {
         buildStatus: 'Success',
         canisterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
@@ -56,7 +56,5 @@ export const WithData: ComponentStoryObj<typeof ActivityTable> = {
 };
 
 export const Loading: ComponentStoryObj<typeof ActivityTable> = {
-  args: {
-    activity: [{}, {}, {}, {}, {}, {}, {}, {}]
-  }
+  args: {}
 };
