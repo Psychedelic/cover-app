@@ -34,7 +34,7 @@ const isValidateFailed = (validations: [(value: string) => boolean], value: stri
 export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
   ({css, defaultValue, textarea, label, rows, required, validations, validationIf, errorMessage, infoTooltip}, ref) => {
     const [hasError, setHasError] = useState(false);
-    const inputRef = createRef<HTMLInputElement>();
+    const inputRef = createRef<HTMLInputElement | HTMLTextAreaElement>();
 
     const onBlur = useCallback<React.ReactEventHandler>(
       _ => {
@@ -86,7 +86,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
             onBlur={onBlur}
             onInput={onInput}
             placeholder={`Enter ${label}`}
-            ref={inputRef}
+            ref={inputRef as React.RefObject<HTMLTextAreaElement>}
             rows={rows}
           />
         ) : (
@@ -96,7 +96,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
             onBlur={onBlur}
             onInput={onInput}
             placeholder={`Enter ${label}`}
-            ref={inputRef}
+            ref={inputRef as React.RefObject<HTMLInputElement>}
           />
         )}
         {hasError && <span>{errorMessage}</span>}

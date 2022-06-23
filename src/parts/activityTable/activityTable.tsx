@@ -32,7 +32,7 @@ export const ActivityTable: React.FC<PropTypes> = ({defaultActivity = DEFAULT_AC
   const resetPage = useCallback(() => {
     fetchActivities(dispatch);
     paginationRef.current?.forceReset();
-  }, [paginationRef]);
+  }, [paginationRef, dispatch]);
   return (
     <TableContainer
       css={tableContainerStyle}
