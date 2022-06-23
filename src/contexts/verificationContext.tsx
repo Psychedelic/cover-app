@@ -67,7 +67,7 @@ const ITEMS_PER_PAGE = 18;
  * DEFAULT LOADING MASK
  * ========================================================================================================
  */
-const loadingVerifications = Array<Verification>(ITEMS_PER_PAGE).fill({});
+export const DEFAULT_VERIFICATIONS = Array<Verification>(ITEMS_PER_PAGE).fill({});
 
 /*
  * ========================================================================================================
@@ -77,7 +77,7 @@ const loadingVerifications = Array<Verification>(ITEMS_PER_PAGE).fill({});
 const verificationReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
-      return {verifications: loadingVerifications, disablePaginated: true};
+      return {verifications: DEFAULT_VERIFICATIONS, disablePaginated: true};
     }
     case 'fetchVerifications': {
       return {

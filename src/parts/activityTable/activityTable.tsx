@@ -1,66 +1,35 @@
-import React, {useCallback, useEffect, useState} from 'react';
-
-import {ActivitiesPagination, Activity as CanisterActivity} from '@psychedelic/cover';
+import React, {useCallback, useEffect} from 'react';
 
 import {TableContainer, TableContent, TableHeader} from '@/components';
+import {DEFAULT_ACTIVITIES, fetchActivities, useActivityContext} from '@/contexts';
 import {Activity} from '@/models';
 import {ActivityRow} from '@/parts';
-import {coverSDK} from '@/utils';
 
 import {tableBodyStyle, tableContainerStyle} from './activityTable.styled';
 
 interface PropTypes {
-  activity?: Activity[];
+  defaultActivity?: Activity[];
 }
 
-export const mapActivity = (activity: CanisterActivity): Activity => ({
-  buildStatus: Object.keys(activity.build_status)[0] as 'Success' | 'Pending' | 'Error' | 'Building',
-  canisterId: activity.canister_id.toString(),
-  datetime: activity.create_at
-});
-
-export const mapActivityList = (activityList: CanisterActivity[]): Activity[] => activityList.map(a => mapActivity(a));
-
-const ITEMS_PER_PAGE = 12;
-
-const fetchActivity = (pageNum = 1): Promise<ActivitiesPagination> =>
-  coverSDK.getActivities({page_index: BigInt(pageNum), items_per_page: BigInt(ITEMS_PER_PAGE)});
-
-const emptyList = Array<Activity>(ITEMS_PER_PAGE).fill({});
-
-export const ActivityTable: React.FC<PropTypes> = ({activity = emptyList}) => {
-  const [activities, setActivities] = useState(activity);
-  const [lastPage, setLastPage] = useState(1);
-  const [disablePaginated, setDisablePaginated] = useState(false);
-
+export const ActivityTable: React.FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITIES}) => {
+  const {
+    state: {activities = defaultActivity, totalPage, disablePaginated},
+    dispatch
+  } = useActivityContext();
   useEffect(() => {
-    let isMounted = true;
-    (async () => {
-      const activityPagination = await fetchActivity();
-      isMounted && setLastPage(Number(activityPagination.total_pages));
-      isMounted && setActivities(mapActivityList(activityPagination.data));
-    })();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  const onPageChange = useCallback((pageNum: number) => {
-    setActivities(emptyList);
-    setDisablePaginated(true);
-    (async () => {
-      const activityPagination = await fetchActivity(pageNum);
-      setActivities(mapActivityList(activityPagination.data));
-      setDisablePaginated(false);
-      setLastPage(Number(activityPagination.total_pages));
-    })();
-  }, []);
-
+    fetchActivities(dispatch);
+  }, [dispatch]);
+  const onPageChange = useCallback(
+    (pageNum: number) => {
+      fetchActivities(dispatch, pageNum);
+    },
+    [dispatch]
+  );
   return (
     <TableContainer
       css={tableContainerStyle}
       disablePaginated={disablePaginated}
-      lastPage={lastPage}
+      lastPage={totalPage}
       onPageChanged={onPageChange}
       paginated>
       <TableHeader>
