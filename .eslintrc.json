@@ -94,7 +94,8 @@
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},
-    {"files": ["*.styled.*", "*.stories.*"], "rules": {"sonarjs/no-duplicate-string": "off"}}
+    {"files": ["*.styled.*", "*.stories.*"], "rules": {"sonarjs/no-duplicate-string": "off"}},
+    {"files": ["gitInfo.js"], "rules": {"@typescript-eslint/no-var-requires": "off"}}
   ],
   "settings": {
     "import/resolver": {"node": {"extensions": [".ts", ".tsx"]}, "typescript": {}}

@@ -61,18 +61,19 @@
     "stitches-normalize-css": "^1.2.0"
   },
   "scripts": {
+    "git": "node gitInfo.js",
     "prettier:check": "prettier --check .",
     "prettier": "prettier --write .",
     "lint:check": "eslint .",
     "lint": "eslint . --fix",
     "clean": "rm -rf node_modules build dist package-lock.json yarn.lock",
-    "prebuild": "npm run prettier:check && npm run lint:check",
+    "prebuild": "npm run git && npm run prettier:check && npm run lint:check",
     "build": "tsc && vite build --mode ${MODE:=production}",
-    "dev": "vite",
-    "preview": "vite preview",
-    "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "storybook": "start-storybook -p 6006",
+    "dev": "npm run git && vite",
+    "preview": "npm run git && vite preview",
+    "test": "npm run git && vitest",
+    "coverage": "npm run git && vitest run --coverage",
+    "storybook": "npm run git && start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prepare": "husky install"
   }
