@@ -15,14 +15,14 @@ export const Default: ComponentStoryObj<typeof Pagination> = {
 export const WithPages: ComponentStoryObj<typeof Pagination> = {
   args: {
     defaultPage: 2,
-    lastPage: 50
+    totalPage: 50
   }
 };
 
 export const ForceDisable: ComponentStoryObj<typeof Pagination> = {
   args: {
     defaultPage: 40,
-    lastPage: 50,
+    totalPage: 50,
     disablePaginated: true
   }
 };

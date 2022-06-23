@@ -7,7 +7,7 @@ import {customRender, screen} from '@/testUtils';
 
 describe('Pagination', () => {
   it('First page', () => {
-    customRender(<Pagination lastPage={1} />);
+    customRender(<Pagination totalPage={1} />);
     const input = screen.getByText((_, element) => element?.tagName.toLowerCase() === 'input');
     expect((input as HTMLInputElement).value).toBe('1');
 
@@ -18,7 +18,7 @@ describe('Pagination', () => {
   });
 
   it('When navigate to another page', () => {
-    customRender(<Pagination defaultPage={2} lastPage={2} />);
+    customRender(<Pagination defaultPage={2} totalPage={2} />);
     const input = screen.getByText((_, element) => element?.tagName.toLowerCase() === 'input');
     expect((input as HTMLInputElement).value).toBe('2');
 
@@ -38,7 +38,7 @@ describe('Pagination', () => {
   });
 
   it('When input', () => {
-    customRender(<Pagination defaultPage={20} lastPage={21} />);
+    customRender(<Pagination defaultPage={20} totalPage={21} />);
     const input = screen.getByText((_, element) => element?.tagName.toLowerCase() === 'input');
     expect((input as HTMLInputElement).value).toBe('20');
 
