@@ -13,13 +13,13 @@ import {MenuItems} from './menuItems';
 import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
 
 export const PageHeader: React.FC = () => {
-  const recentValue = useRef('');
+  const canisterId = useRef('');
   const [isFetching, setIsFetching] = useState(false);
   const {dispatch} = useVerificationContext();
   const onBlur = useCallback(
     (value: string) => {
       // Only difference value each time is called can be dispatched
-      if (value !== recentValue.current) {
+      if (value !== canisterId.current) {
         setIsFetching(true);
         isPrincipal(value)
           ? fetchByCanisterId(dispatch, Principal.fromText(value)).finally(() => {
@@ -29,7 +29,7 @@ export const PageHeader: React.FC = () => {
             fetchVerifications(dispatch).finally(() => {
               setIsFetching(false);
             });
-        recentValue.current = value;
+        canisterId.current = value;
       }
     },
     [dispatch]

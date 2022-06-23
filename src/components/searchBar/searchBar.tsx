@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {createRef, useCallback, useState} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -16,7 +16,7 @@ interface PropTypes {
 export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disabled}) => {
   const [hasValue, setHasValue] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const searchBarRef = useRef(null);
+  const searchBarRef = createRef<HTMLInputElement>();
 
   const search = useCallback(() => {
     if (onBlurOrEnter && searchBarRef.current && validation) {
@@ -26,15 +26,18 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
       // Only trigger `onBlurOrEnter` when `validation` is passed
       !hasErr && onBlurOrEnter(value);
     }
-  }, [onBlurOrEnter, validation]);
+  }, [onBlurOrEnter, validation, searchBarRef]);
 
-  const onInput = useCallback<React.ReactEventHandler>(_ => {
-    if (searchBarRef.current) {
-      const value = (searchBarRef.current as HTMLInputElement).value;
-      setHasValue(value !== '');
-      setHasError(false);
-    }
-  }, []);
+  const onInput = useCallback<React.ReactEventHandler>(
+    _ => {
+      if (searchBarRef.current) {
+        const value = (searchBarRef.current as HTMLInputElement).value;
+        setHasValue(value !== '');
+        setHasError(false);
+      }
+    },
+    [searchBarRef]
+  );
 
   const onClick = useCallback(() => {
     if (searchBarRef.current) {
@@ -44,7 +47,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
       setHasValue(false);
       setHasError(false);
     }
-  }, []);
+  }, [searchBarRef]);
 
   const onBlur = useCallback(search, [search]);
 
