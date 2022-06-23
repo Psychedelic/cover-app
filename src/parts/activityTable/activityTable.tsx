@@ -3,16 +3,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {ActivitiesPagination, Activity as CanisterActivity} from '@psychedelic/cover';
 
 import {TableContainer, TableContent, TableHeader} from '@/components';
+import {Activity} from '@/models';
 import {ActivityRow} from '@/parts';
 import {coverSDK} from '@/utils';
 
 import {tableBodyStyle, tableContainerStyle} from './activityTable.styled';
 
-interface Activity {
-  buildStatus?: 'Success' | 'Pending' | 'Error' | 'Building';
-  canisterId?: string;
-  datetime?: string;
-}
 interface PropTypes {
   activity?: Activity[];
 }
