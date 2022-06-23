@@ -1,6 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 
-import {TableContainer, TableContent, TableHeader, TableRow} from '@/components';
+import {faRotate} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+
+import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
 import {DEFAULT_STATS, fetchStats, useStatsContext} from '@/contexts';
 import {Stats} from '@/models';
 
@@ -23,18 +26,24 @@ const renderItems = (label: string, value?: string) => [
   </td>
 ];
 
-export const StatsTable: React.VFC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
+export const StatsTable: React.FC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
   const {
-    state: {stats = defaultStats},
+    state: {stats = defaultStats, isFetching},
     dispatch
   } = useStatsContext();
-  useEffect(() => {
+  const fetch = useCallback(() => {
     fetchStats(dispatch);
   }, [dispatch]);
+  useEffect(fetch, [fetch]);
   return (
     <TableContainer css={tableContainerStyle}>
       <TableHeader>
-        <th colSpan={2}>{'Statistics'}</th>
+        <th>{'Statistics'}</th>
+        <th>
+          <Core.Button disabled={isFetching} kind={'text'} onClick={fetch}>
+            <FontAwesomeIcon icon={faRotate} size={'lg'} spin />
+          </Core.Button>
+        </th>
       </TableHeader>
       <TableContent css={tableBodyStyle}>
         <TableRow override>{renderItems('Total Canisters', stats.totalCanisters)}</TableRow>

@@ -30,6 +30,7 @@ interface FetchStatsAction extends ActionBase {
  */
 interface State {
   stats?: Stats;
+  isFetching?: boolean;
 }
 const INIT_STATE: State = {};
 
@@ -61,11 +62,12 @@ export const DEFAULT_STATS: Stats = {
 const StatsReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
-      return {stats: DEFAULT_STATS};
+      return {stats: DEFAULT_STATS, isFetching: true};
     }
     case 'fetchStats': {
       return {
-        stats: action.payload.stats
+        stats: action.payload.stats,
+        isFetching: false
       };
     }
     default: {
