@@ -9,7 +9,7 @@ import {menuStyle, StitchesMenuIcon, StitchesMenuItem, StitchesMenuText} from '.
 export const MenuItems = () => (
   <Core.Popover>
     <Core.PopoverTrigger asChild>
-      <Core.Button css={menuStyle} type={'outline'}>
+      <Core.Button css={menuStyle} kind={'outline'}>
         {'...'}
       </Core.Button>
     </Core.PopoverTrigger>

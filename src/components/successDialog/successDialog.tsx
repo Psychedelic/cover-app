@@ -44,19 +44,19 @@ export const SuccessDialog = React.forwardRef<SuccessDialogHandler, PropTypes>(
       <Core.AlertDialog open={isOpen}>
         <Core.AlertDialogContent>
           <Core.AlertDialogTitle>
-            <Core.Dot size={'large'} type={'green'} />
+            <Core.Dot kind={'green'} size={'large'} />
             {title || ' Success'}
           </Core.AlertDialogTitle>
           <Core.AlertDialogDescription>{description || 'Congrats!'}</Core.AlertDialogDescription>
           <StitchesBtnGroup>
             <Core.AlertDialogCancel asChild>
-              <Core.Button onClick={onCancelClick} size={'large'} type={'outline'}>
+              <Core.Button kind={'outline'} onClick={onCancelClick} size={'large'}>
                 {cancelContent}
               </Core.Button>
             </Core.AlertDialogCancel>
             {showActionBtn && (
               <Core.AlertDialogAction asChild>
-                <Core.Button onClick={onActionClick} size={'large'} type={'main'}>
+                <Core.Button kind={'main'} onClick={onActionClick} size={'large'}>
                   {actionContent}
                 </Core.Button>
               </Core.AlertDialogAction>

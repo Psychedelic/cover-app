@@ -15,7 +15,7 @@ export const TableHeader: React.FC<PropTypes> = ({css, children}) => (
   <StitchesTableHeader css={css}>
     <tr>
       <th>
-        <Core.Dot type={'hollow'} />
+        <Core.Dot kind={'hollow'} />
       </th>
       {children}
     </tr>

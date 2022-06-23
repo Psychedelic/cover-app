@@ -15,7 +15,7 @@ export const StitchesButton = styled('button', {
     all: 'unset'
   },
   variants: {
-    type: {
+    kind: {
       main: {
         color: '$coverGreen',
         backgroundColor: '$coverDarkGreen',
@@ -59,7 +59,7 @@ export const StitchesButton = styled('button', {
     }
   },
   defaultVariants: {
-    type: 'main',
+    kind: 'main',
     size: 'medium'
   }
 });

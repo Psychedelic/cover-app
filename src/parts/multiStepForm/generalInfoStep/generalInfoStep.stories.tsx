@@ -1,11 +1,11 @@
 import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
 import {MemoryRouter} from 'react-router-dom';
 
-import {MultiStepForm} from './multiStepForm';
+import {GeneralInfoStep} from './generalInfoStep';
 
-const meta: ComponentMeta<typeof MultiStepForm> = {
-  title: 'Parts/MultiStepForm',
-  component: MultiStepForm,
+const meta: ComponentMeta<typeof GeneralInfoStep> = {
+  title: 'Parts/GeneralInfoStep',
+  component: GeneralInfoStep,
   decorators: [
     Story => (
       <MemoryRouter>
@@ -16,6 +16,6 @@ const meta: ComponentMeta<typeof MultiStepForm> = {
 };
 export default meta;
 
-export const Example: ComponentStoryObj<typeof MultiStepForm> = {
+export const Example: ComponentStoryObj<typeof GeneralInfoStep> = {
   args: {}
 };

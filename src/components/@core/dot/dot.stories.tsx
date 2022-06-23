@@ -10,45 +10,45 @@ export default meta;
 
 export const Hollow: ComponentStoryObj<typeof Dot> = {
   args: {
-    type: 'hollow'
+    kind: 'hollow'
   }
 };
 
 export const Green: ComponentStoryObj<typeof Dot> = {
   args: {
-    type: 'green'
+    kind: 'green'
   }
 };
 
 export const Red: ComponentStoryObj<typeof Dot> = {
   args: {
-    type: 'red'
+    kind: 'red'
   }
 };
 
 export const Yellow: ComponentStoryObj<typeof Dot> = {
   args: {
-    type: 'yellow'
+    kind: 'yellow'
   }
 };
 
 export const GreenIcon: ComponentStoryObj<typeof Dot> = {
   args: {
-    type: 'green',
+    kind: 'green',
     asIcon: true
   }
 };
 
 export const RedIcon: ComponentStoryObj<typeof Dot> = {
   args: {
-    type: 'red',
+    kind: 'red',
     asIcon: true
   }
 };
 
 export const YellowIcon: ComponentStoryObj<typeof Dot> = {
   args: {
-    type: 'yellow',
+    kind: 'yellow',
     asIcon: true
   }
 };
