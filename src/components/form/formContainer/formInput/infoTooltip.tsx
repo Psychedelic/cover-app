@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -9,7 +9,7 @@ interface PropTypes {
   info?: string;
 }
 
-export const InfoTooltip: React.VFC<PropTypes> = ({info}) => (
+export const InfoTooltip: FC<PropTypes> = ({info}) => (
   <Core.TooltipRoot delayDuration={200}>
     <Core.TooltipTrigger type={'button'}>
       <FontAwesomeIcon icon={faInfoCircle} />

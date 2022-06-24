@@ -1,4 +1,4 @@
-import React, {useCallback, useRef} from 'react';
+import {createRef, FC, FormEvent, RefObject, useCallback} from 'react';
 
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -26,21 +26,21 @@ export interface BuildInfo {
 }
 
 interface InputRefs {
-  rustVersion: React.RefObject<FormInputHandler>;
-  dfxVersion: React.RefObject<FormInputHandler>;
-  optimizeCount: React.RefObject<FormInputHandler>;
-  timestamp: React.RefObject<FormInputHandler>;
-  signature: React.RefObject<FormInputHandler>;
-  publicKey: React.RefObject<FormInputHandler>;
+  rustVersion: RefObject<FormInputHandler>;
+  dfxVersion: RefObject<FormInputHandler>;
+  optimizeCount: RefObject<FormInputHandler>;
+  timestamp: RefObject<FormInputHandler>;
+  signature: RefObject<FormInputHandler>;
+  publicKey: RefObject<FormInputHandler>;
 }
 
 const useInputRefs = (): InputRefs => ({
-  rustVersion: useRef<FormInputHandler>(null),
-  dfxVersion: useRef<FormInputHandler>(null),
-  optimizeCount: useRef<FormInputHandler>(null),
-  timestamp: useRef<FormInputHandler>(null),
-  signature: useRef<FormInputHandler>(null),
-  publicKey: useRef<FormInputHandler>(null)
+  rustVersion: createRef<FormInputHandler>(),
+  dfxVersion: createRef<FormInputHandler>(),
+  optimizeCount: createRef<FormInputHandler>(),
+  timestamp: createRef<FormInputHandler>(),
+  signature: createRef<FormInputHandler>(),
+  publicKey: createRef<FormInputHandler>()
 });
 
 const getData = (inputRefs: InputRefs) => ({
@@ -52,10 +52,10 @@ const getData = (inputRefs: InputRefs) => ({
   publicKey: inputRefs.publicKey.current?.value() || ''
 });
 
-export const BuildInfoStep: React.FC<PropTypes> = ({onCompleted, defaultValue, onGoBack}) => {
+export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBack}) => {
   const inputRefs = useInputRefs();
   const onSubmit = useCallback(
-    (event?: React.FormEvent) => {
+    (event?: FormEvent) => {
       event?.preventDefault();
       const hasError = Object.values(inputRefs).reduce((result, ref) => {
         if (ref.current) {

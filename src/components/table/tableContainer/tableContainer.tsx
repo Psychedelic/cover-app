@@ -1,4 +1,4 @@
-import React from 'react';
+import {ComponentProps, forwardRef} from 'react';
 
 import {CSS} from '@stitches/react';
 
@@ -6,7 +6,7 @@ import {Pagination, PaginationHandler} from '@/components';
 
 import {StitchesTableContainer} from './tableContainer.styled';
 
-interface PropTypes extends React.ComponentProps<typeof StitchesTableContainer> {
+interface PropTypes extends ComponentProps<typeof StitchesTableContainer> {
   css?: CSS;
   paginated?: boolean;
   onPageChanged?: (toPage: number) => void;
@@ -14,7 +14,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableContainer> 
   disablePaginated?: boolean;
 }
 
-export const TableContainer = React.forwardRef<PaginationHandler, PropTypes>(
+export const TableContainer = forwardRef<PaginationHandler, PropTypes>(
   ({css, children, paginated, onPageChanged, totalPage, disablePaginated}, ref) => (
     <StitchesTableContainer css={css}>
       <table>{children}</table>

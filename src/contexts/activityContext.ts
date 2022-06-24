@@ -1,4 +1,4 @@
-import React, {Dispatch, ReducerAction} from 'react';
+import {Dispatch, ReducerAction, useContext} from 'react';
 
 import {Activity as CanisterActivity} from '@psychedelic/cover';
 
@@ -44,7 +44,7 @@ const INIT_STATE: State = {};
  * ========================================================================================================
  */
 const context = createContext<State, Action>(INIT_STATE);
-export const useActivityContext = () => React.useContext(context);
+export const useActivityContext = () => useContext(context);
 
 /*
  * ========================================================================================================

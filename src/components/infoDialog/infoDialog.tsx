@@ -1,4 +1,4 @@
-import React, {useCallback, useImperativeHandle, useState} from 'react';
+import {forwardRef, ReactNode, useCallback, useImperativeHandle, useState} from 'react';
 
 import {Core} from '@/components';
 
@@ -12,22 +12,17 @@ interface PropTypes {
 }
 
 export interface InfoDialogHandler {
-  open: (option?: {
-    title?: string;
-    description?: React.ReactNode;
-    showActionBtn?: boolean;
-    showCancelBtn?: boolean;
-  }) => void;
+  open: (option?: {title?: string; description?: ReactNode; showActionBtn?: boolean; showCancelBtn?: boolean}) => void;
   close: () => void;
 }
 
-export const InfoDialog = React.forwardRef<InfoDialogHandler, PropTypes>(
+export const InfoDialog = forwardRef<InfoDialogHandler, PropTypes>(
   ({cancelContent = 'Cancel', actionContent = 'Ok', open, onAction}, ref) => {
     const [isOpen, setIsOpen] = useState(open);
     const [showActionBtn, setShowActionBtn] = useState(false);
     const [showCancelBtn, setShowCancelBtn] = useState(false);
     const [title, setTitle] = useState('');
-    const [description, setDescription] = useState<React.ReactNode>();
+    const [description, setDescription] = useState<ReactNode>();
     useImperativeHandle(ref, () => ({
       open: (option = {title: '', description: '', showActionBtn: false}) => {
         setIsOpen(true);

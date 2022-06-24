@@ -1,4 +1,4 @@
-import React, {createRef, useCallback, useState} from 'react';
+import {createRef, FC, KeyboardEvent, ReactEventHandler, useCallback, useState} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -13,7 +13,7 @@ interface PropTypes {
   disabled?: boolean;
 }
 
-export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disabled}) => {
+export const SearchBar: FC<PropTypes> = ({onBlurOrEnter, validation, disabled}) => {
   const [hasValue, setHasValue] = useState(false);
   const [hasError, setHasError] = useState(false);
   const searchBarRef = createRef<HTMLInputElement>();
@@ -28,7 +28,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
     }
   }, [onBlurOrEnter, validation, searchBarRef]);
 
-  const onInput = useCallback<React.ReactEventHandler>(
+  const onInput = useCallback<ReactEventHandler>(
     _ => {
       if (searchBarRef.current) {
         const value = (searchBarRef.current as HTMLInputElement).value;
@@ -52,7 +52,7 @@ export const SearchBar: React.VFC<PropTypes> = ({onBlurOrEnter, validation, disa
   const onBlur = useCallback(search, [search]);
 
   const onEnter = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         search();
       }

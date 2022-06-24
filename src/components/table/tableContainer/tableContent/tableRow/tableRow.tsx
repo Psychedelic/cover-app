@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import {ComponentProps, FC, ReactElement, useCallback} from 'react';
 
 import {faCaretSquareDown, faCaretSquareRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -8,11 +8,11 @@ import {Core} from '@/components';
 
 import {StitchesTableRow} from './tableRow.styled';
 
-interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
+interface PropTypes extends ComponentProps<typeof StitchesTableRow> {
   css?: CSS;
   kind?: 'green' | 'yellow' | 'red';
   statusAsIcon?: boolean;
-  children: React.ReactElement[];
+  children: ReactElement[];
   override?: boolean;
   showCollapseBtn?: boolean;
   onCollapse?: (id: string) => void;
@@ -23,7 +23,7 @@ interface PropTypes extends React.ComponentProps<typeof StitchesTableRow> {
   disableCollapseBtn?: boolean;
 }
 
-export const TableRow: React.FC<PropTypes> = ({
+export const TableRow: FC<PropTypes> = ({
   css,
   children,
   kind,

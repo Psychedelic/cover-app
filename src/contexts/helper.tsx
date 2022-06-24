@@ -1,4 +1,14 @@
-import React, {useCallback, useEffect, useMemo, useReducer, useRef} from 'react';
+import {
+  FC,
+  PropsWithChildren,
+  Context as ReactContext,
+  createContext as reactCreateContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef
+} from 'react';
 
 /*
  * ========================================================================================================
@@ -26,8 +36,8 @@ interface Context<State, Action extends ActionBase> {
   state: State;
   dispatch: (action: Action) => void;
 }
-export const createContext = <State, Action extends ActionBase>(state: State): React.Context<Context<State, Action>> =>
-  React.createContext({
+export const createContext = <State, Action extends ActionBase>(state: State): ReactContext<Context<State, Action>> =>
+  reactCreateContext({
     state,
     dispatch: (_: Action) => {
       // Do nothing.
@@ -41,10 +51,10 @@ export const createContext = <State, Action extends ActionBase>(state: State): R
  */
 export const createProvider =
   <State, Action extends ActionBase>(
-    context: React.Context<Context<State, Action>>,
+    context: ReactContext<Context<State, Action>>,
     reducer: Reducer<State, Action>,
     initState: State
-  ): React.FC<React.PropsWithChildren<unknown>> =>
+  ): FC<PropsWithChildren<unknown>> =>
   ({children}) => {
     const isMounted = useRef<boolean | undefined>();
     const [state, dispatch] = useReducer(reducer, initState);

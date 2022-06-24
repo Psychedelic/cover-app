@@ -1,8 +1,8 @@
-import React from 'react';
+import {FC} from 'react';
 
 import {MultiStepForm, PageContainer} from '@/parts';
 
-export const SubmitVerification: React.VFC = () => (
+export const SubmitVerification: FC = () => (
   <PageContainer>
     <MultiStepForm />
   </PageContainer>

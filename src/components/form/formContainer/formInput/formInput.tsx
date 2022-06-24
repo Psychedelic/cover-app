@@ -1,4 +1,13 @@
-import React, {createRef, useCallback, useImperativeHandle, useState} from 'react';
+import {
+  ComponentProps,
+  createRef,
+  forwardRef,
+  ReactEventHandler,
+  RefObject,
+  useCallback,
+  useImperativeHandle,
+  useState
+} from 'react';
 
 import {CSS} from '@stitches/react';
 
@@ -10,7 +19,7 @@ import {InfoTooltip} from './infoTooltip';
 
 type InputValidations = [(value: string) => boolean];
 
-interface PropTypes extends React.ComponentProps<typeof StitchesFormInput> {
+interface PropTypes extends ComponentProps<typeof StitchesFormInput> {
   css?: CSS;
   textarea?: boolean;
   label: string;
@@ -31,12 +40,12 @@ export interface FormInputHandler {
 const isValidateFailed = (validations: [(value: string) => boolean], value: string): boolean =>
   validations.reduce((result, validation) => result || !validation(value), false as boolean);
 
-export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
+export const FormInput = forwardRef<FormInputHandler, PropTypes>(
   ({css, defaultValue, textarea, label, rows, required, validations, validationIf, errorMessage, infoTooltip}, ref) => {
     const [hasError, setHasError] = useState(false);
     const inputRef = createRef<HTMLInputElement | HTMLTextAreaElement>();
 
-    const onBlur = useCallback<React.ReactEventHandler>(
+    const onBlur = useCallback<ReactEventHandler>(
       _ => {
         if (inputRef.current && validations) {
           const value = (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value;
@@ -46,7 +55,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
       [validations, inputRef]
     );
 
-    const onInput = useCallback<React.ReactEventHandler>(_ => {
+    const onInput = useCallback<ReactEventHandler>(_ => {
       setHasError(false);
     }, []);
 
@@ -86,7 +95,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
             onBlur={onBlur}
             onInput={onInput}
             placeholder={`Enter ${label}`}
-            ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+            ref={inputRef as RefObject<HTMLTextAreaElement>}
             rows={rows}
           />
         ) : (
@@ -96,7 +105,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
             onBlur={onBlur}
             onInput={onInput}
             placeholder={`Enter ${label}`}
-            ref={inputRef as React.RefObject<HTMLInputElement>}
+            ref={inputRef as RefObject<HTMLInputElement>}
           />
         )}
         {hasError && <span>{errorMessage}</span>}

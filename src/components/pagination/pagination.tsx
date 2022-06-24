@@ -1,4 +1,16 @@
-import React, {createRef, useCallback, useEffect, useImperativeHandle, useRef, useState} from 'react';
+import {
+  ComponentProps,
+  createRef,
+  forwardRef,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  ReactEventHandler,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState
+} from 'react';
 
 import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -9,7 +21,7 @@ import {isPositiveNum} from '@/utils';
 
 import {StitchesPagination} from './pagination.styled';
 
-interface PropTypes extends React.ComponentProps<typeof StitchesPagination> {
+interface PropTypes extends ComponentProps<typeof StitchesPagination> {
   css?: CSS;
   defaultPage?: number;
   onPageChanged?: (toPage: number) => void;
@@ -21,7 +33,7 @@ export interface PaginationHandler {
   forceReset: () => void;
 }
 
-export const Pagination = React.forwardRef<PaginationHandler, PropTypes>(
+export const Pagination = forwardRef<PaginationHandler, PropTypes>(
   ({css, defaultPage = 1, onPageChanged, totalPage = 1, disablePaginated}, ref) => {
     const [isFirstPage, setIsFirstPage] = useState(defaultPage === 1),
       [isLastPage, setIsLastPage] = useState(defaultPage === totalPage);
@@ -54,7 +66,7 @@ export const Pagination = React.forwardRef<PaginationHandler, PropTypes>(
         }
       }, [isPageChanged, totalPage, onPageChanged, inputRef]),
       onBlur = useCallback(pageChangeHandler, [pageChangeHandler]),
-      onBtnClick = useCallback<React.ReactEventHandler>(
+      onBtnClick = useCallback<ReactEventHandler>(
         ({target}) => {
           const isMinus = leftBtn.current && (leftBtn.current as HTMLButtonElement).contains(target as Node);
           if (inputRef.current) {
@@ -68,8 +80,8 @@ export const Pagination = React.forwardRef<PaginationHandler, PropTypes>(
         },
         [onPageChanged, totalPage, inputRef, leftBtn]
       ),
-      onEnter = useCallback(
-        (e: React.KeyboardEvent) => {
+      onEnter = useCallback<KeyboardEventHandler>(
+        (e: KeyboardEvent) => {
           if (e.key === 'Enter') {
             pageChangeHandler();
           }

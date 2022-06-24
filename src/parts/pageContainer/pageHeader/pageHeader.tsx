@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import {FC, useCallback, useRef, useState} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {Link} from 'react-router-dom';
@@ -12,7 +12,7 @@ import {getCurrentPath, isPrincipal} from '@/utils';
 import {MenuItems} from './menuItems';
 import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
 
-export const PageHeader: React.FC = () => {
+export const PageHeader: FC = () => {
   const canisterId = useRef('');
   const [isFetching, setIsFetching] = useState(false);
   const {dispatch} = useVerificationContext();
