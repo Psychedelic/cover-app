@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 
 import {Core} from '@/components';
 
@@ -9,7 +9,7 @@ interface PropTypes {
   isTrim?: boolean;
 }
 
-export const VerificationDetail: React.VFC<PropTypes> = ({label, value, isLink, isTrim}) => (
+export const VerificationDetail: FC<PropTypes> = ({label, value, isLink, isTrim}) => (
   <>
     <td colSpan={2}>
       <div>

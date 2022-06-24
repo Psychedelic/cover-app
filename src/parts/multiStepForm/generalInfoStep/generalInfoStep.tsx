@@ -1,4 +1,4 @@
-import React, {useCallback, useRef} from 'react';
+import {createRef, FC, FormEvent, RefObject, useCallback} from 'react';
 
 import {Link} from 'react-router-dom';
 
@@ -23,27 +23,27 @@ export interface GeneralInfo {
 }
 
 interface InputRefs {
-  ownerId: React.RefObject<FormInputHandler>;
-  canisterId: React.RefObject<FormInputHandler>;
-  canisterName: React.RefObject<FormInputHandler>;
-  repoUrl: React.RefObject<FormInputHandler>;
-  commitHash: React.RefObject<FormInputHandler>;
-  repoAccessToken: React.RefObject<FormInputHandler>;
+  ownerId: RefObject<FormInputHandler>;
+  canisterId: RefObject<FormInputHandler>;
+  canisterName: RefObject<FormInputHandler>;
+  repoUrl: RefObject<FormInputHandler>;
+  commitHash: RefObject<FormInputHandler>;
+  repoAccessToken: RefObject<FormInputHandler>;
 }
 
 const useInputRefs = (): InputRefs => ({
-  ownerId: useRef<FormInputHandler>(null),
-  canisterId: useRef<FormInputHandler>(null),
-  canisterName: useRef<FormInputHandler>(null),
-  repoUrl: useRef<FormInputHandler>(null),
-  commitHash: useRef<FormInputHandler>(null),
-  repoAccessToken: useRef<FormInputHandler>(null)
+  ownerId: createRef<FormInputHandler>(),
+  canisterId: createRef<FormInputHandler>(),
+  canisterName: createRef<FormInputHandler>(),
+  repoUrl: createRef<FormInputHandler>(),
+  commitHash: createRef<FormInputHandler>(),
+  repoAccessToken: createRef<FormInputHandler>()
 });
 
-export const GeneralInfoStep: React.FC<PropTypes> = ({onCompleted, defaultValue}) => {
+export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
   const inputRefs = useInputRefs();
   const onSubmit = useCallback(
-    (event?: React.FormEvent) => {
+    (event?: FormEvent) => {
       event?.preventDefault();
       const hasError = Object.values(inputRefs).reduce((result, ref) => {
         if (ref.current) {

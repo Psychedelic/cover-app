@@ -1,4 +1,4 @@
-import React, {createRef, useCallback, useEffect} from 'react';
+import {createRef, FC, useCallback, useEffect} from 'react';
 
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -14,7 +14,7 @@ interface PropTypes {
   defaultActivity?: Activity[];
 }
 
-export const ActivityTable: React.FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITIES}) => {
+export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITIES}) => {
   const {
     state: {activities = defaultActivity, totalPage, disablePaginated},
     dispatch

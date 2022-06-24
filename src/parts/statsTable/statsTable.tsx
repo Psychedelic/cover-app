@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import {FC, useCallback, useEffect} from 'react';
 
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -26,7 +26,7 @@ const renderItems = (label: string, value?: string) => [
   </td>
 ];
 
-export const StatsTable: React.FC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
+export const StatsTable: FC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
   const {
     state: {stats = defaultStats, isFetching},
     dispatch

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import {FC, useCallback} from 'react';
 
 import {Core, TableRow} from '@/components';
 import {Verification} from '@/models';
@@ -17,7 +17,7 @@ interface PropTypes {
 const getStatus = (isVerified?: boolean) =>
   typeof isVerified === 'boolean' ? (isVerified ? 'green' : 'red') : isVerified;
 
-export const VerificationRow: React.VFC<PropTypes> = ({
+export const VerificationRow: FC<PropTypes> = ({
   verification,
   isSelected,
   setCanisterIdSelected,

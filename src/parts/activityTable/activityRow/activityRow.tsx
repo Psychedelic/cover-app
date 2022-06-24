@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 
 import {Core, TableRow} from '@/components';
 import {getDuration} from '@/utils';
@@ -16,7 +16,7 @@ const activityStatus: {[key: string]: 'red' | 'yellow' | 'green'} = {
   Building: 'yellow'
 };
 
-export const ActivityRow: React.FC<PropTypes> = ({buildStatus, canisterId, dateTime}) => (
+export const ActivityRow: FC<PropTypes> = ({buildStatus, canisterId, dateTime}) => (
   <TableRow
     kind={buildStatus && activityStatus[buildStatus]}
     showLoadingMaskStatus={typeof buildStatus === 'undefined'}>

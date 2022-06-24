@@ -1,4 +1,4 @@
-import React, {MutableRefObject, useCallback, useRef, useState} from 'react';
+import {createRef, FC, Fragment, MutableRefObject, RefObject, useCallback, useRef, useState} from 'react';
 
 import {ErrorResponse} from '@psychedelic/cover';
 import {useNavigate} from 'react-router-dom';
@@ -28,18 +28,18 @@ const useInfoRefs = (): InfoRefs => ({
 });
 
 interface DialogRefs {
-  infoDialog: React.RefObject<InfoDialogHandler>;
-  errDialog: React.RefObject<ErrorDialogHandler>;
-  successDialog: React.RefObject<SuccessDialogHandler>;
+  infoDialog: RefObject<InfoDialogHandler>;
+  errDialog: RefObject<ErrorDialogHandler>;
+  successDialog: RefObject<SuccessDialogHandler>;
 }
 
 const useDialogRefs = (): DialogRefs => ({
-  errDialog: useRef<ErrorDialogHandler>(null),
-  infoDialog: useRef<InfoDialogHandler>(null),
-  successDialog: useRef<SuccessDialogHandler>(null)
+  errDialog: createRef<ErrorDialogHandler>(),
+  infoDialog: createRef<InfoDialogHandler>(),
+  successDialog: createRef<SuccessDialogHandler>()
 });
 
-export const MultiStepForm: React.FC = () => {
+export const MultiStepForm: FC = () => {
   const [steps, setSteps] = useState({generalInfoStep: true, buildInfoStep: false});
   const infoRefs = useInfoRefs();
   const dialogRefs = useDialogRefs();
@@ -126,14 +126,14 @@ const mapBadInputToDescriptionList = (e: ErrorResponse) => ({
   description: (
     <dl>
       {(e.details as Array<{property: string; constraints: Record<string, string>}>).map(({property, constraints}) => (
-        <React.Fragment key={property}>
+        <Fragment key={property}>
           <dt>{`- ${property}:`}</dt>
           <dd>
             {Object.values(constraints).map(c => (
               <li key={c}>{c}</li>
             ))}
           </dd>
-        </React.Fragment>
+        </Fragment>
       ))}
     </dl>
   )

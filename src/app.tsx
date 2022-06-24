@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import {globalStyles} from '@/themes';
 import {DASHBOARD_PATH, SUBMIT_PATH} from './constants';
 import {Dashboard, SubmitVerification} from './pages';
 
-export const App: React.VFC = () => {
+export const App: FC = () => {
   globalStyles();
   return (
     <BrowserRouter>
