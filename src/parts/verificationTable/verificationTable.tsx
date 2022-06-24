@@ -30,9 +30,9 @@ export const VerificationTable: React.FC<PropTypes> = ({defaultVerifications = D
     <TableContainer
       css={tableContainerStyle}
       disablePaginated={disablePaginated}
-      lastPage={totalPage}
       onPageChanged={onPageChanged}
-      paginated>
+      paginated
+      totalPage={totalPage}>
       <TableHeader css={tableHeaderStyle}>
         <>
           <th>{'Canister ID'}</th>

@@ -1,4 +1,4 @@
-import React, {useCallback, useImperativeHandle, useRef, useState} from 'react';
+import React, {createRef, useCallback, useImperativeHandle, useState} from 'react';
 
 import {CSS} from '@stitches/react';
 
@@ -34,7 +34,7 @@ const isValidateFailed = (validations: [(value: string) => boolean], value: stri
 export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
   ({css, defaultValue, textarea, label, rows, required, validations, validationIf, errorMessage, infoTooltip}, ref) => {
     const [hasError, setHasError] = useState(false);
-    const inputRef = useRef(null);
+    const inputRef = createRef<HTMLInputElement | HTMLTextAreaElement>();
 
     const onBlur = useCallback<React.ReactEventHandler>(
       _ => {
@@ -43,7 +43,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
           setHasError(Boolean(value) && isValidateFailed(validations, value));
         }
       },
-      [validations]
+      [validations, inputRef]
     );
 
     const onInput = useCallback<React.ReactEventHandler>(_ => {
@@ -70,7 +70,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
         },
         value: () => (inputRef.current ? (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value : '')
       }),
-      [required, validations, validationIf]
+      [required, validations, validationIf, inputRef]
     );
 
     return (
@@ -86,7 +86,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
             onBlur={onBlur}
             onInput={onInput}
             placeholder={`Enter ${label}`}
-            ref={inputRef}
+            ref={inputRef as React.RefObject<HTMLTextAreaElement>}
             rows={rows}
           />
         ) : (
@@ -96,7 +96,7 @@ export const FormInput = React.forwardRef<FormInputHandler, PropTypes>(
             onBlur={onBlur}
             onInput={onInput}
             placeholder={`Enter ${label}`}
-            ref={inputRef}
+            ref={inputRef as React.RefObject<HTMLInputElement>}
           />
         )}
         {hasError && <span>{errorMessage}</span>}

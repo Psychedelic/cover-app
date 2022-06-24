@@ -6,6 +6,9 @@ export const StitchesTableHeader = styled('thead', {
     '&:first-of-type': {
       width: '$40',
       textAlign: 'center'
+    },
+    '&:last-of-type': {
+      textAlign: 'right'
     }
   }
 });
