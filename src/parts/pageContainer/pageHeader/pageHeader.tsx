@@ -4,12 +4,11 @@ import {Principal} from '@dfinity/principal';
 import {Link} from 'react-router-dom';
 
 import {logo} from '@/assets';
-import {Core, SearchBar} from '@/components';
+import {Core, MenuItems, SearchBar, Settings} from '@/components';
 import {DASHBOARD_PATH, SUBMIT_PATH} from '@/constants';
 import {fetchByCanisterId, fetchVerifications, useVerificationContext} from '@/contexts';
 import {getCurrentPath, isPrincipal} from '@/utils';
 
-import {MenuItems} from './menuItems';
 import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
 
 export const PageHeader: FC = () => {
@@ -51,6 +50,7 @@ export const PageHeader: FC = () => {
           <Core.Button disabled={getCurrentPath() !== DASHBOARD_PATH}>{'Submit Verification'}</Core.Button>
         </Link>
         <Core.Button disabled>{'Connect to Plug'}</Core.Button>
+        <Settings />
         <MenuItems />
       </StitchesPageSecondaryHeader>
     </StitchesPageHeaderContainer>
