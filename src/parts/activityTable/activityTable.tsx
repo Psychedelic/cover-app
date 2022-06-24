@@ -45,7 +45,7 @@ export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITI
         <th colSpan={2}>{'Recent Activities'}</th>
         <th>
           <Core.Button disabled={disablePaginated} kind={'text'} onClick={resetPage}>
-            <FontAwesomeIcon icon={faRotate} size={'lg'} spin />
+            <FontAwesomeIcon icon={faRotate} spin />
           </Core.Button>
         </th>
       </TableHeader>

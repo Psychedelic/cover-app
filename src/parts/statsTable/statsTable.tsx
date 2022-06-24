@@ -41,7 +41,7 @@ export const StatsTable: FC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
         <th>{'Statistics'}</th>
         <th>
           <Core.Button disabled={isFetching} kind={'text'} onClick={fetch}>
-            <FontAwesomeIcon icon={faRotate} size={'lg'} spin />
+            <FontAwesomeIcon icon={faRotate} spin />
           </Core.Button>
         </th>
       </TableHeader>
