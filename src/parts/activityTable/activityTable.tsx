@@ -26,7 +26,16 @@ export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITI
 
   useEffect(() => {
     fetchActivities(dispatch);
-  }, [dispatch]);
+    let timer: ReturnType<typeof setInterval> | null = null;
+    if (coverSettings.isAutoRefresh) {
+      timer = setInterval(() => {
+        fetchActivities(dispatch);
+      }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
+    }
+    return () => {
+      timer && clearTimeout(timer);
+    };
+  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval]);
 
   const onPageChange = useCallback(
     (pageNum: number) => {

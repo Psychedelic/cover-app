@@ -53,11 +53,17 @@ export const useCoverSettingsContext = () => useContext(context);
  * REDUCER
  * ========================================================================================================
  */
-const coverSettingsReducer = (_: State, action: Action): State => {
+const coverSettingsReducer = (state: State, action: Action): State => {
   if (action.type === 'setCoverSettings') {
-    return {
-      coverSettings: action.payload.coverSettings
-    };
+    // HACK: prevent update on same settings
+    if (
+      state.coverSettings.isAutoRefresh !== action.payload.coverSettings.isAutoRefresh ||
+      state.coverSettings.refreshInterval !== action.payload.coverSettings.refreshInterval
+    )
+      return {
+        coverSettings: action.payload.coverSettings
+      };
+    return state;
   }
   throw new Error(`Unhandled action type: ${(action as ActionBase).type}`);
 };
@@ -82,6 +88,7 @@ export const loadCoverSettings = (dispatch: Dispatch<ReducerAction<typeof coverS
     }
   });
 };
+
 export const setCoverSettings = (
   coverSettings: CoverSettings,
   dispatch: Dispatch<ReducerAction<typeof coverSettingsReducer>>

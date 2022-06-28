@@ -36,18 +36,29 @@ export const StatsTable: FC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
     state: {coverSettings}
   } = useCoverSettingsContext();
 
-  const fetch = useCallback(() => {
+  const resetPage = useCallback(() => {
     fetchStats(dispatch);
   }, [dispatch]);
 
-  useEffect(fetch, [fetch]);
+  useEffect(() => {
+    fetchStats(dispatch);
+    let timer: ReturnType<typeof setInterval> | null = null;
+    if (coverSettings.isAutoRefresh) {
+      timer = setInterval(() => {
+        fetchStats(dispatch);
+      }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
+    }
+    return () => {
+      timer && clearTimeout(timer);
+    };
+  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval]);
 
   return (
     <TableContainer css={tableContainerStyle}>
       <TableHeader>
         <th>{'Statistics'}</th>
         <th>
-          <Core.Button disabled={isFetching} kind={'text'} onClick={fetch}>
+          <Core.Button disabled={isFetching} kind={'text'} onClick={resetPage}>
             <FontAwesomeIcon icon={faRotate} spin={coverSettings.isAutoRefresh} />
           </Core.Button>
         </th>
