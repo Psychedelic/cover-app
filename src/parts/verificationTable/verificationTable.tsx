@@ -4,7 +4,7 @@ import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
-import {DEFAULT_VERIFICATIONS, fetchVerifications, useVerificationContext} from '@/contexts';
+import {DEFAULT_VERIFICATIONS, fetchVerifications, useCoverSettingsContext, useVerificationContext} from '@/contexts';
 import {Verification} from '@/models';
 
 import {VerificationRow} from './verificationRow';
@@ -16,24 +16,34 @@ interface PropTypes {
 
 export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT_VERIFICATIONS}) => {
   const [canisterIdSelected, setCanisterIdSelected] = useState('');
+
   const {
     state: {verifications = defaultVerifications, totalPage, currentCanisterId = '', disablePaginated},
     dispatch
   } = useVerificationContext();
+
+  const {
+    state: {coverSettings}
+  } = useCoverSettingsContext();
+
   useEffect(() => {
     fetchVerifications(dispatch);
   }, [dispatch]);
+
   const onPageChanged = useCallback(
     (pageNum: number) => {
       fetchVerifications(dispatch, pageNum);
     },
     [dispatch]
   );
+
   const paginationRef = createRef<PaginationHandler>();
+
   const resetPage = useCallback(() => {
     fetchVerifications(dispatch);
     paginationRef.current?.forceReset();
   }, [paginationRef, dispatch]);
+
   return (
     <TableContainer
       css={tableContainerStyle}
@@ -51,7 +61,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
         <th>{'Last Activity'}</th>
         <th>
           <Core.Button disabled={disablePaginated} kind={'text'} onClick={resetPage}>
-            <FontAwesomeIcon icon={faRotate} spin />
+            <FontAwesomeIcon icon={faRotate} spin={coverSettings.isAutoRefresh} />
           </Core.Button>
         </th>
       </TableHeader>

@@ -4,7 +4,7 @@ import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
-import {DEFAULT_ACTIVITIES, fetchActivities, useActivityContext} from '@/contexts';
+import {DEFAULT_ACTIVITIES, fetchActivities, useActivityContext, useCoverSettingsContext} from '@/contexts';
 import {Activity} from '@/models';
 import {ActivityRow} from '@/parts';
 
@@ -19,20 +19,29 @@ export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITI
     state: {activities = defaultActivity, totalPage, disablePaginated},
     dispatch
   } = useActivityContext();
+
+  const {
+    state: {coverSettings}
+  } = useCoverSettingsContext();
+
   useEffect(() => {
     fetchActivities(dispatch);
   }, [dispatch]);
+
   const onPageChange = useCallback(
     (pageNum: number) => {
       fetchActivities(dispatch, pageNum);
     },
     [dispatch]
   );
+
   const paginationRef = createRef<PaginationHandler>();
+
   const resetPage = useCallback(() => {
     fetchActivities(dispatch);
     paginationRef.current?.forceReset();
   }, [paginationRef, dispatch]);
+
   return (
     <TableContainer
       css={tableContainerStyle}
@@ -45,7 +54,7 @@ export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITI
         <th colSpan={2}>{'Recent Activities'}</th>
         <th>
           <Core.Button disabled={disablePaginated} kind={'text'} onClick={resetPage}>
-            <FontAwesomeIcon icon={faRotate} spin />
+            <FontAwesomeIcon icon={faRotate} spin={coverSettings.isAutoRefresh} />
           </Core.Button>
         </th>
       </TableHeader>
