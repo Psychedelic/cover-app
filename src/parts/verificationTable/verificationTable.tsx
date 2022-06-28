@@ -28,18 +28,16 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
 
   useEffect(() => {
     fetchVerifications(dispatch);
-    /*
-     * Let timer: ReturnType<typeof setInterval> | null = null;
-     * if (coverSettings.isAutoRefresh) {
-     * timer = setInterval(() => {
-     * fetchVerifications(dispatch);
-     * }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
-     * }
-     * return () => {
-     * timer && clearTimeout(timer);
-     * };
-     */
-  }, [dispatch]);
+    let timer: ReturnType<typeof setInterval> | null = null;
+    if (coverSettings.isAutoRefresh) {
+      timer = setInterval(() => {
+        fetchVerifications(dispatch);
+      }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
+    }
+    return () => {
+      timer && clearTimeout(timer);
+    };
+  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval]);
 
   const onPageChanged = useCallback(
     (pageNum: number) => {
