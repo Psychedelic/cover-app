@@ -59,7 +59,7 @@ export const DEFAULT_STATS: Stats = {
  * REDUCER
  * ========================================================================================================
  */
-const StatsReducer = (_: State, action: Action): State => {
+const statsReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
       return {stats: DEFAULT_STATS, isFetching: true};
@@ -81,14 +81,14 @@ const StatsReducer = (_: State, action: Action): State => {
  * PROVIDER
  * ========================================================================================================
  */
-export const StatsProvider = createProvider(context, StatsReducer, INIT_STATE);
+export const StatsProvider = createProvider(context, statsReducer, INIT_STATE);
 
 /*
  * ========================================================================================================
  * ACTIONS
  * ========================================================================================================
  */
-export const fetchStats = async (dispatch: Dispatch<ReducerAction<typeof StatsReducer>>) => {
+export const fetchStats = async (dispatch: Dispatch<ReducerAction<typeof statsReducer>>) => {
   dispatch({type: 'fetchPending'});
   try {
     const canisterStats = await coverSDK.getVerificationStats();
