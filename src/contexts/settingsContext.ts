@@ -88,6 +88,7 @@ export const loadCoverSettings = (dispatch: Dispatch<ReducerAction<typeof coverS
     }
   });
 };
+
 export const setCoverSettings = (
   coverSettings: CoverSettings,
   dispatch: Dispatch<ReducerAction<typeof coverSettingsReducer>>
