@@ -31,12 +31,14 @@ interface PropTypes extends ComponentProps<typeof StitchesFormInput> {
   infoTooltip?: string;
   defaultValue?: string;
   placeholder?: string;
+  disabled?: boolean;
   onBlurHandler?: (value: string) => void;
 }
 
 export interface FormInputHandler {
   hasError: () => boolean;
   value: () => string;
+  setValue: (value: string) => void;
 }
 
 const isValidateFailed = (validations: [(value: string) => boolean], value: string): boolean =>
@@ -56,6 +58,7 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
       errorMessage,
       infoTooltip,
       placeholder,
+      disabled,
       onBlurHandler
     },
     ref
@@ -98,7 +101,8 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
           }
           return false;
         },
-        value: () => (inputRef.current ? (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value : '')
+        value: () => (inputRef.current ? (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value : ''),
+        setValue: (value: string) => ((inputRef.current as HTMLInputElement | HTMLTextAreaElement).value = value)
       }),
       [required, validations, validationIf, inputRef]
     );
@@ -114,6 +118,7 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
         {textarea ? (
           <Core.Textarea
             defaultValue={defaultValue}
+            disabled={disabled}
             name={name}
             onBlur={onBlur}
             onInput={onInput}
@@ -124,6 +129,7 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
         ) : (
           <Core.Input
             defaultValue={defaultValue}
+            disabled={disabled}
             name={name}
             onBlur={onBlur}
             onInput={onInput}

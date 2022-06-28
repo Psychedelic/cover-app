@@ -10,7 +10,7 @@ import {ActionBase, createContext, createProvider} from './helper';
 const saveCoverSettings = (coverSettings: CoverSettings) => {
   localStorage.setItem('cover_settings', JSON.stringify(coverSettings));
 };
-const loadCoverSettings = (): CoverSettings =>
+const readCoverSettings = (): CoverSettings =>
   JSON.parse(localStorage.getItem('cover_settings') || '{"isAutoRefresh":true,"refreshInterval":"1"}');
 
 /*
@@ -38,7 +38,7 @@ interface SetCoverSettingsAction extends ActionBase {
 interface State {
   coverSettings: CoverSettings;
 }
-const INIT_STATE: State = {coverSettings: loadCoverSettings() || {isAutoRefresh: true, refreshInterval: '1'}};
+const INIT_STATE: State = {coverSettings: readCoverSettings() || {isAutoRefresh: true, refreshInterval: '1'}};
 
 /*
  * ========================================================================================================
@@ -74,6 +74,14 @@ export const CoverSettingsProvider = createProvider(context, coverSettingsReduce
  * ACTIONS
  * ========================================================================================================
  */
+export const loadCoverSettings = (dispatch: Dispatch<ReducerAction<typeof coverSettingsReducer>>) => {
+  dispatch({
+    type: 'setCoverSettings',
+    payload: {
+      coverSettings: readCoverSettings()
+    }
+  });
+};
 export const setCoverSettings = (
   coverSettings: CoverSettings,
   dispatch: Dispatch<ReducerAction<typeof coverSettingsReducer>>
