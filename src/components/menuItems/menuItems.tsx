@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core} from '@/components';
 
-import {menuStyle, StitchesMenuIcon, StitchesMenuItem, StitchesMenuText} from './pageHeader.styled';
+import {menuStyle, StitchesMenuIcon, StitchesMenuItem, StitchesMenuText} from './menuItem.styled';
 
 export const MenuItems = () => (
   <Core.Popover>

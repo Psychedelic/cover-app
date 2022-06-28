@@ -22,7 +22,7 @@ type InputValidations = [(value: string) => boolean];
 interface PropTypes extends ComponentProps<typeof StitchesFormInput> {
   css?: CSS;
   textarea?: boolean;
-  label: string;
+  label?: string;
   rows?: number;
   required?: boolean;
   validations?: InputValidations;
@@ -30,29 +30,52 @@ interface PropTypes extends ComponentProps<typeof StitchesFormInput> {
   errorMessage?: string;
   infoTooltip?: string;
   defaultValue?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  onBlurHandler?: (value: string) => void;
 }
 
 export interface FormInputHandler {
   hasError: () => boolean;
   value: () => string;
+  setValue: (value: string) => void;
 }
 
 const isValidateFailed = (validations: [(value: string) => boolean], value: string): boolean =>
   validations.reduce((result, validation) => result || !validation(value), false as boolean);
 
 export const FormInput = forwardRef<FormInputHandler, PropTypes>(
-  ({css, defaultValue, textarea, label, rows, required, validations, validationIf, errorMessage, infoTooltip}, ref) => {
+  (
+    {
+      css,
+      defaultValue,
+      textarea,
+      label,
+      rows,
+      required,
+      validations,
+      validationIf,
+      errorMessage,
+      infoTooltip,
+      placeholder,
+      disabled,
+      onBlurHandler
+    },
+    ref
+  ) => {
     const [hasError, setHasError] = useState(false);
+
     const inputRef = createRef<HTMLInputElement | HTMLTextAreaElement>();
 
     const onBlur = useCallback<ReactEventHandler>(
       _ => {
-        if (inputRef.current && validations) {
+        if (inputRef.current) {
           const value = (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value;
-          setHasError(Boolean(value) && isValidateFailed(validations, value));
+          onBlurHandler && onBlurHandler(value);
+          validations && setHasError(Boolean(value) && isValidateFailed(validations, value));
         }
       },
-      [validations, inputRef]
+      [validations, inputRef, onBlurHandler]
     );
 
     const onInput = useCallback<ReactEventHandler>(_ => {
@@ -60,6 +83,7 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
     }, []);
 
     const name = getNameFromLabel(label);
+
     useImperativeHandle(
       ref,
       () => ({
@@ -77,34 +101,39 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
           }
           return false;
         },
-        value: () => (inputRef.current ? (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value : '')
+        value: () => (inputRef.current ? (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value : ''),
+        setValue: (value: string) => ((inputRef.current as HTMLInputElement | HTMLTextAreaElement).value = value)
       }),
       [required, validations, validationIf, inputRef]
     );
 
     return (
       <StitchesFormInput css={css} hasError={hasError ? 'true' : 'false'}>
-        <div>
-          <label htmlFor={name}>{label}</label>
-          {infoTooltip && <InfoTooltip info={infoTooltip} />}
-        </div>
+        {label && (
+          <div>
+            <label htmlFor={name}>{label}</label>
+            {infoTooltip && <InfoTooltip info={infoTooltip} />}
+          </div>
+        )}
         {textarea ? (
           <Core.Textarea
             defaultValue={defaultValue}
+            disabled={disabled}
             name={name}
             onBlur={onBlur}
             onInput={onInput}
-            placeholder={`Enter ${label}`}
+            placeholder={placeholder || `Enter ${label}`}
             ref={inputRef as RefObject<HTMLTextAreaElement>}
             rows={rows}
           />
         ) : (
           <Core.Input
             defaultValue={defaultValue}
+            disabled={disabled}
             name={name}
             onBlur={onBlur}
             onInput={onInput}
-            placeholder={`Enter ${label}`}
+            placeholder={placeholder || `Enter ${label}`}
             ref={inputRef as RefObject<HTMLInputElement>}
           />
         )}
