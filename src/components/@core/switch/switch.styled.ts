@@ -6,13 +6,12 @@ const {styled} = defaultStitches;
 
 export const StitchesSwitch = styled(SwitchPrimitive.Root, {
   all: 'unset',
-  width: 42,
+  width: 50,
   height: 25,
   borderRadius: '9999px',
   position: 'relative',
-  boxShadow: `0 0 0 2px black`,
-  WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
-  '&[data-state="checked"]': {backgroundColor: 'black'}
+  backgroundColor: '$coverRed',
+  '&[data-state="checked"]': {backgroundColor: '$coverGreenOpacity'}
 });
 
 export const StitchesThumb = styled(SwitchPrimitive.Thumb, {
@@ -24,5 +23,5 @@ export const StitchesThumb = styled(SwitchPrimitive.Thumb, {
   transition: 'transform 100ms',
   transform: 'translateX(2px)',
   willChange: 'transform',
-  '&[data-state="checked"]': {transform: 'translateX(19px)'}
+  '&[data-state="checked"]': {transform: 'translateX(28px)'}
 });

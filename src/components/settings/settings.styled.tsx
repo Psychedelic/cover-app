@@ -7,6 +7,10 @@ export const StitchesSettingsRow = styled('div', {
   padding: '10px 0'
 });
 
+export const rowDisableStyle = {
+  opacity: 0.3
+};
+
 export const StitchesSettingsLeft = styled('div', {
   flex: 2
 });
