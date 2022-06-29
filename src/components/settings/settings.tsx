@@ -7,7 +7,7 @@ import {Core, FormInput, FormInputHandler} from '@/components';
 import {loadCoverSettings, setCoverSettings, useCoverSettingsContext} from '@/contexts';
 import {isPositiveNum} from '@/utils';
 
-import {StitchesSettingsLeft, StitchesSettingsRight, StitchesSettingsRow} from './settings.styled';
+import {rowDisableStyle, StitchesSettingsLeft, StitchesSettingsRight, StitchesSettingsRow} from './settings.styled';
 
 export const Settings: FC = () => {
   const refreshIntervalRef = createRef<FormInputHandler>();
@@ -60,7 +60,7 @@ export const Settings: FC = () => {
             <Core.Switch defaultChecked={coverSettings.isAutoRefresh} onCheckedChange={onCheckedChange} />
           </StitchesSettingsRight>
         </StitchesSettingsRow>
-        <StitchesSettingsRow>
+        <StitchesSettingsRow css={coverSettings.isAutoRefresh ? {} : rowDisableStyle}>
           <StitchesSettingsLeft>
             <FontAwesomeIcon icon={faClock} />
             {' Refresh Interval'}
