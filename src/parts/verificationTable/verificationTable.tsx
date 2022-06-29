@@ -1,11 +1,20 @@
 import {createRef, FC, useCallback, useEffect, useState} from 'react';
 
+import {Principal} from '@dfinity/principal';
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {useParams} from 'react-router-dom';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
-import {DEFAULT_VERIFICATIONS, fetchVerifications, useCoverSettingsContext, useVerificationContext} from '@/contexts';
+import {
+  DEFAULT_VERIFICATIONS,
+  fetchByCanisterId,
+  fetchVerifications,
+  useCoverSettingsContext,
+  useVerificationContext
+} from '@/contexts';
 import {Verification} from '@/models';
+import {isPrincipal} from '@/utils';
 
 import {VerificationRow} from './verificationRow';
 import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './verificationTable.styled';
@@ -15,6 +24,8 @@ interface PropTypes {
 }
 
 export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT_VERIFICATIONS}) => {
+  const {canisterId: canisterIdParam} = useParams();
+  const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam);
   const [canisterIdSelected, setCanisterIdSelected] = useState('');
 
   const {
@@ -27,9 +38,9 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
   } = useCoverSettingsContext();
 
   useEffect(() => {
-    fetchVerifications(dispatch);
+    isDetailPage ? fetchByCanisterId(dispatch, Principal.fromText(canisterIdParam)) : fetchVerifications(dispatch);
     let timer: ReturnType<typeof setInterval> | null = null;
-    if (coverSettings.isAutoRefresh) {
+    if (!isDetailPage && coverSettings.isAutoRefresh) {
       timer = setInterval(() => {
         fetchVerifications(dispatch);
       }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
@@ -37,7 +48,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     return () => {
       timer && clearTimeout(timer);
     };
-  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval]);
+  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval, canisterIdParam, isDetailPage]);
 
   const onPageChanged = useCallback(
     (pageNum: number) => {
@@ -69,8 +80,8 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
         <th>{'IC Wasm Hash'}</th>
         <th>{'Last Activity'}</th>
         <th>
-          <Core.Button disabled={disablePaginated} kind={'text'} onClick={resetPage}>
-            <FontAwesomeIcon icon={faRotate} spin={coverSettings.isAutoRefresh} />
+          <Core.Button disabled={disablePaginated || isDetailPage} kind={'text'} onClick={resetPage}>
+            <FontAwesomeIcon icon={faRotate} spin={!isDetailPage && coverSettings.isAutoRefresh} />
           </Core.Button>
         </th>
       </TableHeader>

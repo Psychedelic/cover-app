@@ -1,37 +1,29 @@
-import {FC, useCallback, useRef, useState} from 'react';
+import {FC, useCallback, useRef} from 'react';
 
-import {Principal} from '@dfinity/principal';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import {logo} from '@/assets';
 import {Core, MenuItems, SearchBar, Settings} from '@/components';
-import {DASHBOARD_PATH, SUBMIT_PATH} from '@/constants';
-import {fetchByCanisterId, fetchVerifications, useVerificationContext} from '@/contexts';
+import {CANISTER_DETAIL_PATH, DASHBOARD_PATH, SUBMIT_PATH} from '@/constants';
 import {getCurrentPath, isPrincipal} from '@/utils';
 
 import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
 
 export const PageHeader: FC = () => {
-  const canisterId = useRef('');
-  const [isFetching, setIsFetching] = useState(false);
-  const {dispatch} = useVerificationContext();
+  const canisterIdParam = getCurrentPath().split('/').pop() || '';
+  const canisterId = useRef(canisterIdParam);
+  const navigate = useNavigate();
   const onBlur = useCallback(
     (value: string) => {
       // Only difference value each time is called can be dispatched
       if (value !== canisterId.current) {
-        setIsFetching(true);
         isPrincipal(value)
-          ? fetchByCanisterId(dispatch, Principal.fromText(value)).finally(() => {
-              setIsFetching(false);
-            })
-          : value === '' &&
-            fetchVerifications(dispatch).finally(() => {
-              setIsFetching(false);
-            });
+          ? navigate(CANISTER_DETAIL_PATH.replaceAll(':canisterId', value), {state: {page: CANISTER_DETAIL_PATH}})
+          : value === '' && navigate(DASHBOARD_PATH, {state: {page: DASHBOARD_PATH}});
         canisterId.current = value;
       }
     },
-    [dispatch]
+    [navigate]
   );
   return (
     <StitchesPageHeaderContainer>
@@ -40,14 +32,17 @@ export const PageHeader: FC = () => {
           <img alt={'logo'} src={logo} />
         </Link>
         <SearchBar
-          disabled={isFetching || getCurrentPath() !== DASHBOARD_PATH}
+          defaultValue={canisterIdParam}
+          disabled={getCurrentPath() !== DASHBOARD_PATH && !getCurrentPath().includes('/canister/')}
           onBlurOrEnter={onBlur}
           validation={isPrincipal}
         />
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
         <Link to={SUBMIT_PATH}>
-          <Core.Button disabled={getCurrentPath() !== DASHBOARD_PATH}>{'Submit Verification'}</Core.Button>
+          <Core.Button disabled={getCurrentPath() !== DASHBOARD_PATH && !getCurrentPath().includes('/canister/')}>
+            {'Submit Verification'}
+          </Core.Button>
         </Link>
         <Core.Button disabled>{'Connect to Plug'}</Core.Button>
         <Settings />

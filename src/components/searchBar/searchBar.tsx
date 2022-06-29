@@ -11,10 +11,11 @@ interface PropTypes {
   onBlurOrEnter?: (value: string) => void;
   validation?: (value: string) => boolean;
   disabled?: boolean;
+  defaultValue?: string;
 }
 
-export const SearchBar: FC<PropTypes> = ({onBlurOrEnter, validation, disabled}) => {
-  const [hasValue, setHasValue] = useState(false);
+export const SearchBar: FC<PropTypes> = ({onBlurOrEnter, validation, disabled, defaultValue}) => {
+  const [hasValue, setHasValue] = useState(Boolean(defaultValue));
   const [hasError, setHasError] = useState(false);
   const searchBarRef = createRef<HTMLInputElement>();
 
@@ -65,6 +66,7 @@ export const SearchBar: FC<PropTypes> = ({onBlurOrEnter, validation, disabled}) 
   return (
     <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
       <Core.Input
+        defaultValue={defaultValue}
         disabled={disabled}
         onBlur={onBlur}
         onInput={onInput}
