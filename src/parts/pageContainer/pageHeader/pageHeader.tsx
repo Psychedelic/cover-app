@@ -12,23 +12,26 @@ import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSeconda
 export const PageHeader: FC = () => {
   const lastParam = getCurrentPath().split('/').pop() || '';
   const canisterIdParam = isPrincipal(lastParam) ? lastParam : '';
-  const canisterId = useRef(canisterIdParam);
+  const lastSearchCanisterId = useRef(canisterIdParam);
   const searchBarRef = createRef<SearchBarHandler>();
   const navigate = useNavigate();
   const onBlur = useCallback(
     (value: string) => {
       // Only difference value each time is called can be dispatched
-      if (value !== canisterId.current) {
+      if (value !== lastSearchCanisterId.current) {
         isPrincipal(value)
           ? navigate(CANISTER_DETAIL_ROUTE.replaceAll(':canisterId', value))
           : value === '' && navigate(DASHBOARD_PATH);
-        canisterId.current = value;
+        lastSearchCanisterId.current = value;
       }
     },
     [navigate]
   );
   useEffect(() => {
-    !canisterIdParam && searchBarRef.current?.clearInput();
+    if (!canisterIdParam) {
+      searchBarRef.current?.clearInput();
+      lastSearchCanisterId.current = '';
+    }
   }, [searchBarRef, canisterIdParam]);
   return (
     <StitchesPageHeaderContainer>
