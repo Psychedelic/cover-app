@@ -1,4 +1,12 @@
-import {createRef, FC, KeyboardEvent, ReactEventHandler, useCallback, useState} from 'react';
+import {
+  createRef,
+  forwardRef,
+  KeyboardEvent,
+  ReactEventHandler,
+  useCallback,
+  useImperativeHandle,
+  useState
+} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -11,73 +19,93 @@ interface PropTypes {
   onBlurOrEnter?: (value: string) => void;
   validation?: (value: string) => boolean;
   disabled?: boolean;
+  defaultValue?: string;
 }
 
-export const SearchBar: FC<PropTypes> = ({onBlurOrEnter, validation, disabled}) => {
-  const [hasValue, setHasValue] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const searchBarRef = createRef<HTMLInputElement>();
+export interface SearchBarHandler {
+  clearInput: () => void;
+}
 
-  const search = useCallback(() => {
-    if (onBlurOrEnter && searchBarRef.current && validation) {
-      const value = (searchBarRef.current as HTMLInputElement).value;
-      const hasErr = value !== '' && !validation(value);
-      setHasError(hasErr);
-      // Only trigger `onBlurOrEnter` when `validation` is passed
-      !hasErr && onBlurOrEnter(value);
-    }
-  }, [onBlurOrEnter, validation, searchBarRef]);
+export const SearchBar = forwardRef<SearchBarHandler, PropTypes>(
+  ({onBlurOrEnter, validation, disabled, defaultValue}, ref) => {
+    const [hasValue, setHasValue] = useState(Boolean(defaultValue)),
+      [hasError, setHasError] = useState(false);
 
-  const onInput = useCallback<ReactEventHandler>(
-    _ => {
-      if (searchBarRef.current) {
+    const searchBarRef = createRef<HTMLInputElement>();
+    const search = useCallback(() => {
+      if (onBlurOrEnter && searchBarRef.current && validation) {
         const value = (searchBarRef.current as HTMLInputElement).value;
-        setHasValue(value !== '');
+        const hasErr = value !== '' && !validation(value);
+        setHasError(hasErr);
+        // Only trigger `onBlurOrEnter` when `validation` is passed
+        !hasErr && onBlurOrEnter(value);
+      }
+    }, [onBlurOrEnter, validation, searchBarRef]);
+
+    const onInput = useCallback<ReactEventHandler>(
+      _ => {
+        if (searchBarRef.current) {
+          const value = (searchBarRef.current as HTMLInputElement).value;
+          setHasValue(value !== '');
+          setHasError(false);
+        }
+      },
+      [searchBarRef]
+    );
+
+    const onClick = useCallback(() => {
+      if (searchBarRef.current) {
+        const searchBar = searchBarRef.current as HTMLInputElement;
+        searchBar.value = '';
+        searchBar.focus();
+        setHasValue(false);
         setHasError(false);
       }
-    },
-    [searchBarRef]
-  );
+    }, [searchBarRef]);
 
-  const onClick = useCallback(() => {
-    if (searchBarRef.current) {
-      const searchBar = searchBarRef.current as HTMLInputElement;
-      searchBar.value = '';
-      searchBar.focus();
-      setHasValue(false);
-      setHasError(false);
-    }
-  }, [searchBarRef]);
+    const onBlur = useCallback(search, [search]);
 
-  const onBlur = useCallback(search, [search]);
+    const onEnter = useCallback(
+      (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          search();
+        }
+      },
+      [search]
+    );
 
-  const onEnter = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        search();
-      }
-    },
-    [search]
-  );
+    const containerStyled = hasError ? hasErrorStyled : hasValue && !disabled ? hasValueStyled : searchBarStyled;
 
-  const containerStyled = hasError ? hasErrorStyled : hasValue && !disabled ? hasValueStyled : searchBarStyled;
+    useImperativeHandle(
+      ref,
+      () => ({
+        clearInput: () => {
+          (searchBarRef.current as HTMLInputElement).value = '';
+          setHasValue(false);
+          setHasError(false);
+        }
+      }),
+      [searchBarRef]
+    );
 
-  return (
-    <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
-      <Core.Input
-        disabled={disabled}
-        onBlur={onBlur}
-        onInput={onInput}
-        onKeyPress={onEnter}
-        placeholder={'Search by Canister ID'}
-        ref={searchBarRef}
-        size={'small'}
-      />
-      {hasValue && (
-        <Core.Button disabled={disabled} kind={'text'} onClick={onClick}>
-          <FontAwesomeIcon icon={faXmark} size={'lg'} />
-        </Core.Button>
-      )}
-    </Core.InputContainer>
-  );
-};
+    return (
+      <Core.InputContainer bg={'gray'} css={containerStyled} icon={faSearch} size={'small'}>
+        <Core.Input
+          defaultValue={defaultValue}
+          disabled={disabled}
+          onBlur={onBlur}
+          onInput={onInput}
+          onKeyPress={onEnter}
+          placeholder={'Search by Canister ID'}
+          ref={searchBarRef}
+          size={'small'}
+        />
+        {hasValue && (
+          <Core.Button disabled={disabled} kind={'text'} onClick={onClick}>
+            <FontAwesomeIcon icon={faXmark} size={'lg'} />
+          </Core.Button>
+        )}
+      </Core.InputContainer>
+    );
+  }
+);
