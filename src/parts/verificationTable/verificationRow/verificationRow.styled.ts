@@ -1,7 +1,7 @@
 export const tableRowSelected = {
   background: '$coverInk',
   '& td': {
-    opacity: 1
+    opacity: '1 !important'
   },
   '+ tr td div': {
     borderTop: '1px solid $coverSilver'
