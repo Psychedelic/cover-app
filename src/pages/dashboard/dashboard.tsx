@@ -9,25 +9,25 @@ import {ActivityTable, PageContainer, StatsTable, VerificationTable} from '@/par
 import {ContentContainer, LeftContent, RightContent} from './dashboard.styled';
 
 export const Dashboard: FC = () => (
-  <PageContainer>
-    <ContentContainer>
-      <LeftContent>
-        <VerificationProvider>
+  <VerificationProvider>
+    <PageContainer>
+      <ContentContainer>
+        <LeftContent>
           <Routes>
             <Route element={<VerificationTable />} path={DASHBOARD_ROUTE} />
             <Route element={<VerificationTable />} path={CANISTER_DETAIL_ROUTE} />
             <Route element={<Navigate to={DASHBOARD_ROUTE} />} path={'*'} />
           </Routes>
-        </VerificationProvider>
-      </LeftContent>
-      <RightContent>
-        <StatsProvider>
-          <StatsTable />
-        </StatsProvider>
-        <ActivityProvider>
-          <ActivityTable />
-        </ActivityProvider>
-      </RightContent>
-    </ContentContainer>
-  </PageContainer>
+        </LeftContent>
+        <RightContent>
+          <StatsProvider>
+            <StatsTable />
+          </StatsProvider>
+          <ActivityProvider>
+            <ActivityTable />
+          </ActivityProvider>
+        </RightContent>
+      </ContentContainer>
+    </PageContainer>
+  </VerificationProvider>
 );

@@ -44,8 +44,10 @@ interface State {
   totalPage?: number;
   currentCanisterId?: string;
   disablePaginated?: boolean;
+  isFetching?: boolean;
+  pendingFetchCount: number;
 }
-const INIT_STATE: State = {};
+const INIT_STATE: State = {pendingFetchCount: 0};
 
 /*
  * ========================================================================================================
@@ -74,24 +76,39 @@ export const DEFAULT_VERIFICATIONS = Array<Verification>(ITEMS_PER_PAGE).fill({}
  * REDUCER
  * ========================================================================================================
  */
-const verificationReducer = (_: State, action: Action): State => {
+const verificationReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
-      return {verifications: DEFAULT_VERIFICATIONS, disablePaginated: true};
+      return {
+        verifications: DEFAULT_VERIFICATIONS,
+        disablePaginated: true,
+        isFetching: true,
+        pendingFetchCount: state.pendingFetchCount + 1
+      };
     }
     case 'fetchVerifications': {
+      const pendingFetchCount = state.pendingFetchCount - 1;
+      const isFetching = pendingFetchCount > 0;
       return {
-        verifications: action.payload.verifications,
+        verifications: isFetching ? DEFAULT_VERIFICATIONS : action.payload.verifications,
         atPage: action.payload.atPage,
         totalPage: action.payload.totalPage,
-        disablePaginated: false
+        disablePaginated: false,
+        isFetching,
+        pendingFetchCount
       };
     }
     case 'fetchByCanisterId': {
+      const pendingFetchCount = state.pendingFetchCount - 1;
+      const isFetching = pendingFetchCount > 0;
       return {
-        verifications: action.payload.verifications,
+        verifications: isFetching ? DEFAULT_VERIFICATIONS : action.payload.verifications,
+        atPage: 1,
+        totalPage: 1,
         currentCanisterId: action.payload.currentCanisterId,
-        disablePaginated: true
+        disablePaginated: true,
+        isFetching,
+        pendingFetchCount
       };
     }
     default: {
