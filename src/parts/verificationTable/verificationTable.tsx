@@ -25,10 +25,6 @@ interface PropTypes {
 }
 
 export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT_VERIFICATIONS}) => {
-  const {canisterId: canisterIdParam} = useParams(),
-    [canisterIdSelected, setCanisterIdSelected] = useState(''),
-    navigate = useNavigate();
-
   const {
       state: {verifications = defaultVerifications, totalPage, currentCanisterId = '', disablePaginated},
       dispatch
@@ -37,13 +33,31 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
       state: {coverSettings}
     } = useCoverSettingsContext();
 
-  if (verifications?.length === 0) {
-    navigate(CANISTER_NOT_FOUND_PATH);
-  }
+  const {canisterId: canisterIdParam} = useParams(),
+    [canisterIdSelected, setCanisterIdSelected] = useState(''),
+    navigate = useNavigate(),
+    paginationRef = createRef<PaginationHandler>(),
+    resetPage = useCallback(() => {
+      fetchVerifications(dispatch);
+      paginationRef.current?.forceReset();
+    }, [paginationRef, dispatch]),
+    onPageChanged = useCallback(
+      (pageNum: number) => {
+        fetchVerifications(dispatch, pageNum);
+      },
+      [dispatch]
+    );
 
-  const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam);
+  const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam),
+    isCanisterNotFound = verifications?.length === 0;
 
   useEffect(() => {
+    if (isCanisterNotFound) {
+      navigate(CANISTER_NOT_FOUND_PATH);
+      return () => {
+        // Do nothing.
+      };
+    }
     isDetailPage ? fetchByCanisterId(dispatch, Principal.fromText(canisterIdParam)) : fetchVerifications(dispatch);
     let timer: ReturnType<typeof setInterval> | null = null;
     if (!isDetailPage && coverSettings.isAutoRefresh) {
@@ -54,21 +68,15 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     return () => {
       timer && clearTimeout(timer);
     };
-  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval, canisterIdParam, isDetailPage, navigate]);
-
-  const onPageChanged = useCallback(
-    (pageNum: number) => {
-      fetchVerifications(dispatch, pageNum);
-    },
-    [dispatch]
-  );
-
-  const paginationRef = createRef<PaginationHandler>();
-
-  const resetPage = useCallback(() => {
-    fetchVerifications(dispatch);
-    paginationRef.current?.forceReset();
-  }, [paginationRef, dispatch]);
+  }, [
+    dispatch,
+    coverSettings.isAutoRefresh,
+    coverSettings.refreshInterval,
+    canisterIdParam,
+    isDetailPage,
+    isCanisterNotFound,
+    navigate
+  ]);
 
   return (
     <TableContainer
