@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
-import {CANISTER_NOT_FOUND} from '@/constants';
+import {CANISTER_NOT_FOUND_PATH} from '@/constants';
 import {
   DEFAULT_VERIFICATIONS,
   fetchByCanisterId,
@@ -42,7 +42,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
   useEffect(() => {
     isDetailPage ? fetchByCanisterId(dispatch, Principal.fromText(canisterIdParam)) : fetchVerifications(dispatch);
     if (verifications?.length === 0) {
-      navigate(CANISTER_NOT_FOUND);
+      navigate(CANISTER_NOT_FOUND_PATH);
     }
     let timer: ReturnType<typeof setInterval> | null = null;
     if (!isDetailPage && coverSettings.isAutoRefresh) {
