@@ -28,22 +28,23 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
   const {canisterId: canisterIdParam} = useParams(),
     [canisterIdSelected, setCanisterIdSelected] = useState(''),
     navigate = useNavigate();
+
+  const {
+      state: {verifications = defaultVerifications, totalPage, currentCanisterId = '', disablePaginated},
+      dispatch
+    } = useVerificationContext(),
+    {
+      state: {coverSettings}
+    } = useCoverSettingsContext();
+
+  if (verifications?.length === 0) {
+    navigate(CANISTER_NOT_FOUND_PATH);
+  }
+
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam);
-
-  const {
-    state: {verifications = defaultVerifications, totalPage, currentCanisterId = '', disablePaginated},
-    dispatch
-  } = useVerificationContext();
-
-  const {
-    state: {coverSettings}
-  } = useCoverSettingsContext();
 
   useEffect(() => {
     isDetailPage ? fetchByCanisterId(dispatch, Principal.fromText(canisterIdParam)) : fetchVerifications(dispatch);
-    if (verifications?.length === 0) {
-      navigate(CANISTER_NOT_FOUND_PATH);
-    }
     let timer: ReturnType<typeof setInterval> | null = null;
     if (!isDetailPage && coverSettings.isAutoRefresh) {
       timer = setInterval(() => {
@@ -53,15 +54,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     return () => {
       timer && clearTimeout(timer);
     };
-  }, [
-    dispatch,
-    coverSettings.isAutoRefresh,
-    coverSettings.refreshInterval,
-    canisterIdParam,
-    isDetailPage,
-    navigate,
-    verifications?.length
-  ]);
+  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval, canisterIdParam, isDetailPage, navigate]);
 
   const onPageChanged = useCallback(
     (pageNum: number) => {
