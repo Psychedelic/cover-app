@@ -183,7 +183,7 @@ const mapPartialVerification = (data: CanisterVerification): Verification => ({
   gitCommit: data.commit_hash,
   lastActivity: data.updated_at,
   ownerId: data.updated_by.toText(),
-  repoVisibility: data.repo_visibility[0] && capitalize(data.repo_visibility[0]),
+  repoVisibility: capitalize(data.repo_visibility),
   rustVersion: data.rust_version[0],
   canisterType: data.canister_type[0] && Object.keys(data.canister_type[0])[0],
   dfxVersion: data.dfx_version,

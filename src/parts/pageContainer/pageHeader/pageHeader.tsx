@@ -53,9 +53,7 @@ export const PageHeader: FC = () => {
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
         <Link to={SUBMIT_PATH}>
-          <Core.Button disabled={getCurrentPath() !== DASHBOARD_PATH && !getCurrentPath().includes('/canister/')}>
-            {'Submit Verification'}
-          </Core.Button>
+          <Core.Button disabled={getCurrentPath() === SUBMIT_PATH}>{'Submit Verification'}</Core.Button>
         </Link>
         <Core.Button disabled>{'Connect to Plug'}</Core.Button>
         <Settings />
