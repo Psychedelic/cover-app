@@ -9,6 +9,7 @@ export const sizes = {
   btnMd: '34px',
   btnLg: '44px',
   dot: '12px',
+  240: '240px',
   400: '400px',
   560: '560px'
 };

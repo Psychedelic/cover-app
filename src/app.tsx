@@ -4,8 +4,8 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 import {globalStyles} from '@/themes';
 
-import {SUBMIT_ROUTE} from './constants';
-import {Dashboard, SubmitVerification} from './pages';
+import {CANISTER_NOT_FOUND, SUBMIT_ROUTE} from './constants';
+import {CanisterNotFound, Dashboard, SubmitVerification} from './pages';
 
 export const App: FC = () => {
   globalStyles();
@@ -14,6 +14,7 @@ export const App: FC = () => {
       <Routes>
         <Route element={<Dashboard />} path={'*'} />
         <Route element={<SubmitVerification />} path={SUBMIT_ROUTE} />
+        <Route element={<CanisterNotFound />} path={CANISTER_NOT_FOUND} />
       </Routes>
     </BrowserRouter>
   );

@@ -3,9 +3,10 @@ import {createRef, FC, useCallback, useEffect, useState} from 'react';
 import {Principal} from '@dfinity/principal';
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
+import {CANISTER_NOT_FOUND} from '@/constants';
 import {
   DEFAULT_VERIFICATIONS,
   fetchByCanisterId,
@@ -24,9 +25,10 @@ interface PropTypes {
 }
 
 export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT_VERIFICATIONS}) => {
-  const {canisterId: canisterIdParam} = useParams();
+  const {canisterId: canisterIdParam} = useParams(),
+    [canisterIdSelected, setCanisterIdSelected] = useState(''),
+    navigate = useNavigate();
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam);
-  const [canisterIdSelected, setCanisterIdSelected] = useState('');
 
   const {
     state: {verifications = defaultVerifications, totalPage, currentCanisterId = '', disablePaginated},
@@ -39,6 +41,9 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
 
   useEffect(() => {
     isDetailPage ? fetchByCanisterId(dispatch, Principal.fromText(canisterIdParam)) : fetchVerifications(dispatch);
+    if (verifications?.length === 0) {
+      navigate(CANISTER_NOT_FOUND);
+    }
     let timer: ReturnType<typeof setInterval> | null = null;
     if (!isDetailPage && coverSettings.isAutoRefresh) {
       timer = setInterval(() => {
@@ -48,7 +53,15 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     return () => {
       timer && clearTimeout(timer);
     };
-  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval, canisterIdParam, isDetailPage]);
+  }, [
+    dispatch,
+    coverSettings.isAutoRefresh,
+    coverSettings.refreshInterval,
+    canisterIdParam,
+    isDetailPage,
+    navigate,
+    verifications?.length
+  ]);
 
   const onPageChanged = useCallback(
     (pageNum: number) => {
