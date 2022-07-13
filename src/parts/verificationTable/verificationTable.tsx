@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
-import {CANISTER_NOT_FOUND_PATH} from '@/constants';
+import {CANISTER_NOT_FOUND_PATH, DASHBOARD_PATH} from '@/constants';
 import {
   DEFAULT_VERIFICATIONS,
   fetchByCanisterId,
@@ -15,7 +15,7 @@ import {
   useVerificationContext
 } from '@/contexts';
 import {Verification} from '@/models';
-import {isPrincipal} from '@/utils';
+import {getCurrentPath, isPrincipal} from '@/utils';
 
 import {VerificationRow} from './verificationRow';
 import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './verificationTable.styled';
@@ -49,10 +49,11 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     );
 
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam),
+    isDashboardPage = getCurrentPath() === DASHBOARD_PATH,
     isCanisterNotFound = verifications?.length === 0;
 
   useEffect(() => {
-    if (isCanisterNotFound) {
+    if (isCanisterNotFound || (!isDashboardPage && !isDetailPage)) {
       navigate(CANISTER_NOT_FOUND_PATH);
       return () => {
         // Do nothing.
@@ -74,6 +75,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     coverSettings.refreshInterval,
     canisterIdParam,
     isDetailPage,
+    isDashboardPage,
     isCanisterNotFound,
     navigate
   ]);
