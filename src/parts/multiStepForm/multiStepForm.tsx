@@ -99,6 +99,7 @@ const handleSubmit = (infoRefs: InfoRefs, {infoDialog, errDialog, successDialog}
   });
   coverAnonymousBuild({
     owner_id: infoRefs.generalInfo.current?.ownerId as string,
+    delegate_canister_id: infoRefs.generalInfo.current?.delegateCanisterId as string,
     canister_id: infoRefs.generalInfo.current?.canisterId as string,
     canister_name: infoRefs.generalInfo.current?.canisterName as string,
     repo_url: infoRefs.generalInfo.current?.repoUrl as string,

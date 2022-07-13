@@ -15,6 +15,7 @@ interface PropTypes {
 
 export interface GeneralInfo {
   ownerId: string;
+  delegateCanisterId: string;
   canisterId: string;
   canisterName: string;
   repoUrl: string;
@@ -24,6 +25,7 @@ export interface GeneralInfo {
 
 interface InputRefs {
   ownerId: RefObject<FormInputHandler>;
+  delegateCanisterId: RefObject<FormInputHandler>;
   canisterId: RefObject<FormInputHandler>;
   canisterName: RefObject<FormInputHandler>;
   repoUrl: RefObject<FormInputHandler>;
@@ -33,6 +35,7 @@ interface InputRefs {
 
 const useInputRefs = (): InputRefs => ({
   ownerId: createRef<FormInputHandler>(),
+  delegateCanisterId: createRef<FormInputHandler>(),
   canisterId: createRef<FormInputHandler>(),
   canisterName: createRef<FormInputHandler>(),
   repoUrl: createRef<FormInputHandler>(),
@@ -54,6 +57,7 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
       if (hasError) return;
       onCompleted({
         ownerId: inputRefs.ownerId.current?.value() || '',
+        delegateCanisterId: inputRefs.delegateCanisterId.current?.value() || '',
         canisterId: inputRefs.canisterId.current?.value() || '',
         canisterName: inputRefs.canisterName.current?.value() || '',
         repoUrl: inputRefs.repoUrl.current?.value() || '',
@@ -76,6 +80,16 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
           label={'Owner Principal ID'}
           ref={inputRefs.ownerId}
           required
+          validations={[isPrincipal]}
+        />
+        <FormInput
+          defaultValue={defaultValue?.delegateCanisterId}
+          errorMessage={'Invalid principal format.'}
+          infoTooltip={`The canister controller of the 'Canister Principal ID' field,
+useful when the controller is the cycle wallet or proxy canister.
+Leave it empty if you don't use it.`}
+          label={'Delegate canister ID'}
+          ref={inputRefs.delegateCanisterId}
           validations={[isPrincipal]}
         />
         <FormInput
