@@ -6,7 +6,7 @@ export const tableRowSelected = {
   '+ tr td div': {
     borderTop: '1px solid $coverSilver'
   },
-  '+ tr, + tr + tr, + tr + tr + tr, + tr + tr + tr + tr': {
+  '+ tr, + tr + tr, + tr + tr + tr, + tr + tr + tr + tr, + tr + tr + tr + tr + tr': {
     border: 'none !important',
     background: '$coverInk',
     '& td': {
@@ -42,7 +42,7 @@ export const tableRowSelected = {
       padding: '25px 50px 10px 0px'
     }
   },
-  '+ tr + tr, + tr + tr + tr': {
+  '+ tr + tr, + tr + tr + tr, + tr + tr + tr + tr': {
     '& td:nth-of-type(1) div span': {
       padding: '10px 0px 10px 25px'
     },
@@ -56,7 +56,7 @@ export const tableRowSelected = {
       padding: '10px 50px 10px 0px'
     }
   },
-  '+ tr + tr + tr + tr': {
+  '+ tr + tr + tr + tr + tr': {
     '& td:nth-of-type(1) div span': {
       padding: '10px 0px 25px 25px'
     },
