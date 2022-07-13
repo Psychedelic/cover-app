@@ -7,6 +7,7 @@ export interface Verification {
   wasmHash?: string;
   lastActivity?: string;
   ownerId?: string;
+  delegateCanisterId?: string;
   repoVisibility?: string;
   rustVersion?: string;
   canisterType?: string;

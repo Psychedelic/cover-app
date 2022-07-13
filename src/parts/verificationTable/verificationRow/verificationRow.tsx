@@ -72,15 +72,19 @@ export const VerificationRow: FC<PropTypes> = ({
             <VerificationDetail label={'Repo visibility'} value={verification.repoVisibility} />
           </TableRow>
           <TableRow override>
-            <VerificationDetail label={'Rust version'} value={verification.rustVersion} />
+            <VerificationDetail isTrim label={'Delegate Canister ID'} value={verification.delegateCanisterId} />
             <VerificationDetail label={'Canister type'} value={verification.canisterType} />
           </TableRow>
           <TableRow override>
-            <VerificationDetail label={'DFX version'} value={verification.dfxVersion} />
+            <VerificationDetail label={'Rust version'} value={verification.rustVersion} />
             <VerificationDetail label={'WASM Optimization count'} value={verification.optimizeCount} />
           </TableRow>
           <TableRow override>
+            <VerificationDetail label={'DFX version'} value={verification.dfxVersion} />
             <VerificationDetail isTrim label={'Build WASM hash'} value={verification.buildWasmHash} />
+          </TableRow>
+          <TableRow override>
+            <VerificationDetail label={''} value={' '} />
             <VerificationDetail isLink label={'Build Result'} value={verification.buildUrl} />
           </TableRow>
         </>
