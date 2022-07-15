@@ -50,7 +50,7 @@ export const useAuthenticationContext = () => useContext(context);
  * REDUCER
  * ========================================================================================================
  */
-const authenticationReducer = (state: State, action: Action): State => {
+const authenticationReducer = (_: State, action: Action): State => {
   if (action.type === 'authenticationAction') {
     return {
       authenticationInfo: {
