@@ -77,14 +77,14 @@ export const VerificationRow: FC<PropTypes> = ({
           </TableRow>
           <TableRow override>
             <VerificationDetail label={'Rust version'} value={verification.rustVersion} />
-            <VerificationDetail label={'Wasm Optimization count'} value={verification.optimizeCount} />
+            <VerificationDetail label={'Verification status'} value={''} />
           </TableRow>
           <TableRow override>
             <VerificationDetail label={'Dfx version'} value={verification.dfxVersion} />
             <VerificationDetail isTrim label={'COVER Build Wasm hash'} value={verification.buildWasmHash} />
           </TableRow>
           <TableRow override>
-            <VerificationDetail label={''} value={' '} />
+            <VerificationDetail label={'Wasm Optimization count'} value={verification.optimizeCount} />
             <VerificationDetail isLink label={'COVER Build Result'} value={verification.buildUrl} />
           </TableRow>
         </>
