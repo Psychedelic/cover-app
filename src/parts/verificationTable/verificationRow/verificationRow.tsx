@@ -68,11 +68,11 @@ export const VerificationRow: FC<PropTypes> = ({
       {isSelected && (
         <>
           <TableRow override>
-            <VerificationDetail isTrim label={'Owner Principal ID'} value={verification.ownerId} />
+            <VerificationDetail isTrim label={'Owner principal'} value={verification.ownerId} />
             <VerificationDetail label={'Repo visibility'} value={verification.repoVisibility} />
           </TableRow>
           <TableRow override>
-            <VerificationDetail isTrim label={'Delegate Canister ID'} value={verification.delegateCanisterId} />
+            <VerificationDetail isTrim label={'Delegate canister'} value={verification.delegateCanisterId} />
             <VerificationDetail label={'Canister type'} value={verification.canisterType} />
           </TableRow>
           <TableRow override>
@@ -81,11 +81,11 @@ export const VerificationRow: FC<PropTypes> = ({
           </TableRow>
           <TableRow override>
             <VerificationDetail label={'Dfx version'} value={verification.dfxVersion} />
-            <VerificationDetail isTrim label={'COVER Build Wasm hash'} value={verification.buildWasmHash} />
+            <VerificationDetail isTrim label={'COVER build wasm hash'} value={verification.buildWasmHash} />
           </TableRow>
           <TableRow override>
-            <VerificationDetail label={'Wasm Optimization count'} value={verification.optimizeCount} />
-            <VerificationDetail isLink label={'COVER Build Result'} value={verification.buildUrl} />
+            <VerificationDetail label={'Wasm optimization'} value={verification.optimizeCount} />
+            <VerificationDetail isLink label={'COVER build result'} value={verification.buildUrl} />
           </TableRow>
         </>
       )}
