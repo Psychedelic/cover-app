@@ -37,6 +37,9 @@ export const tableHeaderStyle = {
   '& th': {
     '&:last-of-type': {
       width: '$40'
+    },
+    '&:nth-of-type(3), &:nth-of-type(4)': {
+      width: '150px'
     }
   }
 };
