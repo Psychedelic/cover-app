@@ -5,7 +5,7 @@ export const StitchesFormInput = styled('div', {
   display: 'inline-flex',
   flexDirection: 'column',
   rowGap: '10px',
-  '& *': {
+  '> *': {
     width: '100%'
   },
   '& label': {
