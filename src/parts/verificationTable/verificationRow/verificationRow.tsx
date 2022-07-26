@@ -4,7 +4,7 @@ import {Core, TableRow} from '@/components';
 import {Verification} from '@/models';
 import {lastUrlSegment, mdy, toGithubUrl} from '@/utils';
 
-import {VerificationDetail} from './verificationDetail';
+import {VerificationDetail, VerificationStatus} from './verificationDetail';
 import {tableRowSelected} from './verificationRow.styled';
 
 interface PropTypes {
@@ -14,8 +14,42 @@ interface PropTypes {
   disableCollapseBtn?: boolean;
 }
 
-const getStatus = (isVerified?: boolean) =>
-  typeof isVerified === 'boolean' ? (isVerified ? 'green' : 'red') : isVerified;
+const isCustomBuild = (canisterType?: string): boolean => canisterType === 'Custom';
+
+const getVerificationStatus = ({isVerified, canisterType}: Verification): VerificationStatus =>
+  typeof isVerified === 'boolean'
+    ? isVerified
+      ? isCustomBuild(canisterType)
+        ? 'yellow'
+        : 'green'
+      : 'red'
+    : isVerified;
+
+const getStatusTooltip = (verificationStatus: VerificationStatus): string => {
+  switch (verificationStatus) {
+    case 'red':
+      return 'Unverified';
+    case 'green':
+      return 'Verified';
+    case 'yellow':
+      return 'Custom build';
+    default:
+      return '';
+  }
+};
+
+const getStatusTooltipInfo = (verificationStatus: VerificationStatus): string => {
+  switch (verificationStatus) {
+    case 'red':
+      return 'Wasm hash does not match.';
+    case 'green':
+      return 'Wasm hash matched.';
+    case 'yellow':
+      return 'Custom build is considered unsafe.';
+    default:
+      return '';
+  }
+};
 
 export const VerificationRow: FC<PropTypes> = ({
   verification,
@@ -29,13 +63,14 @@ export const VerificationRow: FC<PropTypes> = ({
     },
     [setCanisterIdSelected, isSelected]
   );
+  const verificationStatus = getVerificationStatus(verification);
   return (
     <>
       <TableRow
         css={isSelected ? tableRowSelected : {}}
         disableCollapseBtn={disableCollapseBtn}
         isSelected={isSelected}
-        kind={getStatus(verification.isVerified)}
+        kind={verificationStatus}
         onCollapse={onCollapse}
         rowId={verification.canisterId}
         showCollapseBtn
@@ -68,24 +103,29 @@ export const VerificationRow: FC<PropTypes> = ({
       {isSelected && (
         <>
           <TableRow override>
-            <VerificationDetail isTrim label={'Owner Principal ID'} value={verification.ownerId} />
+            <VerificationDetail isTrim label={'Owner principal'} value={verification.ownerId} />
             <VerificationDetail label={'Repo visibility'} value={verification.repoVisibility} />
           </TableRow>
           <TableRow override>
-            <VerificationDetail isTrim label={'Delegate Canister ID'} value={verification.delegateCanisterId} />
+            <VerificationDetail isTrim label={'Delegate canister'} value={verification.delegateCanisterId} />
             <VerificationDetail label={'Canister type'} value={verification.canisterType} />
           </TableRow>
           <TableRow override>
             <VerificationDetail label={'Rust version'} value={verification.rustVersion} />
-            <VerificationDetail label={'Wasm Optimization count'} value={verification.optimizeCount} />
+            <VerificationDetail
+              label={'Verification status'}
+              statusTooltip={getStatusTooltipInfo(verificationStatus)}
+              value={getStatusTooltip(verificationStatus)}
+              verificationStatus={verificationStatus}
+            />
           </TableRow>
           <TableRow override>
             <VerificationDetail label={'Dfx version'} value={verification.dfxVersion} />
-            <VerificationDetail isTrim label={'COVER Build Wasm hash'} value={verification.buildWasmHash} />
+            <VerificationDetail isTrim label={'COVER build wasm hash'} value={verification.buildWasmHash} />
           </TableRow>
           <TableRow override>
-            <VerificationDetail label={''} value={' '} />
-            <VerificationDetail isLink label={'COVER Build Result'} value={verification.buildUrl} />
+            <VerificationDetail label={'Wasm optimization'} value={verification.optimizeCount} />
+            <VerificationDetail isLink label={'COVER build result'} value={verification.buildUrl} />
           </TableRow>
         </>
       )}

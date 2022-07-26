@@ -1,10 +1,18 @@
 import {ComponentMeta, ComponentStoryObj} from '@storybook/react';
+import {MemoryRouter} from 'react-router-dom';
 
 import {VerificationTable} from './verificationTable';
 
 const meta: ComponentMeta<typeof VerificationTable> = {
   title: 'Parts/VerificationTable',
-  component: VerificationTable
+  component: VerificationTable,
+  decorators: [
+    Story => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    )
+  ]
 };
 export default meta;
 
@@ -39,7 +47,7 @@ export const WithData: ComponentStoryObj<typeof VerificationTable> = {
         ownerId: 'j3dqd-46f74-s45g5-yt6qa-c5vyq-4zv7t-y4iie-omikc-cjngg-olpgg-rqe',
         repoVisibility: 'Private',
         rustVersion: 'N/A',
-        canisterType: 'Motoko',
+        canisterType: 'Custom',
         dfxVersion: '0.9.3',
         optimizeCount: '0',
         buildWasmHash: '0xb809d6b1713f68f8a042bc51878fd57640ee46aaa3ddae9e09ac25c37feb6cb5',
@@ -57,6 +65,22 @@ export const WithData: ComponentStoryObj<typeof VerificationTable> = {
         repoVisibility: 'Public',
         rustVersion: 'N/A',
         canisterType: 'Motoko',
+        dfxVersion: '0.9.3',
+        optimizeCount: '0',
+        buildWasmHash: '0xb809d6b1713f68f8a042bc51878fd57640ee46aaa3ddae9e09ac25c37feb6cb5',
+        buildUrl: 'https://github.com/Psychedelic/cover/actions/runs/2096948851'
+      },
+      {
+        isVerified: false,
+        canisterId: '3x7en-uqaaa-aaaai-abgca-cai',
+        name: 'cover_test',
+        repo: '/cover',
+        gitCommit: '7e654d94c514e709d4b25374820149997305f6ad',
+        wasmHash: '0x5b872f9177b871b6f957f0268ce0f5722008a5abc45f9d2bef28e9300ad9693e',
+        lastActivity: '12/29/2021',
+        ownerId: 'v4ehh-6sqi7-irvn2-s43ef-enl26-h7vtu-kymgf-ikejl-k7mdv-wypuo-kqe',
+        repoVisibility: 'Public',
+        rustVersion: 'N/A',
         dfxVersion: '0.9.3',
         optimizeCount: '0',
         buildWasmHash: '0xb809d6b1713f68f8a042bc51878fd57640ee46aaa3ddae9e09ac25c37feb6cb5',

@@ -7,16 +7,19 @@ import {Core} from '@/components';
 
 interface PropTypes {
   info?: string;
+  hasArrow?: boolean;
 }
 
-export const InfoTooltip: FC<PropTypes> = ({info}) => (
-  <Core.TooltipRoot delayDuration={200}>
-    <Core.TooltipTrigger type={'button'}>
-      <FontAwesomeIcon icon={faInfoCircle} />
-    </Core.TooltipTrigger>
-    <Core.TooltipContent side={'right'} sideOffset={5}>
-      {info}
-      <Core.TooltipArrow />
-    </Core.TooltipContent>
-  </Core.TooltipRoot>
+export const InfoTooltip: FC<PropTypes> = ({info, hasArrow}) => (
+  <Core.TooltipProvider>
+    <Core.TooltipRoot delayDuration={200}>
+      <Core.TooltipTrigger type={'button'}>
+        <FontAwesomeIcon icon={faInfoCircle} />
+      </Core.TooltipTrigger>
+      <Core.TooltipContent side={'right'} sideOffset={5}>
+        {info}
+        {hasArrow && <Core.TooltipArrow />}
+      </Core.TooltipContent>
+    </Core.TooltipRoot>
+  </Core.TooltipProvider>
 );
