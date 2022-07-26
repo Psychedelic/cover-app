@@ -9,11 +9,11 @@ export const tableRowSelected = {
   '+ tr, + tr + tr, + tr + tr + tr, + tr + tr + tr + tr, + tr + tr + tr + tr + tr': {
     border: 'none !important',
     background: '$coverInk',
-    '& td': {
+    '> td': {
       opacity: 1,
       height: '1px',
       textDecoration: 'none !important',
-      '& div': {
+      '> div': {
         height: '100%',
         width: '100%',
         display: 'inline-flex',

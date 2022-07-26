@@ -4,7 +4,7 @@ import {Core, TableRow} from '@/components';
 import {Verification} from '@/models';
 import {lastUrlSegment, mdy, toGithubUrl} from '@/utils';
 
-import {VerificationDetail} from './verificationDetail';
+import {VerificationDetail, VerificationStatus} from './verificationDetail';
 import {tableRowSelected} from './verificationRow.styled';
 
 interface PropTypes {
@@ -14,8 +14,42 @@ interface PropTypes {
   disableCollapseBtn?: boolean;
 }
 
-const getStatus = (isVerified?: boolean) =>
-  typeof isVerified === 'boolean' ? (isVerified ? 'green' : 'red') : isVerified;
+const isCustomBuild = (canisterType?: string): boolean => canisterType === 'Custom';
+
+const getVerificationStatus = ({isVerified, canisterType}: Verification): VerificationStatus =>
+  typeof isVerified === 'boolean'
+    ? isVerified
+      ? isCustomBuild(canisterType)
+        ? 'yellow'
+        : 'green'
+      : 'red'
+    : isVerified;
+
+const getStatusTooltip = (verificationStatus: VerificationStatus): string => {
+  switch (verificationStatus) {
+    case 'red':
+      return 'Unverified';
+    case 'green':
+      return 'Verified';
+    case 'yellow':
+      return 'Custom build';
+    default:
+      return '';
+  }
+};
+
+const getStatusTooltipInfo = (verificationStatus: VerificationStatus): string => {
+  switch (verificationStatus) {
+    case 'red':
+      return 'Wasm hash does not match.';
+    case 'green':
+      return 'Wasm hash matched.';
+    case 'yellow':
+      return 'Custom build is considered unsafe.';
+    default:
+      return '';
+  }
+};
 
 export const VerificationRow: FC<PropTypes> = ({
   verification,
@@ -29,13 +63,14 @@ export const VerificationRow: FC<PropTypes> = ({
     },
     [setCanisterIdSelected, isSelected]
   );
+  const verificationStatus = getVerificationStatus(verification);
   return (
     <>
       <TableRow
         css={isSelected ? tableRowSelected : {}}
         disableCollapseBtn={disableCollapseBtn}
         isSelected={isSelected}
-        kind={getStatus(verification.isVerified)}
+        kind={verificationStatus}
         onCollapse={onCollapse}
         rowId={verification.canisterId}
         showCollapseBtn
@@ -77,7 +112,12 @@ export const VerificationRow: FC<PropTypes> = ({
           </TableRow>
           <TableRow override>
             <VerificationDetail label={'Rust version'} value={verification.rustVersion} />
-            <VerificationDetail label={'Verification status'} value={''} />
+            <VerificationDetail
+              label={'Verification status'}
+              statusTooltip={getStatusTooltipInfo(verificationStatus)}
+              value={getStatusTooltip(verificationStatus)}
+              verificationStatus={verificationStatus}
+            />
           </TableRow>
           <TableRow override>
             <VerificationDetail label={'Dfx version'} value={verification.dfxVersion} />
