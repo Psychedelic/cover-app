@@ -191,7 +191,7 @@ const mapPartialVerification = (data: CanisterVerification): Verification => ({
   optimizeCount: String(data.optimize_count),
   buildWasmHash: data.wasm_hash[0],
   buildUrl: data.build_url[0],
-  buildStatus: data.build_status && Object.keys(data.build_status)[0]
+  buildStatus: Object.keys(data.build_status)[0]
 });
 
 const mapFullVerification = async (data: CanisterVerification[]): Promise<Verification[]> => {
