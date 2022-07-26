@@ -41,9 +41,9 @@ const getStatusTooltip = (verificationStatus: VerificationStatus): string => {
 const getStatusTooltipInfo = (verificationStatus: VerificationStatus): string => {
   switch (verificationStatus) {
     case 'red':
-      return 'Wasm hash does not match.';
+      return 'Wasm hashes do not match.';
     case 'green':
-      return 'Wasm hash matched.';
+      return 'Wasm hashes matched.';
     case 'yellow':
       return 'Custom build is considered unsafe.';
     default:
