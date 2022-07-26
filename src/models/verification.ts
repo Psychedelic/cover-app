@@ -15,4 +15,5 @@ export interface Verification {
   optimizeCount?: string;
   buildWasmHash?: string;
   buildUrl?: string;
+  buildStatus?: string;
 }
