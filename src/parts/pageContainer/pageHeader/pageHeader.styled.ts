@@ -15,14 +15,18 @@ export const StitchesPageMainHeader = styled('div', {
   display: 'inline-flex',
   rowGap: '$10',
   columnGap: '$15',
-  width: '750px'
+  width: '600px'
 });
 
 export const StitchesPageSecondaryHeader = styled('div', {
   display: 'inline-flex',
   justifyContent: 'flex-end',
-  width: '450px',
+  width: '600px',
   '& button': {
     marginLeft: '10px'
   }
 });
+
+export const feedbackBtnCss = {
+  padding: 0
+};
