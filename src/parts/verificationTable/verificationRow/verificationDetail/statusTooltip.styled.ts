@@ -4,8 +4,10 @@ const getColor = (verificationStatus: VerificationStatus) => {
   switch (verificationStatus) {
     case 'green':
       return '$coverGreen';
-    case 'yellow':
-      return '$coverYellow';
+    /*
+     * Case 'yellow':
+     * return '$coverYellow';
+     */
     case 'red':
       return '$coverRed';
     default:

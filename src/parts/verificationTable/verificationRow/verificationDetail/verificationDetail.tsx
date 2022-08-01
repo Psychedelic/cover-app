@@ -13,7 +13,11 @@ interface PropTypes {
   verificationStatus?: VerificationStatus;
 }
 
-export type VerificationStatus = 'green' | 'yellow' | 'red' | undefined;
+export type VerificationStatus =
+  | 'green'
+  // 'yellow' |
+  | 'red'
+  | undefined;
 
 export const VerificationDetail: FC<PropTypes> = ({
   label,
