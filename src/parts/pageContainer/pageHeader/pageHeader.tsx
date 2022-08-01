@@ -8,7 +8,12 @@ import {CANISTER_DETAIL_ROUTE, DASHBOARD_PATH, SUBMIT_PATH} from '@/constants';
 import {useVerificationContext} from '@/contexts';
 import {getCurrentPath, isPrincipal} from '@/utils';
 
-import {StitchesPageHeaderContainer, StitchesPageMainHeader, StitchesPageSecondaryHeader} from './pageHeader.styled';
+import {
+  feedbackBtnCss,
+  StitchesPageHeaderContainer,
+  StitchesPageMainHeader,
+  StitchesPageSecondaryHeader
+} from './pageHeader.styled';
 
 export const PageHeader: FC = () => {
   const lastParam = getCurrentPath().split('/').pop() || '';
@@ -58,6 +63,14 @@ export const PageHeader: FC = () => {
         <Core.Button disabled>{'Connect to Plug'}</Core.Button>
         <Settings />
         <MenuItems />
+        <Core.Button css={feedbackBtnCss} kind={'text'}>
+          <a
+            href={'https://docs.google.com/forms/d/e/1FAIpQLSfPhVkcatRQWZr3hPyv3Hv8lkrqeYPtEFB-20bMPOKoiYl5ow/viewform'}
+            rel={'noreferrer'}
+            target={'_blank'}>
+            {'Send Feedback'}
+          </a>
+        </Core.Button>
       </StitchesPageSecondaryHeader>
     </StitchesPageHeaderContainer>
   );
