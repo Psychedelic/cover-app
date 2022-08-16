@@ -7,6 +7,8 @@ export const colors = {
 
   coverYellow: '#FFDF00',
 
+  coverGrayIcon: '#BFBFBE',
+
   coverEbony: '#171717',
   coverInk: '#0F0F0F',
 

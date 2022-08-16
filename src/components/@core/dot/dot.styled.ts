@@ -20,6 +20,10 @@ export const StitchesDot = styled('span', {
       yellow: {
         border: '1px solid $coverYellow',
         backgroundColor: '$coverYellow'
+      },
+      gray: {
+        border: '1px solid $coverGrayIcon',
+        backgroundColor: '$coverGrayIcon'
       }
     },
     size: {

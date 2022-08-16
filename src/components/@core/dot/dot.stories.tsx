@@ -32,6 +32,12 @@ export const Yellow: ComponentStoryObj<typeof Dot> = {
   }
 };
 
+export const Gray: ComponentStoryObj<typeof Dot> = {
+  args: {
+    kind: 'gray'
+  }
+};
+
 export const GreenIcon: ComponentStoryObj<typeof Dot> = {
   args: {
     kind: 'green',
@@ -49,6 +55,13 @@ export const RedIcon: ComponentStoryObj<typeof Dot> = {
 export const YellowIcon: ComponentStoryObj<typeof Dot> = {
   args: {
     kind: 'yellow',
+    asIcon: true
+  }
+};
+
+export const GrayIcon: ComponentStoryObj<typeof Dot> = {
+  args: {
+    kind: 'gray',
     asIcon: true
   }
 };
