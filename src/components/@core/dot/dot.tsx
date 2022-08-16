@@ -1,6 +1,6 @@
 import {ComponentProps, FC} from 'react';
 
-import {faCheckCircle, faCircleDot, faCircleXmark, faExclamationCircle, faSpinner, faWrench} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faCircleDot, faCircleXmark, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 

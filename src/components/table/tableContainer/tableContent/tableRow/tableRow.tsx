@@ -10,7 +10,7 @@ import {StitchesTableRow} from './tableRow.styled';
 
 interface PropTypes extends ComponentProps<typeof StitchesTableRow> {
   css?: CSS;
-  kind?: 'green' | 'yellow' | 'red';
+  kind?: 'green' | 'yellow' | 'red' | 'gray';
   statusAsIcon?: boolean;
   children: ReactElement[];
   override?: boolean;

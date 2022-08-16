@@ -15,7 +15,8 @@ interface PropTypes {
 
 export type VerificationStatus =
   | 'green'
-  // 'yellow' |
+  // | 'yellow'
+  | 'gray'
   | 'red'
   | undefined;
 
