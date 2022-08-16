@@ -1,6 +1,6 @@
 import {ComponentProps, FC} from 'react';
 
-import {faCheckCircle, faCircleXmark, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faCircleDot, faCircleXmark, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 
@@ -11,17 +11,19 @@ interface PropTypes extends ComponentProps<typeof StitchesDot> {
   asIcon?: boolean;
 }
 
-export const Dot: FC<PropTypes> = ({css, asIcon, kind: type, size}) =>
+export const Dot: FC<PropTypes> = ({css, asIcon, kind, size}) =>
   asIcon ? (
-    type === 'green' ? (
+    kind === 'green' ? (
       <FontAwesomeIcon color={'#03BF00'} icon={faCheckCircle} size={'lg'} />
-    ) : type === 'red' ? (
+    ) : kind === 'red' ? (
       <FontAwesomeIcon color={'#ED3357'} icon={faCircleXmark} size={'lg'} />
-    ) : type === 'yellow' ? (
+    ) : kind === 'yellow' ? (
       <FontAwesomeIcon color={'#FFDF00'} icon={faExclamationCircle} size={'lg'} />
+    ) : kind === 'gray' ? (
+      <FontAwesomeIcon color={'#BFBFBE'} icon={faCircleDot} size={'lg'} />
     ) : (
-      <StitchesDot css={css} kind={type} size={size} />
+      <StitchesDot css={css} kind={kind} size={size} />
     )
   ) : (
-    <StitchesDot css={css} kind={type} size={size} />
+    <StitchesDot css={css} kind={kind} size={size} />
   );

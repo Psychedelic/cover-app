@@ -16,12 +16,18 @@ interface PropTypes {
 
 // Const isCustomBuild = (canisterType?: string): boolean => canisterType === 'Custom';
 
-const getVerificationStatus = ({isVerified}: Verification): VerificationStatus =>
+const getVerificationStatus = ({isVerified, buildStatus}: Verification): VerificationStatus =>
   /*
    * ? isCustomBuild(canisterType)
    * ? 'yellow'
    */
-  typeof isVerified === 'boolean' ? (isVerified ? 'green' : 'red') : isVerified;
+  buildStatus === 'Building' || buildStatus === 'Pending'
+    ? 'gray'
+    : typeof isVerified === 'boolean'
+    ? isVerified
+      ? 'green'
+      : 'red'
+    : isVerified;
 
 const getStatusTooltip = (verificationStatus: VerificationStatus): string => {
   switch (verificationStatus) {
@@ -29,6 +35,8 @@ const getStatusTooltip = (verificationStatus: VerificationStatus): string => {
       return 'Unverified';
     case 'green':
       return 'Verified';
+    case 'gray':
+      return 'Building';
     /*
      * Case 'yellow':
      * return 'Custom build';
@@ -44,6 +52,8 @@ const getStatusTooltipInfo = (verificationStatus: VerificationStatus): string =>
       return 'Wasm hashes do not match.';
     case 'green':
       return 'Wasm hashes matched.';
+    case 'gray':
+      return 'Canister builds in progress.';
     /*
      * Case 'yellow':
      * return 'Custom build is considered unsafe.';
