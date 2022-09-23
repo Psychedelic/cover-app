@@ -115,7 +115,7 @@ export const VerificationRow: FC<PropTypes> = ({
       {isSelected && (
         <>
           <TableRow override>
-            <VerificationDetail isTrim label={'Owner principal'} value={verification.ownerId} />
+            <VerificationDetail isTrim label={'Owner | Caller'} value={verification.callerId} />
             <VerificationDetail label={'Repo visibility'} value={verification.repoVisibility} />
           </TableRow>
           <TableRow override>

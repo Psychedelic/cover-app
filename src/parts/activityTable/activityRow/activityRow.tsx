@@ -6,7 +6,7 @@ import {getDuration} from '@/utils';
 interface PropTypes {
   buildStatus?: 'Success' | 'Pending' | 'Error' | 'Building';
   canisterId?: string;
-  dateTime?: string;
+  dateTime?: Date;
 }
 
 const activityStatus: {[key: string]: 'red' | 'yellow' | 'green'} = {

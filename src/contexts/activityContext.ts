@@ -124,5 +124,5 @@ export const fetchActivities = async (dispatch: Dispatch<ReducerAction<typeof ac
 const mapActivity = (data: CanisterActivity): Activity => ({
   canisterId: data.canister_id.toText(),
   buildStatus: Object.keys(data.build_status)[0] as 'Success' | 'Pending' | 'Error' | 'Building',
-  datetime: data.create_at
+  datetime: new Date(Number(data.created_at / BigInt(1_000_000)))
 });

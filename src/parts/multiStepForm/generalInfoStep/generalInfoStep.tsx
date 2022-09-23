@@ -14,7 +14,7 @@ interface PropTypes {
 }
 
 export interface GeneralInfo {
-  ownerId: string;
+  callerId: string;
   delegateCanisterId: string;
   canisterId: string;
   canisterName: string;
@@ -24,7 +24,7 @@ export interface GeneralInfo {
 }
 
 interface InputRefs {
-  ownerId: RefObject<FormInputHandler>;
+  callerId: RefObject<FormInputHandler>;
   delegateCanisterId: RefObject<FormInputHandler>;
   canisterId: RefObject<FormInputHandler>;
   canisterName: RefObject<FormInputHandler>;
@@ -34,7 +34,7 @@ interface InputRefs {
 }
 
 const useInputRefs = (): InputRefs => ({
-  ownerId: createRef<FormInputHandler>(),
+  callerId: createRef<FormInputHandler>(),
   delegateCanisterId: createRef<FormInputHandler>(),
   canisterId: createRef<FormInputHandler>(),
   canisterName: createRef<FormInputHandler>(),
@@ -56,7 +56,7 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
       }, false);
       if (hasError) return;
       onCompleted({
-        ownerId: inputRefs.ownerId.current?.value() || '',
+        callerId: inputRefs.callerId.current?.value() || '',
         delegateCanisterId: inputRefs.delegateCanisterId.current?.value() || '',
         canisterId: inputRefs.canisterId.current?.value() || '',
         canisterName: inputRefs.canisterName.current?.value() || '',
@@ -74,11 +74,11 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
           <span>{'Submit Verification'}</span>
         </div>
         <FormInput
-          defaultValue={defaultValue?.ownerId}
+          defaultValue={defaultValue?.callerId}
           errorMessage={'Invalid principal format.'}
           infoTooltip={'The owner (controller) principal ID associated with the canister'}
           label={'Owner Principal ID'}
-          ref={inputRefs.ownerId}
+          ref={inputRefs.callerId}
           required
           validations={[isPrincipal]}
         />
