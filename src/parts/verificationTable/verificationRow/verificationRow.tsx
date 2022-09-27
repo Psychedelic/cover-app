@@ -97,7 +97,7 @@ export const VerificationRow: FC<PropTypes> = ({
             <span>{verification.name}</span>
           </Core.LoadingMask>,
           <Core.LoadingMask depth={2} key={2}>
-            <a href={toGithubUrl(verification.repo)} rel={'noreferrer'} target={'_blank'}>
+            <a href={toGithubUrl(verification.repo, verification.gitCommit)} rel={'noreferrer'} target={'_blank'}>
               <span>{lastUrlSegment(verification.repo)}</span>
             </a>
           </Core.LoadingMask>,
