@@ -3,7 +3,8 @@ export const trim = (str?: string): string =>
 
 export const getNameFromLabel = (str?: string): string | undefined => str && str.replaceAll(' ', '');
 
-export const toGithubUrl = (url?: string): string => (url ? `https://github.com/${url}` : '');
+export const toGithubUrl = (url?: string, commitHash?: string): string =>
+  url && commitHash ? `https://github.com/${url}/tree/${commitHash}` : '';
 
 export const lastUrlSegment = (url?: string): string => (url ? `/${url.split('/').pop() || ''}` : '');
 

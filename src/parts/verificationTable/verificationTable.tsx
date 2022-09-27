@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
-import {CANISTER_NOT_FOUND_PATH, DASHBOARD_PATH} from '@/constants';
+import {DASHBOARD_PATH, NOT_FOUND_PATH} from '@/constants';
 import {
   DEFAULT_VERIFICATIONS,
   fetchByCanisterId,
@@ -54,7 +54,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
 
   useEffect(() => {
     if (isCanisterNotFound || (!isDashboardPage && !isDetailPage)) {
-      navigate(CANISTER_NOT_FOUND_PATH);
+      navigate(NOT_FOUND_PATH);
       return () => {
         // Do nothing.
       };

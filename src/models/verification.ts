@@ -5,8 +5,8 @@ export interface Verification {
   repo?: string;
   gitCommit?: string;
   wasmHash?: string;
-  lastActivity?: string;
-  ownerId?: string;
+  lastActivity?: Date;
+  callerId?: string;
   delegateCanisterId?: string;
   repoVisibility?: string;
   rustVersion?: string;

@@ -97,7 +97,7 @@ export const VerificationRow: FC<PropTypes> = ({
             <span>{verification.name}</span>
           </Core.LoadingMask>,
           <Core.LoadingMask depth={2} key={2}>
-            <a href={toGithubUrl(verification.repo)} rel={'noreferrer'} target={'_blank'}>
+            <a href={toGithubUrl(verification.repo, verification.gitCommit)} rel={'noreferrer'} target={'_blank'}>
               <span>{lastUrlSegment(verification.repo)}</span>
             </a>
           </Core.LoadingMask>,
@@ -115,7 +115,7 @@ export const VerificationRow: FC<PropTypes> = ({
       {isSelected && (
         <>
           <TableRow override>
-            <VerificationDetail isTrim label={'Owner principal'} value={verification.ownerId} />
+            <VerificationDetail isTrim label={'Owner | Caller'} value={verification.callerId} />
             <VerificationDetail label={'Repo visibility'} value={verification.repoVisibility} />
           </TableRow>
           <TableRow override>

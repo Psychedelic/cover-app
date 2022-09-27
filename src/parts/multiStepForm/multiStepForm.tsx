@@ -12,7 +12,7 @@ import {
   SuccessDialogHandler
 } from '@/components';
 import {DASHBOARD_PATH} from '@/constants';
-import {coverAnonymousBuild} from '@/utils';
+import {anonymousBuild} from '@/utils';
 
 import {BuildInfo, BuildInfoStep} from './buildInfoStep';
 import {GeneralInfo, GeneralInfoStep} from './generalInfoStep';
@@ -97,24 +97,24 @@ const handleSubmit = (infoRefs: InfoRefs, {infoDialog, errDialog, successDialog}
     title: 'Submission Processing',
     description: 'Your submission is processing, please allow some time for the verification to finish.'
   });
-  coverAnonymousBuild({
-    owner_id: infoRefs.generalInfo.current?.ownerId as string,
-    delegate_canister_id: infoRefs.generalInfo.current?.delegateCanisterId as string,
-    canister_id: infoRefs.generalInfo.current?.canisterId as string,
-    canister_name: infoRefs.generalInfo.current?.canisterName as string,
-    repo_url: infoRefs.generalInfo.current?.repoUrl as string,
-    commit_hash: infoRefs.generalInfo.current?.commitHash as string,
-    repo_access_token: infoRefs.generalInfo.current?.repoAccessToken as string,
-    rust_version: infoRefs.buildInfo.current?.rustVersion as string,
-    dfx_version: infoRefs.buildInfo.current?.dfxVersion as string,
-    optimize_count: parseInt(infoRefs.buildInfo.current?.optimizeCount as string, 10),
+  anonymousBuild({
+    callerId: infoRefs.generalInfo.current?.callerId as string,
+    delegateCanisterId: infoRefs.generalInfo.current?.delegateCanisterId as string,
+    canisterId: infoRefs.generalInfo.current?.canisterId as string,
+    canisterName: infoRefs.generalInfo.current?.canisterName as string,
+    repoUrl: infoRefs.generalInfo.current?.repoUrl as string,
+    commitHash: infoRefs.generalInfo.current?.commitHash as string,
+    repoAccessToken: infoRefs.generalInfo.current?.repoAccessToken as string,
+    rustVersion: infoRefs.buildInfo.current?.rustVersion as string,
+    dfxVersion: infoRefs.buildInfo.current?.dfxVersion as string,
+    optimizeCount: parseInt(infoRefs.buildInfo.current?.optimizeCount as string, 10),
     timestamp: parseInt(infoRefs.buildInfo.current?.timestamp as string, 10),
     signature: infoRefs.buildInfo.current?.signature as string,
-    public_key: infoRefs.buildInfo.current?.publicKey as string
+    publicKey: infoRefs.buildInfo.current?.publicKey as string
   })
     .then(() =>
       successDialog.current?.open({
-        description: 'Congrats!!! You have submitted verification successfully',
+        description: 'Congrats!!! You have submitted verification successfully.',
         showActionBtn: true
       })
     )

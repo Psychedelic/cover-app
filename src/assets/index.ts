@@ -1,4 +1,4 @@
-import canisterNotFound from './canisterNotFound.svg';
 import logo from './logo.svg';
+import notFound from './notFound.svg';
 
-export {logo, canisterNotFound};
+export {logo, notFound};
