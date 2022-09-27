@@ -20,5 +20,9 @@ export const submitItemStyle = {
   '&:hover': {
     textDecorationLine: 'none',
     background: '#3D3D3D'
+  },
+  '&[disabled]': {
+    cursor: 'default !important',
+    opacity: 0.3
   }
 };
