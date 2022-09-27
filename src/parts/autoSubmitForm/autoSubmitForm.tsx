@@ -1,9 +1,9 @@
 import {createRef, FC, FormEvent, Fragment, RefObject, useCallback, useRef, useState} from 'react';
 
+import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CoverMetadata, ErrorResponse} from '@psychedelic/cover';
 import {Link, useNavigate} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 
 import {
   Core,
@@ -123,8 +123,13 @@ export const AutoSubmitForm: FC = () => {
         <div className={'info'}>
           <FontAwesomeIcon icon={faInfoCircle} />
           <span>
-            {'To surface "Cover Metadata" information, please provide the canister build configuration by exposing the "coverMetadata" query method from the canister ('}
-            <a href={'https://github.com/Psychedelic/cover-validator#build-with-cover-metadata'} rel="noreferrer" target={'_blank'}>
+            {'To surface "Cover Metadata" information, '}
+            {'please provide the canister build configuration exposed '}
+            {'with the "coverMetadata" query method from the canister ('}
+            <a
+              href={'https://github.com/Psychedelic/cover-validator#build-with-cover-metadata'}
+              rel={'noreferrer'}
+              target={'_blank'}>
               {'Example'}
             </a>
             {').'}

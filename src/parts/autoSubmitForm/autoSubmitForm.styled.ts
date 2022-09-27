@@ -27,8 +27,8 @@ export const StitchesAutoSubmitForm = styled('div', {
     borderRadius: '$8',
     columnGap: 5,
     '> svg': {
-      margin: 2,
-      color: '#747474',
+      margin: 3,
+      color: '#747474'
     },
     '> span': {
       lineHeight: '18px',
