@@ -4,7 +4,7 @@ import {Link, useNavigate} from 'react-router-dom';
 
 import {logo} from '@/assets';
 import {Core, MenuItems, SearchBar, SearchBarHandler, Settings} from '@/components';
-import {CANISTER_DETAIL_ROUTE, DASHBOARD_PATH, SUBMIT_PATH} from '@/constants';
+import {CANISTER_DETAIL_ROUTE, DASHBOARD_PATH} from '@/constants';
 import {useVerificationContext} from '@/contexts';
 import {getCurrentPath, isPrincipal} from '@/utils';
 
@@ -14,6 +14,7 @@ import {
   StitchesPageMainHeader,
   StitchesPageSecondaryHeader
 } from './pageHeader.styled';
+import {SubmitBtn} from './submitBtn';
 
 export const PageHeader: FC = () => {
   const lastParam = getCurrentPath().split('/').pop() || '';
@@ -57,9 +58,7 @@ export const PageHeader: FC = () => {
         />
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
-        <Link to={SUBMIT_PATH}>
-          <Core.Button disabled={getCurrentPath() === SUBMIT_PATH}>{'Submit Verification'}</Core.Button>
-        </Link>
+        <SubmitBtn />
         <Core.Button disabled>{'Connect to Plug'}</Core.Button>
         <Settings />
         <MenuItems />
