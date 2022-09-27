@@ -84,7 +84,7 @@ export const AutoSubmitForm: FC = () => {
         )
           .then(() =>
             dialogRefs.successDialog.current?.open({
-              description: 'Congrats!!! You have submitted verification successfully',
+              description: 'Congrats!!! You have submitted verification successfully.',
               showActionBtn: true
             })
           )
@@ -104,7 +104,7 @@ export const AutoSubmitForm: FC = () => {
           .catch(_ => {
             dialogRefs.errDialog.current?.open({
               title: 'Failed to fetch Cover Metadata',
-              description: 'The canister requested was not supported Cover Metadata'
+              description: 'The canister requested was not Cover Metadata supported.'
             });
           })
           .finally(() => dialogRefs.infoDialog.current?.close());

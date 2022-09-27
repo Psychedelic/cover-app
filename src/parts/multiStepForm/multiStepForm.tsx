@@ -114,7 +114,7 @@ const handleSubmit = (infoRefs: InfoRefs, {infoDialog, errDialog, successDialog}
   })
     .then(() =>
       successDialog.current?.open({
-        description: 'Congrats!!! You have submitted verification successfully',
+        description: 'Congrats!!! You have submitted verification successfully.',
         showActionBtn: true
       })
     )
