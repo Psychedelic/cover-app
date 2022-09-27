@@ -85,10 +85,10 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
         <FormInput
           defaultValue={defaultValue?.delegateCanisterId}
           errorMessage={'Invalid principal format.'}
-          infoTooltip={`The canister controller of the 'Canister Principal ID' field,
+          infoTooltip={`The canister controller of the 'Canister ID' field,
 useful when the controller is the cycle wallet or proxy canister.
 Leave it empty if you don't use it.`}
-          label={'Delegate canister ID'}
+          label={'Delegate Canister ID'}
           ref={inputRefs.delegateCanisterId}
           validations={[isPrincipal]}
         />
@@ -96,7 +96,7 @@ Leave it empty if you don't use it.`}
           defaultValue={defaultValue?.canisterId}
           errorMessage={'Invalid principal format.'}
           infoTooltip={'The canister ID associated with this verification'}
-          label={'Canister Principal ID'}
+          label={'Canister ID'}
           ref={inputRefs.canisterId}
           required
           validations={[isPrincipal]}

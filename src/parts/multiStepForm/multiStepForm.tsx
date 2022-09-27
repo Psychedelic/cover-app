@@ -12,7 +12,7 @@ import {
   SuccessDialogHandler
 } from '@/components';
 import {DASHBOARD_PATH} from '@/constants';
-import {coverAnonymousBuild} from '@/utils';
+import {anonymousBuild} from '@/utils';
 
 import {BuildInfo, BuildInfoStep} from './buildInfoStep';
 import {GeneralInfo, GeneralInfoStep} from './generalInfoStep';
@@ -97,7 +97,7 @@ const handleSubmit = (infoRefs: InfoRefs, {infoDialog, errDialog, successDialog}
     title: 'Submission Processing',
     description: 'Your submission is processing, please allow some time for the verification to finish.'
   });
-  coverAnonymousBuild({
+  anonymousBuild({
     callerId: infoRefs.generalInfo.current?.callerId as string,
     delegateCanisterId: infoRefs.generalInfo.current?.delegateCanisterId as string,
     canisterId: infoRefs.generalInfo.current?.canisterId as string,
