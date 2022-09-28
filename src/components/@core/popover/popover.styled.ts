@@ -24,6 +24,7 @@ const slideLeftAndFade = keyframes({
 });
 
 export const StitchesContent = styled(PopoverPrimitive.Content, {
+  zIndex: 9999,
   borderRadius: 8,
   padding: '12px 22px',
   width: 260,
