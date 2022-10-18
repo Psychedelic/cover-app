@@ -5,13 +5,16 @@ import {Verification} from '@/models';
 import {lastUrlSegment, mdy, toGithubUrl} from '@/utils';
 
 import {VerificationDetail, VerificationStatus} from './verificationDetail';
-import {tableRowSelected} from './verificationRow.styled';
+import {btnRow, tableRowSelected} from './verificationRow.styled';
 
 interface PropTypes {
   verification: Verification;
   isSelected: boolean;
   setCanisterIdSelected: (canisterId: string) => void;
   disableCollapseBtn?: boolean;
+  onDeleteHandler: ((verification: Verification) => void) | null;
+  onEditHandler: ((verification: Verification) => void) | null;
+  onResubmitHandler: ((verification: Verification) => void) | null;
 }
 
 // Const isCustomBuild = (canisterType?: string): boolean => canisterType === 'Custom';
@@ -67,7 +70,10 @@ export const VerificationRow: FC<PropTypes> = ({
   verification,
   isSelected,
   setCanisterIdSelected,
-  disableCollapseBtn
+  disableCollapseBtn,
+  onDeleteHandler,
+  onEditHandler,
+  onResubmitHandler
 }) => {
   const onCollapse = useCallback(
     (canisterId: string) => {
@@ -75,6 +81,15 @@ export const VerificationRow: FC<PropTypes> = ({
     },
     [setCanisterIdSelected, isSelected]
   );
+  const onDeleteHandlerCb = useCallback(() => {
+      onDeleteHandler && onDeleteHandler(verification);
+    }, [onDeleteHandler, verification]),
+    onEditHandlerCb = useCallback(() => {
+      onEditHandler && onEditHandler(verification);
+    }, [onEditHandler, verification]),
+    onResubmitHandlerCb = useCallback(() => {
+      onResubmitHandler && onResubmitHandler(verification);
+    }, [onResubmitHandler, verification]);
   const verificationStatus = getVerificationStatus(verification);
   return (
     <>
@@ -139,6 +154,29 @@ export const VerificationRow: FC<PropTypes> = ({
             <VerificationDetail label={'Wasm optimization'} value={verification.optimizeCount} />
             <VerificationDetail isLink label={'COVER build result'} value={verification.buildUrl} />
           </TableRow>
+          {(onDeleteHandler || onEditHandler || onResubmitHandler) && (
+            <TableRow css={btnRow} override>
+              {[
+                <td colSpan={8} key={99999}>
+                  {onDeleteHandler && (
+                    <Core.Button kind={'outline'} onClick={onDeleteHandlerCb}>
+                      {'Delete'}
+                    </Core.Button>
+                  )}
+                  {onEditHandler && (
+                    <Core.Button kind={'outline'} onClick={onEditHandlerCb}>
+                      {'Edit'}
+                    </Core.Button>
+                  )}
+                  {onResubmitHandler && (
+                    <Core.Button kind={'main'} onClick={onResubmitHandlerCb}>
+                      {'Resubmit'}
+                    </Core.Button>
+                  )}
+                </td>
+              ]}
+            </TableRow>
+          )}
         </>
       )}
     </>

@@ -75,3 +75,18 @@ export const tableRowSelected = {
     }
   }
 };
+
+export const btnRow = {
+  background: '$coverInk',
+  border: 'none !important',
+  '& button': {
+    width: '110px',
+    height: '$btnMd !important',
+    padding: '$0 $15 !important',
+    margin: '$0 $5'
+  },
+  '& td': {
+    padding: '$15 0 $25 0',
+    opacity: 1
+  }
+};

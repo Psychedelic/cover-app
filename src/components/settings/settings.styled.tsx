@@ -25,5 +25,8 @@ export const StitchesSettingsRight = styled('div', {
   },
   '> span': {
     marginLeft: 5
+  },
+  '& button': {
+    margin: 0
   }
 });

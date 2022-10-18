@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
-import {DASHBOARD_PATH, NOT_FOUND_PATH} from '@/constants';
+import {NOT_FOUND_PATH} from '@/constants';
 import {
   DEFAULT_VERIFICATIONS,
   fetchByCanisterId,
@@ -15,7 +15,7 @@ import {
   useVerificationContext
 } from '@/contexts';
 import {Verification} from '@/models';
-import {getCurrentPath, isPrincipal} from '@/utils';
+import {isDashboardPage, isMyCanisterPage, isPrincipal} from '@/utils';
 
 import {VerificationRow} from './verificationRow';
 import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './verificationTable.styled';
@@ -49,11 +49,20 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     );
 
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam),
-    isDashboardPage = getCurrentPath() === DASHBOARD_PATH,
     isCanisterNotFound = verifications?.length === 0;
 
+  const onDeleteHandler = useCallback((verification: Verification) => {
+      console.log('onDeleteHandler', verification);
+    }, []),
+    onEditHandler = useCallback((verification: Verification) => {
+      console.log('onEditHandler', verification);
+    }, []),
+    onResubmitHandler = useCallback((verification: Verification) => {
+      console.log('onResubmitHandler', verification);
+    }, []);
+
   useEffect(() => {
-    if (isCanisterNotFound || (!isDashboardPage && !isDetailPage)) {
+    if (isCanisterNotFound || !(isDashboardPage() || isMyCanisterPage() || isDetailPage)) {
       navigate(NOT_FOUND_PATH);
       return () => {
         // Do nothing.
@@ -75,7 +84,6 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     coverSettings.refreshInterval,
     canisterIdParam,
     isDetailPage,
-    isDashboardPage,
     isCanisterNotFound,
     navigate
   ]);
@@ -107,6 +115,9 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
             disableCollapseBtn={Boolean(currentCanisterId)}
             isSelected={(currentCanisterId || canisterIdSelected) === verification.canisterId}
             key={verification.canisterId || index}
+            onDeleteHandler={isMyCanisterPage() ? onDeleteHandler : null}
+            onEditHandler={isMyCanisterPage() ? onEditHandler : null}
+            onResubmitHandler={isMyCanisterPage() ? onResubmitHandler : null}
             setCanisterIdSelected={setCanisterIdSelected}
             verification={verification}
           />

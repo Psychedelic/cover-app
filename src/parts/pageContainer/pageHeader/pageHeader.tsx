@@ -4,9 +4,16 @@ import {Link, useNavigate} from 'react-router-dom';
 
 import {logo} from '@/assets';
 import {Core, MenuItems, SearchBar, SearchBarHandler, Settings} from '@/components';
-import {CANISTER_DETAIL_ROUTE, DASHBOARD_PATH} from '@/constants';
+import {CANISTER_DETAIL_ROUTE, DASHBOARD_PATH, MY_CANISTER_DETAIL_ROUTE, MY_CANISTER_PATH} from '@/constants';
 import {useVerificationContext} from '@/contexts';
-import {getCurrentPath, isPrincipal} from '@/utils';
+import {
+  getCurrentPath,
+  isCanisterDetailPage,
+  isDashboardPage,
+  isMyCanisterDetailPage,
+  isMyCanisterPage,
+  isPrincipal
+} from '@/utils';
 
 import {
   feedbackBtnCss,
@@ -30,8 +37,10 @@ export const PageHeader: FC = () => {
       // Only difference value each time is called can be dispatched
       if (value !== lastSearchCanisterId.current) {
         isPrincipal(value)
-          ? navigate(CANISTER_DETAIL_ROUTE.replaceAll(':canisterId', value))
-          : value === '' && navigate(DASHBOARD_PATH);
+          ? navigate(
+              (isDashboardPage() ? CANISTER_DETAIL_ROUTE : MY_CANISTER_DETAIL_ROUTE).replaceAll(':canisterId', value)
+            )
+          : value === '' && navigate(isCanisterDetailPage() ? DASHBOARD_PATH : MY_CANISTER_PATH);
         lastSearchCanisterId.current = value;
       }
     },
@@ -51,7 +60,10 @@ export const PageHeader: FC = () => {
         </Link>
         <SearchBar
           defaultValue={canisterIdParam}
-          disabled={isFetching || (getCurrentPath() !== DASHBOARD_PATH && !getCurrentPath().includes('/canister/'))}
+          disabled={
+            isFetching ||
+            !(isDashboardPage() || isCanisterDetailPage() || isMyCanisterPage() || isMyCanisterDetailPage())
+          }
           onBlurOrEnter={onBlur}
           ref={searchBarRef}
           validation={isPrincipal}
