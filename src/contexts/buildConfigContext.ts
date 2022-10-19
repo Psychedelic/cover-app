@@ -1,7 +1,11 @@
 import {Dispatch, ReducerAction, useContext} from 'react';
 
 import {Principal} from '@dfinity/principal';
-import {BuildConfig as CanisterBuildConfig, Verification as CanisterVerification} from '@psychedelic/cover';
+import {
+  BuildConfig as CanisterBuildConfig,
+  Verification as CanisterVerification,
+  _SERVICE as CoverActor
+} from '@psychedelic/cover';
 
 import {BuildConfig} from '@/models';
 import {capitalize, coverSDK} from '@/utils';
@@ -117,10 +121,13 @@ export const BuildConfigProvider = createProvider(context, buildConfigReducer, I
  * ACTIONS
  * ========================================================================================================
  */
-export const fetchBuildConfigs = async (dispatch: Dispatch<ReducerAction<typeof buildConfigReducer>>) => {
+export const fetchBuildConfigs = async (
+  dispatch: Dispatch<ReducerAction<typeof buildConfigReducer>>,
+  plugCoverActor: CoverActor
+) => {
   dispatch({type: 'fetchPending'});
   try {
-    const result = await coverSDK.getBuildConfigs();
+    const result = await plugCoverActor.getBuildConfigs();
     dispatch({
       type: 'fetchBuildConfigs',
       payload: {
@@ -134,15 +141,16 @@ export const fetchBuildConfigs = async (dispatch: Dispatch<ReducerAction<typeof 
 
 export const fetchBuildConfigByCanisterId = async (
   dispatch: Dispatch<ReducerAction<typeof buildConfigReducer>>,
+  plugCoverActor: CoverActor,
   currentCanisterId: Principal
 ) => {
   dispatch({type: 'fetchPending'});
   try {
-    const result = await coverSDK.getBuildConfigByCanisterId(currentCanisterId);
+    const result = await plugCoverActor.getBuildConfigById(currentCanisterId);
     dispatch({
       type: 'fetchBuildConfigByCanisterId',
       payload: {
-        buildConfigs: result ? await mapFullBuildConfig([result]) : [],
+        buildConfigs: result ? await mapFullBuildConfig(result) : [],
         currentCanisterId: currentCanisterId.toText()
       }
     });

@@ -3,6 +3,7 @@ import {FC, useCallback, useEffect, useState} from 'react';
 import {Principal} from '@dfinity/principal';
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {_SERVICE as CoverActor} from '@psychedelic/cover';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {Core, TableContainer, TableContent, TableHeader} from '@/components';
@@ -11,6 +12,7 @@ import {
   DEFAULT_BUILD_CONFIGS,
   fetchBuildConfigByCanisterId,
   fetchBuildConfigs,
+  useAuthenticationContext,
   useBuildConfigContext,
   useCoverSettingsContext
 } from '@/contexts';
@@ -31,25 +33,28 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
     } = useBuildConfigContext(),
     {
       state: {coverSettings}
-    } = useCoverSettingsContext();
+    } = useCoverSettingsContext(),
+    {
+      state: {plugCoverActor}
+    } = useAuthenticationContext();
 
   const {canisterId: canisterIdParam} = useParams(),
     [canisterIdSelected, setCanisterIdSelected] = useState(''),
     resetPage = useCallback(() => {
-      fetchBuildConfigs(dispatch);
-    }, [dispatch]),
+      fetchBuildConfigs(dispatch, plugCoverActor as CoverActor);
+    }, [dispatch, plugCoverActor]),
     navigate = useNavigate();
 
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam),
     isCanisterNotFound = buildConfigs?.length === 0;
 
-  const onDeleteHandler = useCallback((buildConfig: BuildConfig) => {
+  const onDeleteHandler = useCallback((_buildConfig: BuildConfig) => {
       // Do nothing.
     }, []),
-    onEditHandler = useCallback((buildConfig: BuildConfig) => {
+    onEditHandler = useCallback((_buildConfig: BuildConfig) => {
       // Do nothing.
     }, []),
-    onResubmitHandler = useCallback((buildConfig: BuildConfig) => {
+    onResubmitHandler = useCallback((_buildConfig: BuildConfig) => {
       // Do nothing.
     }, []);
 
@@ -61,12 +66,12 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       };
     }
     isDetailPage
-      ? fetchBuildConfigByCanisterId(dispatch, Principal.fromText(canisterIdParam))
-      : fetchBuildConfigs(dispatch);
+      ? fetchBuildConfigByCanisterId(dispatch, plugCoverActor as CoverActor, Principal.fromText(canisterIdParam))
+      : fetchBuildConfigs(dispatch, plugCoverActor as CoverActor);
     let timer: ReturnType<typeof setInterval> | null = null;
     if (!isDetailPage && coverSettings.isAutoRefresh) {
       timer = setInterval(() => {
-        fetchBuildConfigs(dispatch);
+        fetchBuildConfigs(dispatch, plugCoverActor as CoverActor);
       }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
     }
     return () => {
@@ -79,7 +84,8 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
     canisterIdParam,
     isDetailPage,
     isCanisterNotFound,
-    navigate
+    navigate,
+    plugCoverActor
   ]);
 
   return (

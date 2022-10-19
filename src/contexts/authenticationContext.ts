@@ -1,5 +1,10 @@
 import {Dispatch, ReducerAction, useContext} from 'react';
 
+import {_SERVICE as CoverActor} from '@psychedelic/cover';
+import {idlFactory} from '@psychedelic/cover/lib/cjs/actor/idl/cover.did.js';
+
+import {COVER_CANISTER_ID} from '@/constants';
+
 import {ActionBase, createContext, createProvider} from './helper';
 
 /*
@@ -19,6 +24,7 @@ interface AuthenticationAction extends ActionBase {
   payload: {
     isAuthenticated?: boolean;
     pid?: string;
+    plugCoverActor?: CoverActor;
   };
 }
 interface LogOutAction extends ActionBase {
@@ -33,6 +39,7 @@ interface LogOutAction extends ActionBase {
 interface State {
   isAuthenticated?: boolean;
   pid?: string;
+  plugCoverActor?: CoverActor;
 }
 const INIT_STATE: State = {};
 
@@ -54,7 +61,8 @@ const authenticationReducer = (_: State, action: Action): State => {
     case 'authenticationAction': {
       return {
         isAuthenticated: action.payload.isAuthenticated,
-        pid: action.payload.pid
+        pid: action.payload.pid,
+        plugCoverActor: action.payload.plugCoverActor
       };
     }
     case 'logOutAction': {
@@ -86,6 +94,7 @@ interface Plug {
       isConnected: () => Promise<boolean>;
       disconnect: () => Promise<void>;
       requestConnect: (opts: {whitelist: string[]; host: string; onConnectionUpdate: () => void}) => Promise<void>;
+      createActor: (opts: {canisterId: string; interfaceFactory: unknown}) => Promise<CoverActor>;
       sessionManager?: {
         sessionData?: {
           principalId: string;
@@ -98,21 +107,28 @@ interface Plug {
 export const verifyPlugAuthentication = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
   const isAuthenticated = await (window as Plug)?.ic?.plug?.isConnected();
   const pid = (window as Plug)?.ic?.plug?.sessionManager?.sessionData?.principalId;
-  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
+  const plugCoverActor = await (window as Plug)?.ic?.plug?.createActor({
+    canisterId: COVER_CANISTER_ID,
+    interfaceFactory: idlFactory
+  });
+  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid, plugCoverActor}});
 };
 
 export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
-  const onConnectionUpdate = () => {
+  const initAuthenticationState = async () => {
     const pid = (window as Plug)?.ic?.plug?.sessionManager?.sessionData?.principalId;
-    dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid}});
+    const plugCoverActor = await (window as Plug)?.ic?.plug?.createActor({
+      canisterId: COVER_CANISTER_ID,
+      interfaceFactory: idlFactory
+    });
+    dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid, plugCoverActor}});
   };
   await (window as Plug)?.ic?.plug?.requestConnect({
-    whitelist: ['iftvq-niaaa-aaaai-qasga-cai', '3x7en-uqaaa-aaaai-abgca-cai'],
+    whitelist: [COVER_CANISTER_ID],
     host: 'https://mainnet.dfinity.network',
-    onConnectionUpdate
+    onConnectionUpdate: initAuthenticationState
   });
-  const pid = (window as Plug)?.ic?.plug?.sessionManager?.sessionData?.principalId;
-  dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid}});
+  initAuthenticationState();
 };
 
 export const logOut = (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
