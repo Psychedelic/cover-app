@@ -17,8 +17,8 @@ type Action = AuthenticationAction | LogOutAction;
 interface AuthenticationAction extends ActionBase {
   type: 'authenticationAction';
   payload: {
-    isAuthenticated: boolean;
-    pid: string;
+    isAuthenticated?: boolean;
+    pid?: string;
   };
 }
 interface LogOutAction extends ActionBase {
@@ -80,27 +80,42 @@ export const AuthenticationProvider = createProvider(context, authenticationRedu
  * ACTIONS
  * ========================================================================================================
  */
+interface Plug {
+  ic?: {
+    plug?: {
+      isConnected: () => Promise<boolean>;
+      disconnect: () => Promise<void>;
+      requestConnect: (opts: {whitelist: string[]; host: string; onConnectionUpdate: () => void}) => Promise<void>;
+      sessionManager?: {
+        sessionData?: {
+          principalId: string;
+        };
+      };
+    };
+  };
+}
+
 export const verifyPlugAuthentication = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
-  const isAuthenticated = await (window as any)?.ic?.plug?.isConnected();
-  const pid = (window as any)?.ic?.plug?.sessionManager?.sessionData?.principalId;
+  const isAuthenticated = await (window as Plug)?.ic?.plug?.isConnected();
+  const pid = (window as Plug)?.ic?.plug?.sessionManager?.sessionData?.principalId;
   dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
 };
 
 export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
   const onConnectionUpdate = () => {
-    const pid = (window as any)?.ic?.plug?.sessionManager?.sessionData?.principalId;
+    const pid = (window as Plug)?.ic?.plug?.sessionManager?.sessionData?.principalId;
     dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid}});
   };
-  await (window as any)?.ic?.plug?.requestConnect({
+  await (window as Plug)?.ic?.plug?.requestConnect({
     whitelist: ['iftvq-niaaa-aaaai-qasga-cai', '3x7en-uqaaa-aaaai-abgca-cai'],
     host: 'https://mainnet.dfinity.network',
     onConnectionUpdate
   });
-  const pid = (window as any)?.ic?.plug?.sessionManager?.sessionData?.principalId;
+  const pid = (window as Plug)?.ic?.plug?.sessionManager?.sessionData?.principalId;
   dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid}});
 };
 
 export const logOut = (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
-  (window as any)?.ic?.plug?.disconnect();
+  (window as Plug)?.ic?.plug?.disconnect();
   dispatch({type: 'logOutAction'});
 };

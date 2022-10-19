@@ -61,7 +61,7 @@ export const PageHeader: FC = () => {
       if (isMyCanisterPage() || isMyCanisterDetailPage()) {
         navigate(DASHBOARD_PATH);
       }
-    }, [dispatch]);
+    }, [dispatch, navigate]);
 
   useEffect(() => {
     if (!canisterIdParam) {
