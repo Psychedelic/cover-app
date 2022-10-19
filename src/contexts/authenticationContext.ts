@@ -1,7 +1,5 @@
 import {Dispatch, ReducerAction, useContext} from 'react';
 
-import {Principal} from '@dfinity/principal';
-
 import {ActionBase, createContext, createProvider} from './helper';
 
 /*
@@ -15,16 +13,16 @@ import {ActionBase, createContext, createProvider} from './helper';
  * ACTION INTERFACES
  * ========================================================================================================
  */
-export interface AuthenticationInfo {
-  isAuthenticated?: boolean;
-  pid?: Principal;
-}
-type Action = AuthenticationAction;
+type Action = AuthenticationAction | LogOutAction;
 interface AuthenticationAction extends ActionBase {
   type: 'authenticationAction';
   payload: {
-    pid: Principal;
+    isAuthenticated: boolean;
+    pid: string;
   };
+}
+interface LogOutAction extends ActionBase {
+  type: 'logOutAction';
 }
 
 /*
@@ -33,7 +31,8 @@ interface AuthenticationAction extends ActionBase {
  * ========================================================================================================
  */
 interface State {
-  authenticationInfo?: AuthenticationInfo;
+  isAuthenticated?: boolean;
+  pid?: string;
 }
 const INIT_STATE: State = {};
 
@@ -51,15 +50,22 @@ export const useAuthenticationContext = () => useContext(context);
  * ========================================================================================================
  */
 const authenticationReducer = (_: State, action: Action): State => {
-  if (action.type === 'authenticationAction') {
-    return {
-      authenticationInfo: {
-        isAuthenticated: true,
+  switch (action.type) {
+    case 'authenticationAction': {
+      return {
+        isAuthenticated: action.payload.isAuthenticated,
         pid: action.payload.pid
-      }
-    };
+      };
+    }
+    case 'logOutAction': {
+      return {
+        isAuthenticated: false
+      };
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${(action as ActionBase).type}`);
+    }
   }
-  throw new Error(`Unhandled action type: ${(action as ActionBase).type}`);
 };
 
 /*
@@ -74,6 +80,27 @@ export const AuthenticationProvider = createProvider(context, authenticationRedu
  * ACTIONS
  * ========================================================================================================
  */
-export const authenticate = (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>, pid: Principal) => {
-  dispatch({type: 'authenticationAction', payload: {pid}});
+export const verifyPlugAuthentication = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
+  const isAuthenticated = await (window as any)?.ic?.plug?.isConnected();
+  const pid = (window as any)?.ic?.plug?.sessionManager?.sessionData?.principalId;
+  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
+};
+
+export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
+  const onConnectionUpdate = () => {
+    const pid = (window as any)?.ic?.plug?.sessionManager?.sessionData?.principalId;
+    dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid}});
+  };
+  await (window as any)?.ic?.plug?.requestConnect({
+    whitelist: ['iftvq-niaaa-aaaai-qasga-cai', '3x7en-uqaaa-aaaai-abgca-cai'],
+    host: 'https://mainnet.dfinity.network',
+    onConnectionUpdate
+  });
+  const pid = (window as any)?.ic?.plug?.sessionManager?.sessionData?.principalId;
+  dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid}});
+};
+
+export const logOut = (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
+  (window as any)?.ic?.plug?.disconnect();
+  dispatch({type: 'logOutAction'});
 };
