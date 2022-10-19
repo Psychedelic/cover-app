@@ -15,7 +15,7 @@ import {
   useVerificationContext
 } from '@/contexts';
 import {Verification} from '@/models';
-import {isDashboardPage, isMyCanisterPage, isPrincipal} from '@/utils';
+import {isDashboardPage, isPrincipal} from '@/utils';
 
 import {VerificationRow} from './verificationRow';
 import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './verificationTable.styled';
@@ -51,18 +51,8 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam),
     isCanisterNotFound = verifications?.length === 0;
 
-  const onDeleteHandler = useCallback((verification: Verification) => {
-      console.log('onDeleteHandler', verification);
-    }, []),
-    onEditHandler = useCallback((verification: Verification) => {
-      console.log('onEditHandler', verification);
-    }, []),
-    onResubmitHandler = useCallback((verification: Verification) => {
-      console.log('onResubmitHandler', verification);
-    }, []);
-
   useEffect(() => {
-    if (isCanisterNotFound || !(isDashboardPage() || isMyCanisterPage() || isDetailPage)) {
+    if (isCanisterNotFound || !(isDashboardPage() || isDetailPage)) {
       navigate(NOT_FOUND_PATH);
       return () => {
         // Do nothing.
@@ -115,9 +105,6 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
             disableCollapseBtn={Boolean(currentCanisterId)}
             isSelected={(currentCanisterId || canisterIdSelected) === verification.canisterId}
             key={verification.canisterId || index}
-            onDeleteHandler={isMyCanisterPage() ? onDeleteHandler : null}
-            onEditHandler={isMyCanisterPage() ? onEditHandler : null}
-            onResubmitHandler={isMyCanisterPage() ? onResubmitHandler : null}
             setCanisterIdSelected={setCanisterIdSelected}
             verification={verification}
           />
