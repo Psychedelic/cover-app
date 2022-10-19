@@ -52,7 +52,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     isCanisterNotFound = verifications?.length === 0;
 
   useEffect(() => {
-    if (isCanisterNotFound || !(isDashboardPage() || isDetailPage)) {
+    if (!(isDashboardPage() || isDetailPage) || (isCanisterNotFound && isDetailPage)) {
       navigate(NOT_FOUND_PATH);
       return () => {
         // Do nothing.
