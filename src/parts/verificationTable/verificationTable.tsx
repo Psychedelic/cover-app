@@ -9,7 +9,7 @@ import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from
 import {NOT_FOUND_PATH} from '@/constants';
 import {
   DEFAULT_VERIFICATIONS,
-  fetchByCanisterId,
+  fetchVerificationByCanisterId,
   fetchVerifications,
   useCoverSettingsContext,
   useVerificationContext
@@ -58,7 +58,9 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
         // Do nothing.
       };
     }
-    isDetailPage ? fetchByCanisterId(dispatch, Principal.fromText(canisterIdParam)) : fetchVerifications(dispatch);
+    isDetailPage
+      ? fetchVerificationByCanisterId(dispatch, Principal.fromText(canisterIdParam))
+      : fetchVerifications(dispatch);
     let timer: ReturnType<typeof setInterval> | null = null;
     if (!isDetailPage && coverSettings.isAutoRefresh) {
       timer = setInterval(() => {

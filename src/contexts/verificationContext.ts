@@ -13,7 +13,7 @@ import {ActionBase, createContext, createProvider} from './helper';
  * ACTION INTERFACES
  * ========================================================================================================
  */
-type Action = FetchPendingAction | FetchVerificationsAction | FetchByCanisterIdAction;
+type Action = FetchPendingAction | FetchVerificationsAction | FetchVerificationByCanisterIdAction;
 interface FetchPendingAction extends ActionBase {
   type: 'fetchPending';
 }
@@ -25,8 +25,8 @@ interface FetchVerificationsAction extends ActionBase {
     totalPage: number;
   };
 }
-interface FetchByCanisterIdAction extends ActionBase {
-  type: 'fetchByCanisterId';
+interface FetchVerificationByCanisterIdAction extends ActionBase {
+  type: 'fetchVerificationByCanisterId';
   payload: {
     verifications: Verification[];
     currentCanisterId: string;
@@ -98,7 +98,7 @@ const verificationReducer = (state: State, action: Action): State => {
         pendingFetchCount
       };
     }
-    case 'fetchByCanisterId': {
+    case 'fetchVerificationByCanisterId': {
       const pendingFetchCount = state.pendingFetchCount - 1;
       const isFetching = pendingFetchCount > 0;
       return {
@@ -152,7 +152,7 @@ export const fetchVerifications = async (
   }
 };
 
-export const fetchByCanisterId = async (
+export const fetchVerificationByCanisterId = async (
   dispatch: Dispatch<ReducerAction<typeof verificationReducer>>,
   currentCanisterId: Principal
 ) => {
@@ -160,7 +160,7 @@ export const fetchByCanisterId = async (
   try {
     const result = await coverSDK.getVerificationByCanisterId(currentCanisterId);
     dispatch({
-      type: 'fetchByCanisterId',
+      type: 'fetchVerificationByCanisterId',
       payload: {
         verifications: result ? await mapFullVerification([result]) : [],
         currentCanisterId: currentCanisterId.toText()
