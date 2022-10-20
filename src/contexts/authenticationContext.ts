@@ -1,9 +1,6 @@
 import {Dispatch, ReducerAction, useContext} from 'react';
 
-import {_SERVICE as CoverActor} from '@psychedelic/cover';
-import {idlFactory} from '@psychedelic/cover/lib/cjs/actor/idl/cover.did.js';
-
-import {COVER_CANISTER_ID} from '@/constants';
+import {getPlugAuthentication, plugConnect, plugDisconnect} from '@/utils';
 
 import {ActionBase, createContext, createProvider} from './helper';
 
@@ -18,13 +15,15 @@ import {ActionBase, createContext, createProvider} from './helper';
  * ACTION INTERFACES
  * ========================================================================================================
  */
-type Action = AuthenticationAction | LogOutAction;
+type Action = FetchPendingAction | AuthenticationAction | LogOutAction;
+interface FetchPendingAction extends ActionBase {
+  type: 'fetchPending';
+}
 interface AuthenticationAction extends ActionBase {
   type: 'authenticationAction';
   payload: {
-    isAuthenticated?: boolean;
+    isAuthenticated: boolean;
     pid?: string;
-    plugCoverActor?: CoverActor;
   };
 }
 interface LogOutAction extends ActionBase {
@@ -39,7 +38,7 @@ interface LogOutAction extends ActionBase {
 interface State {
   isAuthenticated?: boolean;
   pid?: string;
-  plugCoverActor?: CoverActor;
+  isPending?: boolean;
 }
 const INIT_STATE: State = {};
 
@@ -58,16 +57,23 @@ export const useAuthenticationContext = () => useContext(context);
  */
 const authenticationReducer = (_: State, action: Action): State => {
   switch (action.type) {
+    case 'fetchPending': {
+      return {
+        isPending: true,
+        isAuthenticated: false
+      };
+    }
     case 'authenticationAction': {
       return {
         isAuthenticated: action.payload.isAuthenticated,
         pid: action.payload.pid,
-        plugCoverActor: action.payload.plugCoverActor
+        isPending: false
       };
     }
     case 'logOutAction': {
       return {
-        isAuthenticated: false
+        isAuthenticated: false,
+        isPending: false
       };
     }
     default: {
@@ -88,50 +94,26 @@ export const AuthenticationProvider = createProvider(context, authenticationRedu
  * ACTIONS
  * ========================================================================================================
  */
-interface Plug {
-  ic?: {
-    plug?: {
-      isConnected: () => Promise<boolean>;
-      disconnect: () => Promise<void>;
-      requestConnect: (opts: {whitelist: string[]; host: string; onConnectionUpdate: () => void}) => Promise<void>;
-      createActor: (opts: {canisterId: string; interfaceFactory: unknown}) => Promise<CoverActor>;
-      sessionManager?: {
-        sessionData?: {
-          principalId: string;
-        };
-      };
-    };
-  };
-}
-
 export const verifyPlugAuthentication = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
-  const isAuthenticated = await (window as Plug)?.ic?.plug?.isConnected();
-  const pid = (window as Plug)?.ic?.plug?.sessionManager?.sessionData?.principalId;
-  const plugCoverActor = await (window as Plug)?.ic?.plug?.createActor({
-    canisterId: COVER_CANISTER_ID,
-    interfaceFactory: idlFactory
-  });
-  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid, plugCoverActor}});
+  dispatch({type: 'fetchPending'});
+  const {isAuthenticated, pid} = await getPlugAuthentication();
+  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
 };
 
 export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
-  const initAuthenticationState = async () => {
-    const pid = (window as Plug)?.ic?.plug?.sessionManager?.sessionData?.principalId;
-    const plugCoverActor = await (window as Plug)?.ic?.plug?.createActor({
-      canisterId: COVER_CANISTER_ID,
-      interfaceFactory: idlFactory
-    });
-    dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid, plugCoverActor}});
+  dispatch({type: 'fetchPending'});
+  const dispatcher = async () => {
+    await verifyPlugAuthentication(dispatch);
   };
-  await (window as Plug)?.ic?.plug?.requestConnect({
-    whitelist: [COVER_CANISTER_ID],
-    host: 'https://mainnet.dfinity.network',
-    onConnectionUpdate: initAuthenticationState
-  });
-  initAuthenticationState();
+  try {
+    await plugConnect(dispatcher);
+    await dispatcher();
+  } catch (e) {
+    dispatch({type: 'logOutAction'});
+  }
 };
 
 export const logOut = (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
-  (window as Plug)?.ic?.plug?.disconnect();
+  plugDisconnect();
   dispatch({type: 'logOutAction'});
 };

@@ -12,7 +12,7 @@ export const MyCanister: FC = () => (
   <BuildConfigProvider>
     <PageContainer>
       <ContentContainerOuter>
-        <Title>{'My Canister - Build Configs'}</Title>
+        <Title>{'My Canisters'}</Title>
         <ContentContainer>
           <LeftContent>
             <Routes>

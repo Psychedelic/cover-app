@@ -26,7 +26,7 @@ export const AuthenticatedBtn: FC<PropTypes> = ({pid, onLogOut}) => (
     <Core.PopoverContent align={'end'} css={popoverContentStyle} side={'bottom'} sideOffset={10}>
       <Link to={MY_CANISTER_PATH}>
         <Core.Button css={submitItemStyle} disabled={isMyCanisterPage()} kind={'text'}>
-          {'My Canister - Build Configs'}
+          {'My Canisters'}
         </Core.Button>
       </Link>
       <Core.Button css={submitItemStyle} kind={'text'} onClick={onLogOut}>

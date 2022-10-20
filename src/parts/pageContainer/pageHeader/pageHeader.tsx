@@ -35,7 +35,7 @@ export const PageHeader: FC = () => {
       state: {isFetching}
     } = useVerificationContext(),
     {
-      state: {isAuthenticated, pid},
+      state: {isPending, isAuthenticated, pid},
       dispatch
     } = useAuthenticationContext();
 
@@ -89,7 +89,9 @@ export const PageHeader: FC = () => {
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
         <SubmitBtn />
-        {isAuthenticated ? (
+        {isPending ? (
+          <Core.Button kind={'text'} disabled>{'Loading...'}</Core.Button>
+        ) : isAuthenticated ? (
           <AuthenticatedBtn onLogOut={onLogOut} pid={pid as string} />
         ) : (
           <Core.Button onClick={onAuthenticate}>{'Connect to Plug'}</Core.Button>
