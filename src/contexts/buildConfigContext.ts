@@ -13,7 +13,11 @@ import {ActionBase, createContext, createProvider} from './helper';
  * ACTION INTERFACES
  * ========================================================================================================
  */
-type Action = FetchPendingAction | FetchBuildConfigsAction | FetchBuildConfigByCanisterIdAction;
+type Action =
+  | FetchPendingAction
+  | FetchBuildConfigsAction
+  | FetchBuildConfigByCanisterIdAction
+  | DeleteBuildConfigAction;
 interface FetchPendingAction extends ActionBase {
   type: 'fetchPending';
 }
@@ -29,6 +33,9 @@ interface FetchBuildConfigByCanisterIdAction extends ActionBase {
     buildConfigs: BuildConfig[];
     currentCanisterId: string;
   };
+}
+interface DeleteBuildConfigAction extends ActionBase {
+  type: 'deleteBuildConfig';
 }
 
 /*
@@ -99,6 +106,14 @@ const buildConfigReducer = (state: State, action: Action): State => {
         pendingFetchCount
       };
     }
+    case 'deleteBuildConfig': {
+      const pendingFetchCount = state.pendingFetchCount - 1;
+      const isFetching = pendingFetchCount > 0;
+      return {
+        isFetching,
+        pendingFetchCount
+      };
+    }
     default: {
       throw new Error(`Unhandled action type: ${(action as ActionBase).type}`);
     }
@@ -146,6 +161,19 @@ export const fetchBuildConfigByCanisterId = async (
         currentCanisterId: currentCanisterId.toText()
       }
     });
+  } catch (e) {
+    dispatch({type: 'fetchPending'});
+  }
+};
+
+export const deleteBuildConfig = async (
+  dispatch: Dispatch<ReducerAction<typeof buildConfigReducer>>,
+  canisterId: Principal
+) => {
+  dispatch({type: 'fetchPending'});
+  try {
+    await getPlugCoverActor().deleteBuildConfig(canisterId);
+    dispatch({type: 'deleteBuildConfig'});
   } catch (e) {
     dispatch({type: 'fetchPending'});
   }

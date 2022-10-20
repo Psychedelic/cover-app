@@ -9,6 +9,7 @@ import {Core, TableContainer, TableContent, TableHeader} from '@/components';
 import {DASHBOARD_PATH, NOT_FOUND_PATH} from '@/constants';
 import {
   DEFAULT_BUILD_CONFIGS,
+  deleteBuildConfig,
   fetchBuildConfigByCanisterId,
   fetchBuildConfigs,
   useAuthenticationContext,
@@ -47,9 +48,15 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam),
     isCanisterNotFound = buildConfigs?.length === 0;
 
-  const onDeleteHandler = useCallback((_buildConfig: BuildConfig) => {
-      // Do nothing.
-    }, []),
+  const onDeleteHandler = useCallback(
+      (buildConfig: BuildConfig) => {
+        (async () => {
+          await deleteBuildConfig(dispatch, Principal.fromText(buildConfig.canisterId as string));
+          await fetchBuildConfigs(dispatch);
+        })();
+      },
+      [dispatch]
+    ),
     onEditHandler = useCallback((_buildConfig: BuildConfig) => {
       // Do nothing.
     }, []),

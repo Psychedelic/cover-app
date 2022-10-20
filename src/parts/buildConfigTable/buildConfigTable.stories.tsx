@@ -35,7 +35,7 @@ export const WithData: ComponentStoryObj<typeof BuildConfigTable> = {
         lastBuildRepoVisibility: 'Public',
         lastBuildCanisterType: 'Rust',
         isVerified: false,
-        wasmHash: '0xae173b2e914bac019d0b1f2210fcc3b26b84d39da4a80b4e156fb7dc249291a9',
+        wasmHash: '0xae173b2e914bac019d0b1f2210fcc3b26b84d39da4a80b4e156fb7dc249291a9'
       },
       {
         canisterId: 'iftvq-niaaa-aaaai-qasga-cai',
@@ -53,7 +53,7 @@ export const WithData: ComponentStoryObj<typeof BuildConfigTable> = {
         lastBuildRepoVisibility: 'Private',
         lastBuildCanisterType: 'Custom',
         isVerified: false,
-        wasmHash: '0xb809d6b1713f68f8a042bc51878fd57640ee46aaa3ddae9e09ac25c37feb6cb5',
+        wasmHash: '0xb809d6b1713f68f8a042bc51878fd57640ee46aaa3ddae9e09ac25c37feb6cb5'
       },
       {
         canisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
@@ -71,7 +71,7 @@ export const WithData: ComponentStoryObj<typeof BuildConfigTable> = {
         lastBuildRepoVisibility: 'Public',
         lastBuildCanisterType: 'Motoko',
         isVerified: true,
-        wasmHash: '0x5b872f9177b871b6f957f0268ce0f5722008a5abc45f9d2bef28e9300ad9693e',
+        wasmHash: '0x5b872f9177b871b6f957f0268ce0f5722008a5abc45f9d2bef28e9300ad9693e'
       },
       {
         isVerified: false,
@@ -84,7 +84,7 @@ export const WithData: ComponentStoryObj<typeof BuildConfigTable> = {
         callerId: 'v4ehh-6sqi7-irvn2-s43ef-enl26-h7vtu-kymgf-ikejl-k7mdv-wypuo-kqe',
         rustVersion: 'N/A',
         dfxVersion: '0.9.3',
-        optimizeCount: '0',
+        optimizeCount: '0'
       }
     ]
   }
