@@ -112,6 +112,7 @@ export const fetchActivities = async (dispatch: Dispatch<ReducerAction<typeof ac
       }
     });
   } catch (e) {
+    console.error(e);
     dispatch({type: 'fetchPending'});
   }
 };

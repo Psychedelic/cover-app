@@ -1,6 +1,6 @@
 import {Dispatch, ReducerAction, useContext} from 'react';
 
-import {Principal} from '@dfinity/principal';
+import {getPlugAuthentication, getPlugPrincipalId, initPlugPersistenceData, plugConnect, plugDisconnect} from '@/utils';
 
 import {ActionBase, createContext, createProvider} from './helper';
 
@@ -15,16 +15,19 @@ import {ActionBase, createContext, createProvider} from './helper';
  * ACTION INTERFACES
  * ========================================================================================================
  */
-export interface AuthenticationInfo {
-  isAuthenticated?: boolean;
-  pid?: Principal;
+type Action = FetchPendingAction | AuthenticationAction | LogOutAction;
+interface FetchPendingAction extends ActionBase {
+  type: 'fetchPending';
 }
-type Action = AuthenticationAction;
 interface AuthenticationAction extends ActionBase {
   type: 'authenticationAction';
   payload: {
-    pid: Principal;
+    isAuthenticated: boolean;
+    pid?: string;
   };
+}
+interface LogOutAction extends ActionBase {
+  type: 'logOutAction';
 }
 
 /*
@@ -33,7 +36,9 @@ interface AuthenticationAction extends ActionBase {
  * ========================================================================================================
  */
 interface State {
-  authenticationInfo?: AuthenticationInfo;
+  isAuthenticated?: boolean;
+  pid?: string;
+  isPending?: boolean;
 }
 const INIT_STATE: State = {};
 
@@ -51,15 +56,30 @@ export const useAuthenticationContext = () => useContext(context);
  * ========================================================================================================
  */
 const authenticationReducer = (_: State, action: Action): State => {
-  if (action.type === 'authenticationAction') {
-    return {
-      authenticationInfo: {
-        isAuthenticated: true,
-        pid: action.payload.pid
-      }
-    };
+  switch (action.type) {
+    case 'fetchPending': {
+      return {
+        isPending: true,
+        isAuthenticated: false
+      };
+    }
+    case 'authenticationAction': {
+      return {
+        isAuthenticated: action.payload.isAuthenticated,
+        pid: action.payload.pid,
+        isPending: false
+      };
+    }
+    case 'logOutAction': {
+      return {
+        isAuthenticated: false,
+        isPending: false
+      };
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${(action as ActionBase).type}`);
+    }
   }
-  throw new Error(`Unhandled action type: ${(action as ActionBase).type}`);
 };
 
 /*
@@ -74,6 +94,32 @@ export const AuthenticationProvider = createProvider(context, authenticationRedu
  * ACTIONS
  * ========================================================================================================
  */
-export const authenticate = (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>, pid: Principal) => {
-  dispatch({type: 'authenticationAction', payload: {pid}});
+const refetchAuthenticationState = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
+  dispatch({type: 'fetchPending'});
+  const {isAuthenticated, pid} = await getPlugAuthentication();
+  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
+};
+
+export const verifyPlugAuthentication = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
+  dispatch({type: 'fetchPending'});
+  const {isAuthenticated, pid} = await getPlugAuthentication();
+  await initPlugPersistenceData(isAuthenticated, () => refetchAuthenticationState(dispatch));
+  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
+};
+
+export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
+  dispatch({type: 'fetchPending'});
+  try {
+    await plugConnect();
+    await initPlugPersistenceData(true, () => refetchAuthenticationState(dispatch));
+    dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid: getPlugPrincipalId()}});
+  } catch (_) {
+    plugDisconnect();
+    dispatch({type: 'logOutAction'});
+  }
+};
+
+export const logOut = (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
+  plugDisconnect();
+  dispatch({type: 'logOutAction'});
 };

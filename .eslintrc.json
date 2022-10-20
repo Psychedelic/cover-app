@@ -66,7 +66,7 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-max-depth": ["error", {"max": 5}],
+    "react/jsx-max-depth": ["error", {"max": 6}],
     "react/jsx-no-leaked-render": "off",
     "no-restricted-imports": [
       "error",
@@ -90,7 +90,9 @@
     "@typescript-eslint/no-unused-vars": ["error"],
     "sonarjs/no-duplicate-string": ["error", 5],
     "sonarjs/cognitive-complexity": ["error", 25],
-    "promise/catch-or-return": ["error", {"allowFinally": true}]
+    "promise/catch-or-return": ["error", {"allowFinally": true}],
+    "max-statements": ["error", 15],
+    "no-console": ["error", {"allow": ["error"]}]
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},

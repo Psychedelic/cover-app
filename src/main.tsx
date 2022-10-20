@@ -5,7 +5,7 @@ import {createRoot} from 'react-dom/client';
 import {Core} from '@/components';
 
 import {App} from './app';
-import {CoverSettingsProvider} from './contexts';
+import {AuthenticationProvider, CoverSettingsProvider} from './contexts';
 
 const container = document.getElementById('root');
 
@@ -14,7 +14,9 @@ const root = createRoot(container as HTMLElement);
 root.render(
   <StrictMode>
     <CoverSettingsProvider>
-      <App />
+      <AuthenticationProvider>
+        <App />
+      </AuthenticationProvider>
     </CoverSettingsProvider>
     <Core.GitInfo />
   </StrictMode>

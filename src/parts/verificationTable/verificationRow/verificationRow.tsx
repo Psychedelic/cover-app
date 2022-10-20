@@ -14,13 +14,7 @@ interface PropTypes {
   disableCollapseBtn?: boolean;
 }
 
-// Const isCustomBuild = (canisterType?: string): boolean => canisterType === 'Custom';
-
 const getVerificationStatus = ({isVerified, buildStatus}: Verification): VerificationStatus =>
-  /*
-   * ? isCustomBuild(canisterType)
-   * ? 'yellow'
-   */
   buildStatus === 'Building' || buildStatus === 'Pending'
     ? 'gray'
     : typeof isVerified === 'boolean'
@@ -37,10 +31,6 @@ const getStatusTooltip = (verificationStatus: VerificationStatus): string => {
       return 'Verified';
     case 'gray':
       return 'Building';
-    /*
-     * Case 'yellow':
-     * return 'Custom build';
-     */
     default:
       return '';
   }
@@ -54,10 +44,6 @@ const getStatusTooltipInfo = (verificationStatus: VerificationStatus): string =>
       return 'Wasm hashes matched.';
     case 'gray':
       return 'Canister builds in progress.';
-    /*
-     * Case 'yellow':
-     * return 'Custom build is considered unsafe.';
-     */
     default:
       return '';
   }
