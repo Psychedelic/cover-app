@@ -1,6 +1,6 @@
 import {Dispatch, ReducerAction, useContext} from 'react';
 
-import {getPlugAuthentication, plugConnect, plugDisconnect} from '@/utils';
+import {getPlugAuthentication, getPlugPrincipalId, initPlugPersistenceData, plugConnect, plugDisconnect} from '@/utils';
 
 import {ActionBase, createContext, createProvider} from './helper';
 
@@ -94,9 +94,16 @@ export const AuthenticationProvider = createProvider(context, authenticationRedu
  * ACTIONS
  * ========================================================================================================
  */
+const refetchAuthenticationState = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
+  dispatch({type: 'fetchPending'});
+  const {isAuthenticated, pid} = await getPlugAuthentication();
+  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
+};
+
 export const verifyPlugAuthentication = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
   dispatch({type: 'fetchPending'});
-  const {isAuthenticated, pid} = await getPlugAuthentication(() => verifyPlugAuthentication(dispatch));
+  const {isAuthenticated, pid} = await getPlugAuthentication();
+  await initPlugPersistenceData(isAuthenticated, () => refetchAuthenticationState(dispatch));
   dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
 };
 
@@ -104,7 +111,8 @@ export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authe
   dispatch({type: 'fetchPending'});
   try {
     await plugConnect();
-    await verifyPlugAuthentication(dispatch);
+    await initPlugPersistenceData(true, () => refetchAuthenticationState(dispatch));
+    dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid: getPlugPrincipalId()}});
   } catch (e) {
     dispatch({type: 'logOutAction'});
   }

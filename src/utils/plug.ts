@@ -26,9 +26,7 @@ const getPlugInstance = () => {
   throw new Error('Plug not found.');
 };
 
-const initPlugAuthentication = async (isAuthenticated: boolean, onConnectionUpdate?: () => Promise<void>) => {
-  const pid = getPlugInstance().sessionManager.sessionData?.principalId;
-
+export const initPlugPersistenceData = async (isAuthenticated: boolean, onConnectionUpdate?: () => Promise<void>) => {
   // Set actor
   getPlugInstance().coverActor = isAuthenticated
     ? await getPlugInstance().createActor({
@@ -39,8 +37,6 @@ const initPlugAuthentication = async (isAuthenticated: boolean, onConnectionUpda
 
   // Set onConnectionUpdate handler
   getPlugInstance().sessionManager.onConnectionUpdate = onConnectionUpdate;
-
-  return {pid};
 };
 
 export const plugDisconnect = () => {
@@ -49,10 +45,11 @@ export const plugDisconnect = () => {
   getPlugInstance().disconnect();
 };
 
-export const getPlugAuthentication = async (onConnectionUpdate?: () => Promise<void>) => {
+export const getPlugPrincipalId = () => getPlugInstance().sessionManager.sessionData?.principalId;
+
+export const getPlugAuthentication = async () => {
   const isAuthenticated = await getPlugInstance().isConnected();
-  const {pid} = await initPlugAuthentication(isAuthenticated, onConnectionUpdate);
-  return {isAuthenticated, pid};
+  return {isAuthenticated, pid: getPlugPrincipalId()};
 };
 
 export const plugConnect = async () => {
