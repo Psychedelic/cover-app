@@ -143,6 +143,7 @@ export const fetchBuildConfigs = async (dispatch: Dispatch<ReducerAction<typeof 
       }
     });
   } catch (e) {
+    console.error(e);
     dispatch({type: 'fetchPending'});
   }
 };
@@ -162,6 +163,7 @@ export const fetchBuildConfigByCanisterId = async (
       }
     });
   } catch (e) {
+    console.error(e);
     dispatch({type: 'fetchPending'});
   }
 };
@@ -175,6 +177,7 @@ export const deleteBuildConfig = async (
     await getPlugCoverActor().deleteBuildConfig(canisterId);
     dispatch({type: 'deleteBuildConfig'});
   } catch (e) {
+    console.error(e);
     dispatch({type: 'fetchPending'});
   }
 };
