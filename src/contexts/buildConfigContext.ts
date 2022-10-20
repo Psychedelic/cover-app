@@ -183,10 +183,6 @@ const mapFullBuildConfig = async (data: CanisterBuildConfig[]): Promise<BuildCon
       lastBuildPromises: Promise<CanisterVerification | undefined>[];
     }
   );
-  (await Promise.all(aggregator.hashPromises)).forEach((hash, i) => {
-    aggregator.buildConfigs[i].wasmHash = hash || 'N/A';
-    aggregator.buildConfigs[i].isVerified = hash === aggregator.buildConfigs[i].lastBuildWasmHash;
-  });
   (await Promise.all(aggregator.lastBuildPromises)).forEach((verification, i) => {
     aggregator.buildConfigs[i].lastBuildWasmHash = verification?.wasm_hash[0];
     aggregator.buildConfigs[i].lastBuildUrl = verification?.build_url[0];
@@ -194,6 +190,10 @@ const mapFullBuildConfig = async (data: CanisterBuildConfig[]): Promise<BuildCon
     aggregator.buildConfigs[i].lastBuildRepoVisibility = verification && capitalize(verification.repo_visibility);
     aggregator.buildConfigs[i].lastBuildCanisterType =
       verification && verification.canister_type[0] && Object.keys(verification.canister_type[0])[0];
+  });
+  (await Promise.all(aggregator.hashPromises)).forEach((hash, i) => {
+    aggregator.buildConfigs[i].wasmHash = hash || 'N/A';
+    aggregator.buildConfigs[i].isVerified = hash === aggregator.buildConfigs[i].lastBuildWasmHash;
   });
   return aggregator.buildConfigs;
 };

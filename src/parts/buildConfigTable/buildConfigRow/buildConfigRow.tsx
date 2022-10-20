@@ -117,17 +117,17 @@ export const BuildConfigRow: FC<PropTypes> = ({
         <>
           <TableRow override>
             <BuildConfigDetail isTrim label={'Owner | Caller'} value={buildConfig.callerId} />
-            <BuildConfigDetail label={'Last Build Repo visibility'} value={buildConfig.lastBuildRepoVisibility} />
+            <BuildConfigDetail label={'Last build repo visibility'} value={buildConfig.lastBuildRepoVisibility} />
           </TableRow>
           <TableRow override>
             <BuildConfigDetail isTrim label={'Delegate canister'} value={buildConfig.delegateCanisterId} />
-            <BuildConfigDetail label={'Last Build Canister type'} value={buildConfig.lastBuildCanisterType} />
+            <BuildConfigDetail label={'Last build canister type'} value={buildConfig.lastBuildCanisterType} />
           </TableRow>
           <TableRow override>
             <BuildConfigDetail label={'Rust version'} value={buildConfig.rustVersion} />
             <BuildConfigDetail
               buildConfigStatus={buildConfigStatus}
-              label={'BuildConfig status'}
+              label={'Last build status'}
               statusTooltip={getStatusTooltipInfo(buildConfigStatus)}
               value={getStatusTooltip(buildConfigStatus)}
             />
