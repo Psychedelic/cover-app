@@ -113,8 +113,7 @@ export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authe
     await plugConnect();
     await initPlugPersistenceData(true, () => refetchAuthenticationState(dispatch));
     dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid: getPlugPrincipalId()}});
-  } catch (e) {
-    console.error(e);
+  } catch (_) {
     plugDisconnect();
     dispatch({type: 'logOutAction'});
   }

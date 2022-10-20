@@ -5,12 +5,12 @@ import {COVER_CANISTER_ID} from '@/constants';
 interface Plug {
   ic?: {
     plug?: {
-      coverActor?: CoverActor | null;
       isConnected: () => Promise<boolean>;
       disconnect: () => Promise<void>;
       requestConnect: (opts: {whitelist: string[]; host: string}) => Promise<void>;
       createActor: (opts: {canisterId: string; interfaceFactory: unknown}) => Promise<CoverActor>;
       sessionManager: {
+        coverActor?: CoverActor | null;
         onConnectionUpdate?: (() => Promise<void>) | null;
         sessionData?: {
           principalId: string;
@@ -28,7 +28,7 @@ const getPlugInstance = () => {
 
 export const initPlugPersistenceData = async (isAuthenticated: boolean, onConnectionUpdate?: () => Promise<void>) => {
   // Set actor
-  getPlugInstance().coverActor = isAuthenticated
+  getPlugInstance().sessionManager.coverActor = isAuthenticated
     ? await getPlugInstance().createActor({
         canisterId: COVER_CANISTER_ID,
         interfaceFactory: idlFactory
@@ -40,7 +40,7 @@ export const initPlugPersistenceData = async (isAuthenticated: boolean, onConnec
 };
 
 export const plugDisconnect = () => {
-  getPlugInstance().coverActor = null;
+  getPlugInstance().sessionManager.coverActor = null;
   getPlugInstance().sessionManager.onConnectionUpdate = null;
   getPlugInstance().disconnect();
 };
@@ -60,7 +60,7 @@ export const plugConnect = async () => {
 };
 
 export const getPlugCoverActor = (): CoverActor => {
-  const coverActor = getPlugInstance().coverActor;
+  const coverActor = getPlugInstance().sessionManager.coverActor;
   if (coverActor) {
     return coverActor;
   }
