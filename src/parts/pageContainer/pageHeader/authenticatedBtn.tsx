@@ -1,6 +1,6 @@
 import {FC} from 'react';
 
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import {faChevronDown, faLightbulb, faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Link} from 'react-router-dom';
 
@@ -26,10 +26,12 @@ export const AuthenticatedBtn: FC<PropTypes> = ({pid, onLogOut}) => (
     <Core.PopoverContent align={'end'} css={popoverContentStyle} side={'bottom'} sideOffset={10}>
       <Link to={MY_CANISTER_PATH}>
         <Core.Button css={submitItemStyle} disabled={isMyCanisterPage()} kind={'text'}>
+          <FontAwesomeIcon icon={faLightbulb} />
           {'My Canisters'}
         </Core.Button>
       </Link>
       <Core.Button css={submitItemStyle} kind={'text'} onClick={onLogOut}>
+        <FontAwesomeIcon icon={faRightFromBracket} />
         {'Log out'}
       </Core.Button>
     </Core.PopoverContent>

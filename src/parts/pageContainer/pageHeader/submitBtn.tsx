@@ -1,4 +1,4 @@
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import {faAtom, faChevronDown, faPencil} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Link} from 'react-router-dom';
 
@@ -19,11 +19,13 @@ export const SubmitBtn = () => (
     <Core.PopoverContent align={'end'} css={popoverContentStyle} side={'bottom'} sideOffset={10}>
       <Link to={STANDARD_SUBMIT_PATH}>
         <Core.Button css={submitItemStyle} disabled={isStandardSubmitPage()} kind={'text'}>
+          <FontAwesomeIcon icon={faPencil} />
           {'Standard Verification'}
         </Core.Button>
       </Link>
       <Link to={AUTOMATIC_SUBMIT_PATH}>
         <Core.Button css={submitItemStyle} disabled={isAutoSubmitPage()} kind={'text'}>
+          <FontAwesomeIcon icon={faAtom} />
           {'Automatic Verification'}
         </Core.Button>
       </Link>

@@ -12,6 +12,8 @@ export const popoverContentStyle = {
 };
 
 export const submitItemStyle = {
+  justifyContent: 'flex-start',
+  columnGap: '15px',
   cursor: 'pointer !important',
   padding: '10px 20px',
   margin: '0 !important',
