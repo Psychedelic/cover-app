@@ -8,9 +8,10 @@ interface Plug {
       coverActor?: CoverActor | null;
       isConnected: () => Promise<boolean>;
       disconnect: () => Promise<void>;
-      requestConnect: (opts: {whitelist: string[]; host: string; onConnectionUpdate: () => void}) => Promise<void>;
+      requestConnect: (opts: {whitelist: string[]; host: string}) => Promise<void>;
       createActor: (opts: {canisterId: string; interfaceFactory: unknown}) => Promise<CoverActor>;
-      sessionManager?: {
+      sessionManager: {
+        onConnectionUpdate?: (() => Promise<void>) | null;
         sessionData?: {
           principalId: string;
         };
@@ -25,33 +26,39 @@ const getPlugInstance = () => {
   throw new Error('Plug not found.');
 };
 
-const initPlugAuthentication = async (isAuthenticated: boolean) => {
-  const pid = getPlugInstance().sessionManager?.sessionData?.principalId;
+const initPlugAuthentication = async (isAuthenticated: boolean, onConnectionUpdate?: () => Promise<void>) => {
+  const pid = getPlugInstance().sessionManager.sessionData?.principalId;
+
+  // Set actor
   getPlugInstance().coverActor = isAuthenticated
     ? await getPlugInstance().createActor({
         canisterId: COVER_CANISTER_ID,
         interfaceFactory: idlFactory
       })
     : null;
+
+  // Set onConnectionUpdate handler
+  getPlugInstance().sessionManager.onConnectionUpdate = onConnectionUpdate;
+
   return {pid};
 };
 
-export const plugDisconnect = () => getPlugInstance().disconnect();
+export const plugDisconnect = () => {
+  getPlugInstance().coverActor = null;
+  getPlugInstance().sessionManager.onConnectionUpdate = null;
+  getPlugInstance().disconnect();
+};
 
-export const getPlugAuthentication = async () => {
+export const getPlugAuthentication = async (onConnectionUpdate?: () => Promise<void>) => {
   const isAuthenticated = await getPlugInstance().isConnected();
-  const {pid} = await initPlugAuthentication(isAuthenticated);
+  const {pid} = await initPlugAuthentication(isAuthenticated, onConnectionUpdate);
   return {isAuthenticated, pid};
 };
 
-export const plugConnect = async (onConnectionUpdate?: () => Promise<void>) => {
+export const plugConnect = async () => {
   await getPlugInstance().requestConnect({
     whitelist: [COVER_CANISTER_ID],
-    host: 'https://mainnet.dfinity.network',
-    onConnectionUpdate: async () => {
-      await initPlugAuthentication(true);
-      onConnectionUpdate && (await onConnectionUpdate());
-    }
+    host: 'https://mainnet.dfinity.network'
   });
 };
 

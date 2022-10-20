@@ -96,18 +96,15 @@ export const AuthenticationProvider = createProvider(context, authenticationRedu
  */
 export const verifyPlugAuthentication = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
   dispatch({type: 'fetchPending'});
-  const {isAuthenticated, pid} = await getPlugAuthentication();
+  const {isAuthenticated, pid} = await getPlugAuthentication(() => verifyPlugAuthentication(dispatch));
   dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
 };
 
 export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
   dispatch({type: 'fetchPending'});
-  const dispatcher = async () => {
-    await verifyPlugAuthentication(dispatch);
-  };
   try {
-    await plugConnect(dispatcher);
-    await dispatcher();
+    await plugConnect();
+    await verifyPlugAuthentication(dispatch);
   } catch (e) {
     dispatch({type: 'logOutAction'});
   }

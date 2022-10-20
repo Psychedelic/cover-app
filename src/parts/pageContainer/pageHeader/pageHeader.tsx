@@ -90,7 +90,9 @@ export const PageHeader: FC = () => {
       <StitchesPageSecondaryHeader>
         <SubmitBtn />
         {isPending ? (
-          <Core.Button kind={'text'} disabled>{'Loading...'}</Core.Button>
+          <Core.Button disabled kind={'text'}>
+            {'Loading...'}
+          </Core.Button>
         ) : isAuthenticated ? (
           <AuthenticatedBtn onLogOut={onLogOut} pid={pid as string} />
         ) : (
