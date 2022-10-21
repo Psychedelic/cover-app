@@ -1,7 +1,6 @@
 import {ComponentProps, FC, ReactElement, useCallback} from 'react';
 
 import {faCaretSquareDown, faCaretSquareRight} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 
 import {Core} from '@/components';
@@ -60,7 +59,7 @@ export const TableRow: FC<PropTypes> = ({
         showCollapseBtn && (
           <td>
             <Core.Button disabled={disableCollapseBtn} kind={'text'} onClick={onClick}>
-              <FontAwesomeIcon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
+              <Core.Icon icon={isSelected ? faCaretSquareDown : faCaretSquareRight} size={'lg'} />
             </Core.Button>
           </td>
         )

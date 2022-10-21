@@ -12,7 +12,6 @@ import {
 } from 'react';
 
 import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 
 import {Core} from '@/components';
@@ -104,7 +103,7 @@ export const Pagination = forwardRef<PaginationHandler, PropTypes>(
     return (
       <StitchesPagination css={css}>
         <Core.Button disabled={disablePaginated || isFirstPage} kind={'outline'} onClick={onBtnClick} ref={leftBtnRef}>
-          <FontAwesomeIcon icon={faChevronLeft} />
+          <Core.Icon icon={faChevronLeft} />
         </Core.Button>
         <Core.Input
           defaultValue={defaultPage}
@@ -114,7 +113,7 @@ export const Pagination = forwardRef<PaginationHandler, PropTypes>(
           ref={inputRef}
         />
         <Core.Button disabled={disablePaginated || isLastPage} kind={'outline'} onClick={onBtnClick} ref={rightBtnRef}>
-          <FontAwesomeIcon icon={faChevronRight} />
+          <Core.Icon icon={faChevronRight} />
         </Core.Button>
       </StitchesPagination>
     );

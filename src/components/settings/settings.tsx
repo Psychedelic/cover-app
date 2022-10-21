@@ -1,7 +1,6 @@
 import {FC, useCallback, useEffect, useRef} from 'react';
 
 import {faClock, faGear, faRotate} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core, FormInput, FormInputHandler} from '@/components';
 import {loadCoverSettings, setCoverSettings, useCoverSettingsContext} from '@/contexts';
@@ -47,13 +46,13 @@ export const Settings: FC = () => {
     <Core.Popover>
       <Core.PopoverTrigger asChild>
         <Core.Button kind={'outline'}>
-          <FontAwesomeIcon icon={faGear} />
+          <Core.Icon icon={faGear} />
         </Core.Button>
       </Core.PopoverTrigger>
       <Core.PopoverContent sideOffset={10}>
         <StitchesSettingsRow>
           <StitchesSettingsLeft>
-            <FontAwesomeIcon icon={faRotate} />
+            <Core.Icon icon={faRotate} />
             {' Auto Refresh'}
           </StitchesSettingsLeft>
           <StitchesSettingsRight>
@@ -62,7 +61,7 @@ export const Settings: FC = () => {
         </StitchesSettingsRow>
         <StitchesSettingsRow css={coverSettings.isAutoRefresh ? {} : rowDisableStyle}>
           <StitchesSettingsLeft>
-            <FontAwesomeIcon icon={faClock} />
+            <Core.Icon icon={faClock} />
             {' Refresh Interval'}
           </StitchesSettingsLeft>
           <StitchesSettingsRight>

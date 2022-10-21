@@ -2,9 +2,9 @@ import {ComponentProps, FC, ReactEventHandler, useCallback, useRef, useState} fr
 
 import {faCopy} from '@fortawesome/free-regular-svg-icons';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CSS} from '@stitches/react';
 
+import {Core} from '@/components';
 import {trim} from '@/utils';
 
 import {StitchesCopyableText} from './copyableText.styled';
@@ -45,7 +45,7 @@ export const CopyableText: FC<PropTypes> = ({children, css, color, rawText}) => 
       onMouseLeave={onMouseLeave}>
       {rawText ? children : trim(children)}
       {(isClicked || isHovered) && ' '}
-      {isClicked ? <FontAwesomeIcon icon={faCheck} /> : isHovered && <FontAwesomeIcon icon={faCopy} />}
+      {isClicked ? <Core.Icon icon={faCheck} /> : isHovered && <Core.Icon icon={faCopy} />}
     </StitchesCopyableText>
   );
 };
