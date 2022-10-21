@@ -1,3 +1,5 @@
+import {memo} from 'react';
+
 import {faDiscord, faGithub, faTwitter} from '@fortawesome/free-brands-svg-icons';
 import {faBook, faNewspaper} from '@fortawesome/free-solid-svg-icons';
 
@@ -5,7 +7,7 @@ import {Core} from '@/components';
 
 import {menuStyle, StitchesMenuIcon, StitchesMenuItem, StitchesMenuText} from './menuItem.styled';
 
-export const MenuItems = () => (
+export const MenuItems = memo(() => (
   <Core.Popover>
     <Core.PopoverTrigger asChild>
       <Core.Button css={menuStyle} kind={'outline'}>
@@ -65,4 +67,4 @@ export const MenuItems = () => (
       </StitchesMenuItem>
     </Core.PopoverContent>
   </Core.Popover>
-);
+));

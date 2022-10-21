@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useRef} from 'react';
+import {FC, useCallback, useEffect, useMemo, useRef} from 'react';
 
 import {Link, useNavigate} from 'react-router-dom';
 
@@ -71,41 +71,58 @@ export const PageHeader: FC = () => {
   return (
     <StitchesPageHeaderContainer>
       <StitchesPageMainHeader>
-        <Link to={DASHBOARD_PATH}>
-          <img alt={'logo'} src={logo} />
-        </Link>
-        <SearchBar
-          defaultValue={canisterIdParam}
-          disabled={
-            isFetching ||
-            !(isDashboardPage() || isCanisterDetailPage() || isMyCanisterPage() || isMyCanisterDetailPage())
-          }
-          onBlurOrEnter={onBlur}
-          ref={searchBarRef}
-          validation={isPrincipal}
-        />
+        {useMemo(
+          () => (
+            <>
+              <Link to={DASHBOARD_PATH}>
+                <img alt={'logo'} src={logo} />
+              </Link>
+              <SearchBar
+                defaultValue={canisterIdParam}
+                disabled={
+                  isFetching ||
+                  !(isDashboardPage() || isCanisterDetailPage() || isMyCanisterPage() || isMyCanisterDetailPage())
+                }
+                onBlurOrEnter={onBlur}
+                ref={searchBarRef}
+                validation={isPrincipal}
+              />
+            </>
+          ),
+          [canisterIdParam, isFetching, onBlur]
+        )}
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
-        <SubmitBtn />
-        {isPending ? (
-          <Core.Button disabled kind={'text'}>
-            {'Loading...'}
-          </Core.Button>
-        ) : isAuthenticated ? (
-          <AuthenticatedBtn onLogOut={onLogOut} pid={pid as string} />
-        ) : (
-          <Core.Button onClick={onAuthenticate}>{'Connect to Plug'}</Core.Button>
+        {useMemo(
+          () => (
+            <>
+              <SubmitBtn />
+              {isPending ? (
+                <Core.Button disabled kind={'text'}>
+                  {'Loading...'}
+                </Core.Button>
+              ) : isAuthenticated ? (
+                <AuthenticatedBtn onLogOut={onLogOut} pid={pid as string} />
+              ) : (
+                <Core.Button onClick={onAuthenticate}>{'Connect to Plug'}</Core.Button>
+              )}
+              <Settings />
+              <MenuItems />
+              <Core.Button css={feedbackBtnCss} kind={'text'}>
+                <a
+                  href={
+                    'https://docs.google.com/forms/' +
+                    'd/e/1FAIpQLSfPhVkcatRQWZr3hPyv3Hv8lkrqeYPtEFB-20bMPOKoiYl5ow/viewform'
+                  }
+                  rel={'noreferrer'}
+                  target={'_blank'}>
+                  {'Send Feedback'}
+                </a>
+              </Core.Button>
+            </>
+          ),
+          [isAuthenticated, isPending, onAuthenticate, onLogOut, pid]
         )}
-        <Settings />
-        <MenuItems />
-        <Core.Button css={feedbackBtnCss} kind={'text'}>
-          <a
-            href={'https://docs.google.com/forms/d/e/1FAIpQLSfPhVkcatRQWZr3hPyv3Hv8lkrqeYPtEFB-20bMPOKoiYl5ow/viewform'}
-            rel={'noreferrer'}
-            target={'_blank'}>
-            {'Send Feedback'}
-          </a>
-        </Core.Button>
       </StitchesPageSecondaryHeader>
     </StitchesPageHeaderContainer>
   );
