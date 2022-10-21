@@ -1,4 +1,4 @@
-import {createRef, FC, FormEvent, RefObject, useCallback} from 'react';
+import {FC, FormEvent, useCallback, useRef} from 'react';
 
 import {Link} from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import {isNotEmpty, isPrincipal, isValidHexFormat, isValidRepoFormat} from '@/ut
 import {StitchesGeneralInfoStep} from './generalInfoStep.styled';
 
 interface PropTypes {
-  defaultValue: GeneralInfo | null;
+  defaultValue: GeneralInfo | undefined;
   onCompleted: (input: GeneralInfo) => void;
 }
 
@@ -23,32 +23,26 @@ export interface GeneralInfo {
   repoAccessToken: string;
 }
 
-interface InputRefs {
-  callerId: RefObject<FormInputHandler>;
-  delegateCanisterId: RefObject<FormInputHandler>;
-  canisterId: RefObject<FormInputHandler>;
-  canisterName: RefObject<FormInputHandler>;
-  repoUrl: RefObject<FormInputHandler>;
-  commitHash: RefObject<FormInputHandler>;
-  repoAccessToken: RefObject<FormInputHandler>;
-}
-
-const useInputRefs = (): InputRefs => ({
-  callerId: createRef<FormInputHandler>(),
-  delegateCanisterId: createRef<FormInputHandler>(),
-  canisterId: createRef<FormInputHandler>(),
-  canisterName: createRef<FormInputHandler>(),
-  repoUrl: createRef<FormInputHandler>(),
-  commitHash: createRef<FormInputHandler>(),
-  repoAccessToken: createRef<FormInputHandler>()
-});
-
 export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
-  const inputRefs = useInputRefs();
+  const callerIdRef = useRef<FormInputHandler>(null),
+    delegateCanisterIdRef = useRef<FormInputHandler>(null),
+    canisterIdRef = useRef<FormInputHandler>(null),
+    canisterNameRef = useRef<FormInputHandler>(null),
+    repoUrlRef = useRef<FormInputHandler>(null),
+    commitHashRef = useRef<FormInputHandler>(null),
+    repoAccessTokenRef = useRef<FormInputHandler>(null);
   const onSubmit = useCallback(
     (event?: FormEvent) => {
       event?.preventDefault();
-      const hasError = Object.values(inputRefs).reduce((result, ref) => {
+      const hasError = [
+        callerIdRef,
+        delegateCanisterIdRef,
+        canisterIdRef,
+        canisterNameRef,
+        repoUrlRef,
+        commitHashRef,
+        repoAccessTokenRef
+      ].reduce((result, ref) => {
         if (ref.current) {
           return ref.current.hasError() || result;
         }
@@ -56,16 +50,16 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
       }, false);
       if (hasError) return;
       onCompleted({
-        callerId: inputRefs.callerId.current?.value() || '',
-        delegateCanisterId: inputRefs.delegateCanisterId.current?.value() || '',
-        canisterId: inputRefs.canisterId.current?.value() || '',
-        canisterName: inputRefs.canisterName.current?.value() || '',
-        repoUrl: inputRefs.repoUrl.current?.value() || '',
-        commitHash: inputRefs.commitHash.current?.value() || '',
-        repoAccessToken: inputRefs.repoAccessToken.current?.value() || ''
+        callerId: callerIdRef.current?.value() || '',
+        delegateCanisterId: delegateCanisterIdRef.current?.value() || '',
+        canisterId: canisterIdRef.current?.value() || '',
+        canisterName: canisterNameRef.current?.value() || '',
+        repoUrl: repoUrlRef.current?.value() || '',
+        commitHash: commitHashRef.current?.value() || '',
+        repoAccessToken: repoAccessTokenRef.current?.value() || ''
       });
     },
-    [onCompleted, inputRefs]
+    [onCompleted]
   );
   return (
     <StitchesGeneralInfoStep>
@@ -78,7 +72,7 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
           errorMessage={'Invalid principal format.'}
           infoTooltip={'The owner (controller) principal ID associated with the canister'}
           label={'Owner Principal ID'}
-          ref={inputRefs.callerId}
+          ref={callerIdRef}
           required
           validations={[isPrincipal]}
         />
@@ -89,7 +83,7 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
 useful when the controller is the cycle wallet or proxy canister.
 Leave it empty if you don't use it.`}
           label={'Delegate Canister ID'}
-          ref={inputRefs.delegateCanisterId}
+          ref={delegateCanisterIdRef}
           validations={[isPrincipal]}
         />
         <FormInput
@@ -97,7 +91,7 @@ Leave it empty if you don't use it.`}
           errorMessage={'Invalid principal format.'}
           infoTooltip={'The canister ID associated with this verification'}
           label={'Canister ID'}
-          ref={inputRefs.canisterId}
+          ref={canisterIdRef}
           required
           validations={[isPrincipal]}
         />
@@ -106,7 +100,7 @@ Leave it empty if you don't use it.`}
           errorMessage={'Required.'}
           infoTooltip={'The canister name defined in your dfx.json and canister_ids.json'}
           label={'Canister Name'}
-          ref={inputRefs.canisterName}
+          ref={canisterNameRef}
           required
           validations={[isNotEmpty]}
         />
@@ -115,7 +109,7 @@ Leave it empty if you don't use it.`}
           errorMessage={'Invalid repo url format. Example: psychedelic/cover'}
           infoTooltip={'The git repository of the canister in format {server}/{repo}'}
           label={'Repo URL'}
-          ref={inputRefs.repoUrl}
+          ref={repoUrlRef}
           required
           validations={[isValidRepoFormat]}
         />
@@ -124,7 +118,7 @@ Leave it empty if you don't use it.`}
           errorMessage={'Invalid hex format. Example: f01f'}
           infoTooltip={'The git commit hash associated with the git repository in hex format'}
           label={'Commit Hash'}
-          ref={inputRefs.commitHash}
+          ref={commitHashRef}
           required
           validations={[isValidHexFormat]}
         />
@@ -134,7 +128,7 @@ Leave it empty if you don't use it.`}
             'Personal Access Token of a github account that has READ permission. Leave it empty if your repo is public'
           }
           label={'Repo Access Token'}
-          ref={inputRefs.repoAccessToken}
+          ref={repoAccessTokenRef}
         />
         <div className={'formButtonGroup'}>
           <Link to={DASHBOARD_PATH}>

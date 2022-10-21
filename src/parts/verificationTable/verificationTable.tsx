@@ -1,4 +1,4 @@
-import {createRef, FC, useCallback, useEffect, useState} from 'react';
+import {FC, useCallback, useEffect, useRef, useState} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
@@ -37,11 +37,11 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
   const {canisterId: canisterIdParam} = useParams(),
     [canisterIdSelected, setCanisterIdSelected] = useState(''),
     navigate = useNavigate(),
-    paginationRef = createRef<PaginationHandler>(),
+    paginationRef = useRef<PaginationHandler>(null),
     resetPage = useCallback(() => {
       fetchVerifications(dispatch);
       paginationRef.current?.forceReset();
-    }, [paginationRef, dispatch]),
+    }, [dispatch]),
     onPageChanged = useCallback(
       (pageNum: number) => {
         fetchVerifications(dispatch, pageNum);
@@ -60,7 +60,15 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
     isDetailPage
       ? fetchVerificationByCanisterId(dispatch, Principal.fromText(canisterIdParam))
       : fetchVerifications(dispatch);
-    return autoRefresh(coverSettings, () => fetchVerifications(dispatch), !isDetailPage);
+    paginationRef.current?.forceReset();
+    return autoRefresh(
+      coverSettings,
+      () => {
+        fetchVerifications(dispatch);
+        paginationRef.current?.forceReset();
+      },
+      !isDetailPage
+    );
   }, [dispatch, coverSettings, canisterIdParam, isDetailPage, isCanisterNotFound, navigate]);
 
   return (

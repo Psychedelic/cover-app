@@ -93,7 +93,8 @@
     "promise/catch-or-return": ["error", {"allowFinally": true}],
     "no-console": ["error", {"allow": ["error"]}],
     "init-declarations": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "max-params": ["error", 5]
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},

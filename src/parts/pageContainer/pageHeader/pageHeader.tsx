@@ -1,4 +1,4 @@
-import {createRef, FC, useCallback, useEffect, useRef} from 'react';
+import {FC, useCallback, useEffect, useRef} from 'react';
 
 import {Link, useNavigate} from 'react-router-dom';
 
@@ -28,9 +28,8 @@ export const PageHeader: FC = () => {
   const lastParam = getCurrentPath().split('/').pop() || '';
   const canisterIdParam = isPrincipal(lastParam) ? lastParam : '';
   const lastSearchCanisterId = useRef(canisterIdParam);
-  const searchBarRef = createRef<SearchBarHandler>();
+  const searchBarRef = useRef<SearchBarHandler>(null);
   const navigate = useNavigate();
-
   const {
       state: {isFetching}
     } = useVerificationContext(),
@@ -38,7 +37,6 @@ export const PageHeader: FC = () => {
       state: {isPending, isAuthenticated, pid},
       dispatch
     } = useAuthenticationContext();
-
   const onBlur = useCallback(
       (value: string) => {
         // Only difference value each time is called can be dispatched
@@ -68,7 +66,7 @@ export const PageHeader: FC = () => {
       searchBarRef.current?.clearInput();
       lastSearchCanisterId.current = '';
     }
-  }, [searchBarRef, canisterIdParam]);
+  }, [canisterIdParam]);
 
   return (
     <StitchesPageHeaderContainer>

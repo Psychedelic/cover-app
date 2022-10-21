@@ -1,4 +1,4 @@
-import {createRef, FC, useCallback, useEffect} from 'react';
+import {FC, useCallback, useEffect, useRef} from 'react';
 
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -30,11 +30,6 @@ export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITI
     state: {coverSettings}
   } = useCoverSettingsContext();
 
-  useEffect(() => {
-    fetchActivities(dispatch);
-    return autoRefresh(coverSettings, () => fetchActivities(dispatch));
-  }, [dispatch, coverSettings]);
-
   const onPageChange = useCallback(
     (pageNum: number) => {
       fetchActivities(dispatch, pageNum);
@@ -42,12 +37,21 @@ export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITI
     [dispatch]
   );
 
-  const paginationRef = createRef<PaginationHandler>();
+  const paginationRef = useRef<PaginationHandler>(null);
 
   const resetPage = useCallback(() => {
     fetchActivities(dispatch);
     paginationRef.current?.forceReset();
-  }, [paginationRef, dispatch]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchActivities(dispatch);
+    paginationRef.current?.forceReset();
+    return autoRefresh(coverSettings, () => {
+      fetchActivities(dispatch);
+      paginationRef.current?.forceReset();
+    });
+  }, [dispatch, coverSettings]);
 
   return (
     <TableContainer

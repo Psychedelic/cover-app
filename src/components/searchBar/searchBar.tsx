@@ -1,12 +1,4 @@
-import {
-  createRef,
-  forwardRef,
-  KeyboardEvent,
-  ReactEventHandler,
-  useCallback,
-  useImperativeHandle,
-  useState
-} from 'react';
+import {forwardRef, KeyboardEvent, ReactEventHandler, useCallback, useImperativeHandle, useRef, useState} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -31,7 +23,8 @@ export const SearchBar = forwardRef<SearchBarHandler, PropTypes>(
     const [hasValue, setHasValue] = useState(Boolean(defaultValue)),
       [hasError, setHasError] = useState(false);
 
-    const searchBarRef = createRef<HTMLInputElement>();
+    const searchBarRef = useRef<HTMLInputElement>(null);
+
     const search = useCallback(() => {
       if (onBlurOrEnter && searchBarRef.current && validation) {
         const value = (searchBarRef.current as HTMLInputElement).value;
@@ -40,18 +33,15 @@ export const SearchBar = forwardRef<SearchBarHandler, PropTypes>(
         // Only trigger `onBlurOrEnter` when `validation` is passed
         !hasErr && onBlurOrEnter(value);
       }
-    }, [onBlurOrEnter, validation, searchBarRef]);
+    }, [onBlurOrEnter, validation]);
 
-    const onInput = useCallback<ReactEventHandler>(
-      _ => {
-        if (searchBarRef.current) {
-          const value = (searchBarRef.current as HTMLInputElement).value;
-          setHasValue(value !== '');
-          setHasError(false);
-        }
-      },
-      [searchBarRef]
-    );
+    const onInput = useCallback<ReactEventHandler>(_ => {
+      if (searchBarRef.current) {
+        const value = (searchBarRef.current as HTMLInputElement).value;
+        setHasValue(value !== '');
+        setHasError(false);
+      }
+    }, []);
 
     const onClick = useCallback(() => {
       if (searchBarRef.current) {
@@ -61,7 +51,7 @@ export const SearchBar = forwardRef<SearchBarHandler, PropTypes>(
         setHasValue(false);
         setHasError(false);
       }
-    }, [searchBarRef]);
+    }, []);
 
     const onBlur = useCallback(search, [search]);
 
@@ -85,7 +75,7 @@ export const SearchBar = forwardRef<SearchBarHandler, PropTypes>(
           setHasError(false);
         }
       }),
-      [searchBarRef]
+      []
     );
 
     return (

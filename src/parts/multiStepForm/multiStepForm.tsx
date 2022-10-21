@@ -1,4 +1,4 @@
-import {createRef, FC, Fragment, MutableRefObject, RefObject, useCallback, useRef, useState} from 'react';
+import {FC, Fragment, MutableRefObject, useCallback, useRef, useState} from 'react';
 
 import {ErrorResponse} from '@psychedelic/cover';
 import {useNavigate} from 'react-router-dom';
@@ -17,109 +17,83 @@ import {anonymousBuild} from '@/utils';
 import {BuildInfo, BuildInfoStep} from './buildInfoStep';
 import {GeneralInfo, GeneralInfoStep} from './generalInfoStep';
 
-interface InfoRefs {
-  generalInfo: MutableRefObject<GeneralInfo | null>;
-  buildInfo: MutableRefObject<BuildInfo | null>;
-}
-
-const useInfoRefs = (): InfoRefs => ({
-  generalInfo: useRef<GeneralInfo>(null),
-  buildInfo: useRef<BuildInfo>(null)
-});
-
-interface DialogRefs {
-  infoDialog: RefObject<InfoDialogHandler>;
-  errDialog: RefObject<ErrorDialogHandler>;
-  successDialog: RefObject<SuccessDialogHandler>;
-}
-
-const useDialogRefs = (): DialogRefs => ({
-  errDialog: createRef<ErrorDialogHandler>(),
-  infoDialog: createRef<InfoDialogHandler>(),
-  successDialog: createRef<SuccessDialogHandler>()
-});
-
 export const MultiStepForm: FC = () => {
   const [steps, setSteps] = useState({generalInfoStep: true, buildInfoStep: false});
-  const infoRefs = useInfoRefs();
-  const dialogRefs = useDialogRefs();
+  const generalInfoRef = useRef<GeneralInfo>(),
+    buildInfoRef = useRef<BuildInfo>();
+  const errDialogRef = useRef<ErrorDialogHandler>(null),
+    infoDialogRef = useRef<InfoDialogHandler>(null),
+    successDialogRef = useRef<SuccessDialogHandler>(null);
   const navigate = useNavigate();
   const goToDashboard = useCallback(() => navigate(DASHBOARD_PATH), [navigate]);
-  const onGoBack = useCallback(
-    (buildInfo: BuildInfo) => {
-      infoRefs.buildInfo.current = buildInfo;
-      setSteps({generalInfoStep: true, buildInfoStep: false});
-    },
-    [infoRefs.buildInfo]
-  );
-  const onCompletedGeneralInfoStep = useCallback(
-    (generalInfo: GeneralInfo) => {
-      infoRefs.generalInfo.current = generalInfo;
-      setSteps({generalInfoStep: false, buildInfoStep: true});
-    },
-    [infoRefs.generalInfo]
-  );
-  const onCompletedBuildInfoStep = useCallback(
-    (buildInfo: BuildInfo) => {
-      infoRefs.buildInfo.current = buildInfo;
-      handleSubmit(infoRefs, dialogRefs);
-    },
-    [infoRefs, dialogRefs]
-  );
+  const onGoBack = useCallback((buildInfo: BuildInfo) => {
+    buildInfoRef.current = buildInfo;
+    setSteps({generalInfoStep: true, buildInfoStep: false});
+  }, []);
+  const onCompletedGeneralInfoStep = useCallback((generalInfo: GeneralInfo) => {
+    generalInfoRef.current = generalInfo;
+    setSteps({generalInfoStep: false, buildInfoStep: true});
+  }, []);
+  const onCompletedBuildInfoStep = useCallback((buildInfo: BuildInfo) => {
+    buildInfoRef.current = buildInfo;
+    handleSubmit(generalInfoRef, buildInfoRef, infoDialogRef, errDialogRef, successDialogRef);
+  }, []);
   const onSubmit = useCallback(() => {
-    handleSubmit(infoRefs, dialogRefs);
-  }, [infoRefs, dialogRefs]);
+    handleSubmit(generalInfoRef, buildInfoRef, infoDialogRef, errDialogRef, successDialogRef);
+  }, []);
   return (
     <>
       {steps.generalInfoStep ? (
-        <GeneralInfoStep defaultValue={infoRefs.generalInfo.current} onCompleted={onCompletedGeneralInfoStep} />
+        <GeneralInfoStep defaultValue={generalInfoRef.current} onCompleted={onCompletedGeneralInfoStep} />
       ) : (
-        <BuildInfoStep
-          defaultValue={infoRefs.buildInfo.current}
-          onCompleted={onCompletedBuildInfoStep}
-          onGoBack={onGoBack}
-        />
+        <BuildInfoStep defaultValue={buildInfoRef.current} onCompleted={onCompletedBuildInfoStep} onGoBack={onGoBack} />
       )}
-      <SuccessDialog actionContent={'Go back to Dashboard'} onAction={goToDashboard} ref={dialogRefs.successDialog} />
-      <InfoDialog ref={dialogRefs.infoDialog} />
+      <SuccessDialog actionContent={'Go back to Dashboard'} onAction={goToDashboard} ref={successDialogRef} />
+      <InfoDialog ref={infoDialogRef} />
       <ErrorDialog
         actionContent={'Retry Verification'}
         cancelContent={'Close'}
         onAction={onSubmit}
-        ref={dialogRefs.errDialog}
+        ref={errDialogRef}
       />
     </>
   );
 };
 
-const handleSubmit = (infoRefs: InfoRefs, {infoDialog, errDialog, successDialog}: DialogRefs) => {
-  infoDialog.current?.open({
+const handleSubmit = (
+  generalInfoRef: MutableRefObject<GeneralInfo | undefined>,
+  buildInfoRef: MutableRefObject<BuildInfo | undefined>,
+  infoDialogRef: MutableRefObject<InfoDialogHandler | null>,
+  errDialogRef: MutableRefObject<ErrorDialogHandler | null>,
+  successDialogRef: MutableRefObject<SuccessDialogHandler | null>
+) => {
+  infoDialogRef.current?.open({
     title: 'Submission Processing',
     description: 'Your submission is processing, please allow some time for the verification to finish.'
   });
   anonymousBuild({
-    callerId: infoRefs.generalInfo.current?.callerId as string,
-    delegateCanisterId: infoRefs.generalInfo.current?.delegateCanisterId as string,
-    canisterId: infoRefs.generalInfo.current?.canisterId as string,
-    canisterName: infoRefs.generalInfo.current?.canisterName as string,
-    repoUrl: infoRefs.generalInfo.current?.repoUrl as string,
-    commitHash: infoRefs.generalInfo.current?.commitHash as string,
-    repoAccessToken: infoRefs.generalInfo.current?.repoAccessToken as string,
-    rustVersion: infoRefs.buildInfo.current?.rustVersion as string,
-    dfxVersion: infoRefs.buildInfo.current?.dfxVersion as string,
-    optimizeCount: parseInt(infoRefs.buildInfo.current?.optimizeCount as string, 10),
-    timestamp: parseInt(infoRefs.buildInfo.current?.timestamp as string, 10),
-    signature: infoRefs.buildInfo.current?.signature as string,
-    publicKey: infoRefs.buildInfo.current?.publicKey as string
+    callerId: generalInfoRef.current?.callerId as string,
+    delegateCanisterId: generalInfoRef.current?.delegateCanisterId as string,
+    canisterId: generalInfoRef.current?.canisterId as string,
+    canisterName: generalInfoRef.current?.canisterName as string,
+    repoUrl: generalInfoRef.current?.repoUrl as string,
+    commitHash: generalInfoRef.current?.commitHash as string,
+    repoAccessToken: generalInfoRef.current?.repoAccessToken as string,
+    rustVersion: buildInfoRef.current?.rustVersion as string,
+    dfxVersion: buildInfoRef.current?.dfxVersion as string,
+    optimizeCount: parseInt(buildInfoRef.current?.optimizeCount as string, 10),
+    timestamp: parseInt(buildInfoRef.current?.timestamp as string, 10),
+    signature: buildInfoRef.current?.signature as string,
+    publicKey: buildInfoRef.current?.publicKey as string
   })
     .then(() =>
-      successDialog.current?.open({
+      successDialogRef.current?.open({
         description: 'Congrats!!! You have submitted verification successfully.',
         showActionBtn: true
       })
     )
-    .catch((e: ErrorResponse) => errorHandler(e, errDialog.current as ErrorDialogHandler))
-    .finally(() => infoDialog.current?.close());
+    .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
+    .finally(() => infoDialogRef.current?.close());
 };
 
 const mapBadInputToDescriptionList = (e: ErrorResponse) => ({

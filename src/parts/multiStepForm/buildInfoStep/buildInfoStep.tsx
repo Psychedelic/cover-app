@@ -1,4 +1,4 @@
-import {createRef, FC, FormEvent, RefObject, useCallback} from 'react';
+import {FC, FormEvent, useCallback, useRef} from 'react';
 
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -11,7 +11,7 @@ import {isFrom1To10, isValidHexFormat, isValidTimestamp, isValidVersionFormat} f
 import {StitchesBuildInfoStep} from './buildInfoStep.styled';
 
 interface PropTypes {
-  defaultValue: BuildInfo | null;
+  defaultValue: BuildInfo | undefined;
   onCompleted: (input: BuildInfo) => void;
   onGoBack: (input: BuildInfo) => void;
 }
@@ -25,52 +25,51 @@ export interface BuildInfo {
   publicKey: string;
 }
 
-interface InputRefs {
-  rustVersion: RefObject<FormInputHandler>;
-  dfxVersion: RefObject<FormInputHandler>;
-  optimizeCount: RefObject<FormInputHandler>;
-  timestamp: RefObject<FormInputHandler>;
-  signature: RefObject<FormInputHandler>;
-  publicKey: RefObject<FormInputHandler>;
-}
-
-const useInputRefs = (): InputRefs => ({
-  rustVersion: createRef<FormInputHandler>(),
-  dfxVersion: createRef<FormInputHandler>(),
-  optimizeCount: createRef<FormInputHandler>(),
-  timestamp: createRef<FormInputHandler>(),
-  signature: createRef<FormInputHandler>(),
-  publicKey: createRef<FormInputHandler>()
-});
-
-const getData = (inputRefs: InputRefs) => ({
-  rustVersion: inputRefs.rustVersion.current?.value() || '',
-  dfxVersion: inputRefs.dfxVersion.current?.value() || '',
-  optimizeCount: inputRefs.optimizeCount.current?.value() || '',
-  timestamp: inputRefs.timestamp.current?.value() || '',
-  signature: inputRefs.signature.current?.value() || '',
-  publicKey: inputRefs.publicKey.current?.value() || ''
-});
-
 export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBack}) => {
-  const inputRefs = useInputRefs();
+  const rustVersionRef = useRef<FormInputHandler>(null),
+    dfxVersionRef = useRef<FormInputHandler>(null),
+    optimizeCountRef = useRef<FormInputHandler>(null),
+    timestampRef = useRef<FormInputHandler>(null),
+    signatureRef = useRef<FormInputHandler>(null),
+    publicKeyRef = useRef<FormInputHandler>(null);
   const onSubmit = useCallback(
     (event?: FormEvent) => {
       event?.preventDefault();
-      const hasError = Object.values(inputRefs).reduce((result, ref) => {
+      const hasError = [
+        rustVersionRef,
+        dfxVersionRef,
+        optimizeCountRef,
+        timestampRef,
+        signatureRef,
+        publicKeyRef
+      ].reduce((result, ref) => {
         if (ref.current) {
           return ref.current.hasError() || result;
         }
         return result;
       }, false);
       if (hasError) return;
-      onCompleted(getData(inputRefs));
+      onCompleted({
+        rustVersion: rustVersionRef.current?.value() || '',
+        dfxVersion: dfxVersionRef.current?.value() || '',
+        optimizeCount: optimizeCountRef.current?.value() || '',
+        timestamp: timestampRef.current?.value() || '',
+        signature: signatureRef.current?.value() || '',
+        publicKey: publicKeyRef.current?.value() || ''
+      });
     },
-    [onCompleted, inputRefs]
+    [onCompleted]
   );
   const goBackHandler = useCallback(() => {
-    onGoBack(getData(inputRefs));
-  }, [inputRefs, onGoBack]);
+    onGoBack({
+      rustVersion: rustVersionRef.current?.value() || '',
+      dfxVersion: dfxVersionRef.current?.value() || '',
+      optimizeCount: optimizeCountRef.current?.value() || '',
+      timestamp: timestampRef.current?.value() || '',
+      signature: signatureRef.current?.value() || '',
+      publicKey: publicKeyRef.current?.value() || ''
+    });
+  }, [onGoBack]);
   return (
     <StitchesBuildInfoStep>
       <FormContainer autoComplete={'off'} onSubmit={onSubmit}>
@@ -85,7 +84,7 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
           errorMessage={'Invalid version format. Example 1.60.0'}
           infoTooltip={'Rust stable version to build the canister; skip this field if using Motoko'}
           label={'Rust Version'}
-          ref={inputRefs.rustVersion}
+          ref={rustVersionRef}
           validationIf={[value => parseInt(value, 10) > 0]}
           validations={[isValidVersionFormat]}
         />
@@ -94,7 +93,7 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
           errorMessage={'Invalid version format. Example 0.9.2'}
           infoTooltip={'Dfx version to deploy/build the canister'}
           label={'DFX Version'}
-          ref={inputRefs.dfxVersion}
+          ref={dfxVersionRef}
           required
           validations={[isValidVersionFormat]}
         />
@@ -106,7 +105,7 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
             'the wasm will not be significantly smaller anymore. If times > 0, you must specify the rust version'
           }
           label={'IC CDK Optimizer'}
-          ref={inputRefs.optimizeCount}
+          ref={optimizeCountRef}
           required
           validations={[isFrom1To10]}
         />
@@ -118,7 +117,7 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
             'and the signature will be expired after 5 minutes.'
           }
           label={'Timestamp'}
-          ref={inputRefs.timestamp}
+          ref={timestampRef}
           required
           validations={[isValidTimestamp]}
         />
@@ -127,7 +126,7 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
           errorMessage={'Invalid hex format. Example: f01f'}
           infoTooltip={'The signature is signed with the timestamp being the message'}
           label={'Signature'}
-          ref={inputRefs.signature}
+          ref={signatureRef}
           required
           rows={3}
           textarea
@@ -138,7 +137,7 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
           errorMessage={'Invalid hex format. Example: f01f'}
           infoTooltip={'The public key that associated with the owner principal ID'}
           label={'Public Key'}
-          ref={inputRefs.publicKey}
+          ref={publicKeyRef}
           required
           textarea
           validations={[isValidHexFormat]}
