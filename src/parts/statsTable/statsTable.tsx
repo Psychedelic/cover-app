@@ -4,7 +4,7 @@ import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
-import {DEFAULT_STATS, fetchStats, useCoverSettingsContext, useStatsContext} from '@/contexts';
+import {autoRefresh, DEFAULT_STATS, fetchStats, useCoverSettingsContext, useStatsContext} from '@/contexts';
 import {Stats} from '@/models';
 
 import {tableBodyStyle, tableContainerStyle} from './statsTable.styled';
@@ -42,16 +42,8 @@ export const StatsTable: FC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
 
   useEffect(() => {
     fetchStats(dispatch);
-    let timer: ReturnType<typeof setInterval> | null = null;
-    if (coverSettings.isAutoRefresh) {
-      timer = setInterval(() => {
-        fetchStats(dispatch);
-      }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
-    }
-    return () => {
-      timer && clearTimeout(timer);
-    };
-  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval]);
+    return autoRefresh(coverSettings, () => fetchStats(dispatch));
+  }, [dispatch, coverSettings]);
 
   return (
     <TableContainer css={tableContainerStyle}>

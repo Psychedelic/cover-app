@@ -8,6 +8,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
 import {NOT_FOUND_PATH} from '@/constants';
 import {
+  autoRefresh,
   DEFAULT_VERIFICATIONS,
   fetchVerificationByCanisterId,
   fetchVerifications,
@@ -54,31 +55,13 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
   useEffect(() => {
     if (!(isDashboardPage() || isDetailPage) || (isCanisterNotFound && isDetailPage)) {
       navigate(NOT_FOUND_PATH);
-      return () => {
-        // Do nothing.
-      };
+      return;
     }
     isDetailPage
       ? fetchVerificationByCanisterId(dispatch, Principal.fromText(canisterIdParam))
       : fetchVerifications(dispatch);
-    let timer: ReturnType<typeof setInterval> | null = null;
-    if (!isDetailPage && coverSettings.isAutoRefresh) {
-      timer = setInterval(() => {
-        fetchVerifications(dispatch);
-      }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
-    }
-    return () => {
-      timer && clearTimeout(timer);
-    };
-  }, [
-    dispatch,
-    coverSettings.isAutoRefresh,
-    coverSettings.refreshInterval,
-    canisterIdParam,
-    isDetailPage,
-    isCanisterNotFound,
-    navigate
-  ]);
+    return autoRefresh(coverSettings, () => fetchVerifications(dispatch), !isDetailPage);
+  }, [dispatch, coverSettings, canisterIdParam, isDetailPage, isCanisterNotFound, navigate]);
 
   return (
     <TableContainer

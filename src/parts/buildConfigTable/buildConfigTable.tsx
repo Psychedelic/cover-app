@@ -8,6 +8,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Core, TableContainer, TableContent, TableHeader} from '@/components';
 import {DASHBOARD_PATH, NOT_FOUND_PATH} from '@/constants';
 import {
+  autoRefresh,
   DEFAULT_BUILD_CONFIGS,
   deleteBuildConfig,
   fetchBuildConfigByCanisterId,
@@ -66,38 +67,23 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
 
   useEffect(() => {
     if (typeof isPending === 'undefined' || isPending) {
-      return () => {
-        // Do nothing.
-      };
+      return;
     }
     if (!isAuthenticated) {
       navigate(DASHBOARD_PATH);
-      return () => {
-        // Do nothing.
-      };
+      return;
     }
     if (!(isMyCanisterPage() || isDetailPage) || (isCanisterNotFound && isDetailPage)) {
       navigate(NOT_FOUND_PATH);
-      return () => {
-        // Do nothing.
-      };
+      return;
     }
     isDetailPage
       ? fetchBuildConfigByCanisterId(dispatch, Principal.fromText(canisterIdParam))
       : fetchBuildConfigs(dispatch);
-    let timer: ReturnType<typeof setInterval> | null = null;
-    if (!isDetailPage && coverSettings.isAutoRefresh) {
-      timer = setInterval(() => {
-        fetchBuildConfigs(dispatch);
-      }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
-    }
-    return () => {
-      timer && clearTimeout(timer);
-    };
+    return autoRefresh(coverSettings, () => fetchBuildConfigs(dispatch), !isDetailPage);
   }, [
     dispatch,
-    coverSettings.isAutoRefresh,
-    coverSettings.refreshInterval,
+    coverSettings,
     canisterIdParam,
     isDetailPage,
     isCanisterNotFound,

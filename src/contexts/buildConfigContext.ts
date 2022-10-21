@@ -78,6 +78,10 @@ export const DEFAULT_BUILD_CONFIGS = Array<BuildConfig>(ITEMS_PER_PAGE).fill({})
  * REDUCER
  * ========================================================================================================
  */
+const calculatePendingAfterAction = (state: State) => ({
+  pendingFetchCount: state.pendingFetchCount - 1,
+  isFetching: state.pendingFetchCount - 1 > 0
+});
 const buildConfigReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
@@ -88,8 +92,7 @@ const buildConfigReducer = (state: State, action: Action): State => {
       };
     }
     case 'fetchBuildConfigs': {
-      const pendingFetchCount = state.pendingFetchCount - 1;
-      const isFetching = pendingFetchCount > 0;
+      const {isFetching, pendingFetchCount} = calculatePendingAfterAction(state);
       return {
         buildConfigs: isFetching ? DEFAULT_BUILD_CONFIGS : action.payload.buildConfigs,
         isFetching,
@@ -97,8 +100,7 @@ const buildConfigReducer = (state: State, action: Action): State => {
       };
     }
     case 'fetchBuildConfigByCanisterId': {
-      const pendingFetchCount = state.pendingFetchCount - 1;
-      const isFetching = pendingFetchCount > 0;
+      const {isFetching, pendingFetchCount} = calculatePendingAfterAction(state);
       return {
         buildConfigs: isFetching ? DEFAULT_BUILD_CONFIGS : action.payload.buildConfigs,
         currentCanisterId: action.payload.currentCanisterId,
@@ -107,8 +109,7 @@ const buildConfigReducer = (state: State, action: Action): State => {
       };
     }
     case 'deleteBuildConfig': {
-      const pendingFetchCount = state.pendingFetchCount - 1;
-      const isFetching = pendingFetchCount > 0;
+      const {isFetching, pendingFetchCount} = calculatePendingAfterAction(state);
       return {
         isFetching,
         pendingFetchCount

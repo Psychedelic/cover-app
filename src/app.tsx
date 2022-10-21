@@ -2,8 +2,6 @@ import {FC, useEffect} from 'react';
 
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
-import {globalStyles} from '@/themes';
-
 import {MY_CANISTER_ROUTE, NOT_FOUND_ROUTE, SUBMIT_ROUTE} from './constants';
 import {useAuthenticationContext, verifyPlugAuthentication} from './contexts';
 import {Dashboard, MyCanister, NotFound, SubmitVerification} from './pages';
@@ -11,7 +9,6 @@ import {Dashboard, MyCanister, NotFound, SubmitVerification} from './pages';
 export const App: FC = () => {
   const {dispatch} = useAuthenticationContext();
   useEffect(() => {
-    globalStyles();
     verifyPlugAuthentication(dispatch);
   }, [dispatch]);
   return (

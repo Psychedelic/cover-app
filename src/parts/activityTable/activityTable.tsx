@@ -4,7 +4,13 @@ import {faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
-import {DEFAULT_ACTIVITIES, fetchActivities, useActivityContext, useCoverSettingsContext} from '@/contexts';
+import {
+  autoRefresh,
+  DEFAULT_ACTIVITIES,
+  fetchActivities,
+  useActivityContext,
+  useCoverSettingsContext
+} from '@/contexts';
 import {Activity} from '@/models';
 import {ActivityRow} from '@/parts';
 
@@ -26,16 +32,8 @@ export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITI
 
   useEffect(() => {
     fetchActivities(dispatch);
-    let timer: ReturnType<typeof setInterval> | null = null;
-    if (coverSettings.isAutoRefresh) {
-      timer = setInterval(() => {
-        fetchActivities(dispatch);
-      }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
-    }
-    return () => {
-      timer && clearTimeout(timer);
-    };
-  }, [dispatch, coverSettings.isAutoRefresh, coverSettings.refreshInterval]);
+    return autoRefresh(coverSettings, () => fetchActivities(dispatch));
+  }, [dispatch, coverSettings]);
 
   const onPageChange = useCallback(
     (pageNum: number) => {
