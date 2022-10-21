@@ -1,4 +1,4 @@
-import {ComponentProps, forwardRef} from 'react';
+import {ComponentProps, forwardRef, useMemo} from 'react';
 
 import {CSS} from '@stitches/react';
 
@@ -18,8 +18,17 @@ export const TableContainer = forwardRef<PaginationHandler, PropTypes>(
   ({css, children, paginated, onPageChanged, totalPage, disablePaginated}, ref) => (
     <StitchesTableContainer css={css}>
       <table>{children}</table>
-      {paginated && (
-        <Pagination disablePaginated={disablePaginated} onPageChanged={onPageChanged} ref={ref} totalPage={totalPage} />
+      {useMemo(
+        () =>
+          paginated && (
+            <Pagination
+              disablePaginated={disablePaginated}
+              onPageChanged={onPageChanged}
+              ref={ref}
+              totalPage={totalPage}
+            />
+          ),
+        [paginated, disablePaginated, onPageChanged, totalPage, ref]
       )}
     </StitchesTableContainer>
   )
