@@ -27,4 +27,5 @@ export const Dot: FC<PropTypes> = memo(({css, asIcon, kind, size}) =>
     )
   ) : (
     <StitchesDot css={css} kind={kind} size={size} />
-  ));
+  )
+);
