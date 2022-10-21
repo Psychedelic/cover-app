@@ -99,7 +99,6 @@ export const fetchStats = async (dispatch: Dispatch<ReducerAction<typeof statsRe
       }
     });
   } catch (e) {
-    dispatch({type: 'fetchPending'});
     console.error(e);
   }
 };

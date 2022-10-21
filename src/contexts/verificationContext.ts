@@ -149,7 +149,6 @@ export const fetchVerifications = async (
     });
   } catch (e) {
     console.error(e);
-    dispatch({type: 'fetchPending'});
   }
 };
 
@@ -169,7 +168,6 @@ export const fetchVerificationByCanisterId = async (
     });
   } catch (e) {
     console.error(e);
-    dispatch({type: 'fetchPending'});
   }
 };
 
