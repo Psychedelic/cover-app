@@ -1,4 +1,4 @@
 export * from './dashboard';
-export * from './submitVerification';
+export * from './submitForm';
 export * from './notFound';
 export * from './myCanister';
