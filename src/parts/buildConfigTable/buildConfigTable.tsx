@@ -29,7 +29,7 @@ interface PropTypes {
 
 export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_BUILD_CONFIGS}) => {
   const {
-      state: {buildConfigs = defaultBuildConfigs, currentCanisterId = ''},
+      state: {buildConfigs = defaultBuildConfigs},
       dispatch
     } = useBuildConfigContext(),
     {
@@ -39,8 +39,8 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       state: {isPending, isAuthenticated}
     } = useAuthenticationContext();
 
-  const {canisterId: canisterIdParam} = useParams(),
-    [canisterIdSelected, setCanisterIdSelected] = useState(''),
+  const {canisterId: canisterIdParam = ''} = useParams(),
+    [canisterIdSelected, setCanisterIdSelected] = useState(canisterIdParam),
     resetPage = useCallback(() => {
       fetchBuildConfigs(dispatch);
     }, [dispatch]),
@@ -111,8 +111,8 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
         {buildConfigs?.map((buildConfig, index) => (
           <BuildConfigRow
             buildConfig={buildConfig}
-            disableCollapseBtn={Boolean(currentCanisterId)}
-            isSelected={(currentCanisterId || canisterIdSelected) === buildConfig.canisterId}
+            disableCollapseBtn={isDetailPage}
+            isSelected={canisterIdSelected === buildConfig.canisterId}
             key={buildConfig.canisterId || index}
             onDeleteHandler={onDeleteHandler}
             onEditHandler={onEditHandler}

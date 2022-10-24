@@ -31,7 +31,6 @@ interface FetchBuildConfigByCanisterIdAction extends ActionBase {
   type: 'fetchBuildConfigByCanisterId';
   payload: {
     buildConfigs: BuildConfig[];
-    currentCanisterId: string;
   };
 }
 interface DeleteBuildConfigAction extends ActionBase {
@@ -45,7 +44,6 @@ interface DeleteBuildConfigAction extends ActionBase {
  */
 interface State {
   buildConfigs?: BuildConfig[];
-  currentCanisterId?: string;
   isFetching?: boolean;
   pendingFetchCount: number;
 }
@@ -103,7 +101,6 @@ const buildConfigReducer = (state: State, action: Action): State => {
       const {isFetching, pendingFetchCount} = calculatePendingAfterAction(state);
       return {
         buildConfigs: isFetching ? DEFAULT_BUILD_CONFIGS : action.payload.buildConfigs,
-        currentCanisterId: action.payload.currentCanisterId,
         isFetching,
         pendingFetchCount
       };
@@ -150,16 +147,15 @@ export const fetchBuildConfigs = async (dispatch: Dispatch<ReducerAction<typeof 
 
 export const fetchBuildConfigByCanisterId = async (
   dispatch: Dispatch<ReducerAction<typeof buildConfigReducer>>,
-  currentCanisterId: Principal
+  canisterId: Principal
 ) => {
   dispatch({type: 'fetchPending'});
   try {
-    const result = await getPlugCoverActor().getBuildConfigById(currentCanisterId);
+    const result = await getPlugCoverActor().getBuildConfigById(canisterId);
     dispatch({
       type: 'fetchBuildConfigByCanisterId',
       payload: {
-        buildConfigs: result ? await mapFullBuildConfig(result) : [],
-        currentCanisterId: currentCanisterId.toText()
+        buildConfigs: result ? await mapFullBuildConfig(result) : []
       }
     });
   } catch (e) {

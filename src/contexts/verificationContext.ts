@@ -29,7 +29,6 @@ interface FetchVerificationByCanisterIdAction extends ActionBase {
   type: 'fetchVerificationByCanisterId';
   payload: {
     verifications: Verification[];
-    currentCanisterId: string;
   };
 }
 
@@ -42,7 +41,6 @@ interface State {
   verifications?: Verification[];
   atPage?: number;
   totalPage?: number;
-  currentCanisterId?: string;
   disablePaginated?: boolean;
   isFetching?: boolean;
   pendingFetchCount: number;
@@ -107,7 +105,6 @@ const verificationReducer = (state: State, action: Action): State => {
         verifications: isFetching ? DEFAULT_VERIFICATIONS : action.payload.verifications,
         atPage: 1,
         totalPage: 1,
-        currentCanisterId: action.payload.currentCanisterId,
         disablePaginated: true,
         isFetching,
         pendingFetchCount
@@ -156,16 +153,15 @@ export const fetchVerifications = async (
 
 export const fetchVerificationByCanisterId = async (
   dispatch: Dispatch<ReducerAction<typeof verificationReducer>>,
-  currentCanisterId: Principal
+  canisterId: Principal
 ) => {
   dispatch({type: 'fetchPending'});
   try {
-    const result = await coverSDK.getVerificationByCanisterId(currentCanisterId);
+    const result = await coverSDK.getVerificationByCanisterId(canisterId);
     dispatch({
       type: 'fetchVerificationByCanisterId',
       payload: {
-        verifications: result ? await mapFullVerification([result]) : [],
-        currentCanisterId: currentCanisterId.toText()
+        verifications: result ? await mapFullVerification([result]) : []
       }
     });
   } catch (e) {

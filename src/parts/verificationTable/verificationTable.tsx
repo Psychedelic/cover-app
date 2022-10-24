@@ -27,15 +27,15 @@ interface PropTypes {
 
 export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT_VERIFICATIONS}) => {
   const {
-      state: {verifications = defaultVerifications, totalPage, currentCanisterId = '', disablePaginated},
+      state: {verifications = defaultVerifications, totalPage, disablePaginated},
       dispatch
     } = useVerificationContext(),
     {
       state: {coverSettings}
     } = useCoverSettingsContext();
 
-  const {canisterId: canisterIdParam} = useParams(),
-    [canisterIdSelected, setCanisterIdSelected] = useState(''),
+  const {canisterId: canisterIdParam = ''} = useParams(),
+    [canisterIdSelected, setCanisterIdSelected] = useState(canisterIdParam),
     navigate = useNavigate(),
     paginationRef = useRef<PaginationHandler>(null),
     resetPage = useCallback(() => {
@@ -95,8 +95,8 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
       <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>
         {verifications?.map((verification, index) => (
           <VerificationRow
-            disableCollapseBtn={Boolean(currentCanisterId)}
-            isSelected={(currentCanisterId || canisterIdSelected) === verification.canisterId}
+            disableCollapseBtn={isDetailPage}
+            isSelected={canisterIdSelected === verification.canisterId}
             key={verification.canisterId || index}
             setCanisterIdSelected={setCanisterIdSelected}
             verification={verification}
