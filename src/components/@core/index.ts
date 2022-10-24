@@ -8,4 +8,3 @@ export * from './tooltip';
 export * from './popover';
 export * from './gitInfo';
 export * from './switch';
-export * from './icon';

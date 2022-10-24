@@ -1,6 +1,7 @@
 import {FC, useCallback, useEffect} from 'react';
 
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core, TableContainer, TableContent, TableHeader, TableRow} from '@/components';
 import {autoRefresh, DEFAULT_STATS, fetchStats, useCoverSettingsContext, useStatsContext} from '@/contexts';
@@ -50,7 +51,7 @@ export const StatsTable: FC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
         <th>{'Statistics'}</th>
         <th>
           <Core.Button disabled={isFetching} kind={'text'} onClick={resetPage}>
-            <Core.Icon icon={faRotate} spin={coverSettings.isAutoRefresh} />
+            <FontAwesomeIcon icon={faRotate} spin={coverSettings.isAutoRefresh} />
           </Core.Button>
         </th>
       </TableHeader>

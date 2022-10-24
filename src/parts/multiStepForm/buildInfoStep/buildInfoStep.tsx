@@ -1,6 +1,7 @@
 import {FC, FormEvent, useCallback, useRef} from 'react';
 
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Link} from 'react-router-dom';
 
 import {Core, FormContainer, FormInput, FormInputHandler} from '@/components';
@@ -74,7 +75,7 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
       <FormContainer autoComplete={'off'} onSubmit={onSubmit}>
         <div className={'header'}>
           <Core.Button kind={'text'} onClick={goBackHandler} type={'button'}>
-            <Core.Icon icon={faChevronLeft} size={'lg'} />
+            <FontAwesomeIcon icon={faChevronLeft} size={'lg'} />
           </Core.Button>
           <span>{'Submit Verification'}</span>
         </div>

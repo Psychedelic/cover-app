@@ -1,6 +1,7 @@
 import {FC, useCallback, useEffect, useRef} from 'react';
 
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
 import {
@@ -64,7 +65,7 @@ export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITI
         <th colSpan={2}>{'Recent Activities'}</th>
         <th>
           <Core.Button disabled={disablePaginated} kind={'text'} onClick={resetPage}>
-            <Core.Icon icon={faRotate} spin={coverSettings.isAutoRefresh} />
+            <FontAwesomeIcon icon={faRotate} spin={coverSettings.isAutoRefresh} />
           </Core.Button>
         </th>
       </TableHeader>

@@ -1,6 +1,7 @@
 import {FC, FormEvent, Fragment, useCallback, useRef, useState} from 'react';
 
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {CoverMetadata, ErrorResponse} from '@psychedelic/cover';
 import {Link, useNavigate} from 'react-router-dom';
 
@@ -98,7 +99,7 @@ export const AutoSubmitForm: FC = () => {
           <span>{'Submit Automatic Verification'}</span>
         </div>
         <div className={'info'}>
-          <Core.Icon icon={faInfoCircle} />
+          <FontAwesomeIcon icon={faInfoCircle} />
           <span>
             {'To surface "Cover Metadata" information, '}
             {'please provide the canister build configuration exposed '}

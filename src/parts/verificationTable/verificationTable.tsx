@@ -2,6 +2,7 @@ import {FC, useCallback, useEffect, useRef, useState} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
@@ -87,7 +88,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
         <th>{'Last Activity'}</th>
         <th>
           <Core.Button disabled={disablePaginated || isDetailPage} kind={'text'} onClick={resetPage}>
-            <Core.Icon icon={faRotate} spin={!isDetailPage && coverSettings.isAutoRefresh} />
+            <FontAwesomeIcon icon={faRotate} spin={!isDetailPage && coverSettings.isAutoRefresh} />
           </Core.Button>
         </th>
       </TableHeader>

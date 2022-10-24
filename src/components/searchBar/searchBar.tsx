@@ -1,6 +1,7 @@
 import {forwardRef, KeyboardEvent, ReactEventHandler, useCallback, useImperativeHandle, useRef, useState} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {Core} from '@/components';
 
@@ -91,7 +92,7 @@ export const SearchBar = forwardRef<SearchBarHandler, PropTypes>(
         />
         {hasValue && (
           <Core.Button disabled={disabled} kind={'text'} onClick={onClick}>
-            <Core.Icon icon={faXmark} size={'lg'} />
+            <FontAwesomeIcon icon={faXmark} size={'lg'} />
           </Core.Button>
         )}
       </Core.InputContainer>
