@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {FC, useCallback, useEffect, useRef, useState} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
@@ -79,24 +79,17 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
       ref={paginationRef}
       totalPage={totalPage}>
       <TableHeader css={tableHeaderStyle}>
-        {useMemo(
-          () => (
-            <>
-              <th>{'Canister ID'}</th>
-              <th>{'Name'}</th>
-              <th>{'Repo'}</th>
-              <th>{'Git Commit'}</th>
-              <th>{'IC Wasm Hash'}</th>
-              <th>{'Last Activity'}</th>
-              <th>
-                <Core.Button disabled={disablePaginated || isDetailPage} kind={'text'} onClick={resetPage}>
-                  <Core.Icon icon={faRotate} spin={!isDetailPage && coverSettings.isAutoRefresh} />
-                </Core.Button>
-              </th>
-            </>
-          ),
-          [disablePaginated, isDetailPage, coverSettings, resetPage]
-        )}
+        <th>{'Canister ID'}</th>
+        <th>{'Name'}</th>
+        <th>{'Repo'}</th>
+        <th>{'Git Commit'}</th>
+        <th>{'IC Wasm Hash'}</th>
+        <th>{'Last Activity'}</th>
+        <th>
+          <Core.Button disabled={disablePaginated || isDetailPage} kind={'text'} onClick={resetPage}>
+            <Core.Icon icon={faRotate} spin={!isDetailPage && coverSettings.isAutoRefresh} />
+          </Core.Button>
+        </th>
       </TableHeader>
       <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>
         {verifications?.map((verification, index) => (

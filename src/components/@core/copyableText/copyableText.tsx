@@ -1,4 +1,4 @@
-import {ComponentProps, FC, memo, ReactEventHandler, useCallback, useRef, useState} from 'react';
+import {ComponentProps, FC, ReactEventHandler, useCallback, useRef, useState} from 'react';
 
 import {faCopy} from '@fortawesome/free-regular-svg-icons';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +15,7 @@ interface PropTypes extends ComponentProps<typeof StitchesCopyableText> {
   children?: string;
 }
 
-export const CopyableText: FC<PropTypes> = memo(({children, css, color, rawText}) => {
+export const CopyableText: FC<PropTypes> = ({children, css, color, rawText}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const content = useRef(children || '');
@@ -48,4 +48,4 @@ export const CopyableText: FC<PropTypes> = memo(({children, css, color, rawText}
       {isClicked ? <Core.Icon icon={faCheck} /> : isHovered && <Core.Icon icon={faCopy} />}
     </StitchesCopyableText>
   );
-});
+};

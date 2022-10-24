@@ -1,4 +1,4 @@
-import {ComponentProps, FC, memo} from 'react';
+import {ComponentProps, FC} from 'react';
 
 import {faCheckCircle, faCircleDot, faCircleXmark, faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 import {CSS} from '@stitches/react';
@@ -12,7 +12,7 @@ interface PropTypes extends ComponentProps<typeof StitchesDot> {
   asIcon?: boolean;
 }
 
-export const Dot: FC<PropTypes> = memo(({css, asIcon, kind, size}) =>
+export const Dot: FC<PropTypes> = ({css, asIcon, kind, size}) =>
   asIcon ? (
     kind === 'green' ? (
       <Core.Icon color={'#03BF00'} icon={faCheckCircle} size={'lg'} />
@@ -27,5 +27,4 @@ export const Dot: FC<PropTypes> = memo(({css, asIcon, kind, size}) =>
     )
   ) : (
     <StitchesDot css={css} kind={kind} size={size} />
-  )
-);
+  );

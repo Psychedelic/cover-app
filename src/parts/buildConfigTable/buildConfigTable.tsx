@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useMemo, useState} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
@@ -94,24 +94,17 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
   return (
     <TableContainer css={tableContainerStyle} paginated={false}>
       <TableHeader css={tableHeaderStyle}>
-        {useMemo(
-          () => (
-            <>
-              <th>{'Canister ID'}</th>
-              <th>{'Name'}</th>
-              <th>{'Repo'}</th>
-              <th>{'Git Commit'}</th>
-              <th>{'IC Wasm Hash'}</th>
-              <th>{'Last Activity'}</th>
-              <th>
-                <Core.Button disabled={isDetailPage} kind={'text'} onClick={resetPage}>
-                  <Core.Icon icon={faRotate} spin={!isDetailPage && coverSettings.isAutoRefresh} />
-                </Core.Button>
-              </th>
-            </>
-          ),
-          [isDetailPage, resetPage, coverSettings]
-        )}
+        <th>{'Canister ID'}</th>
+        <th>{'Name'}</th>
+        <th>{'Repo'}</th>
+        <th>{'Git Commit'}</th>
+        <th>{'IC Wasm Hash'}</th>
+        <th>{'Last Activity'}</th>
+        <th>
+          <Core.Button disabled={isDetailPage} kind={'text'} onClick={resetPage}>
+            <Core.Icon icon={faRotate} spin={!isDetailPage && coverSettings.isAutoRefresh} />
+          </Core.Button>
+        </th>
       </TableHeader>
       <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>
         {buildConfigs?.map((buildConfig, index) => (

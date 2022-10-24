@@ -1,5 +1,3 @@
-import {memo} from 'react';
-
 import {faAtom, faChevronDown, faPencil} from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 
@@ -9,7 +7,7 @@ import {isAutoSubmitPage, isStandardSubmitPage} from '@/utils';
 
 import {popoverContentStyle, submitItemStyle, triggerBtnStyle} from './submitBtn.styled';
 
-export const SubmitBtn = memo(() => (
+export const SubmitBtn = () => (
   <Core.Popover>
     <Core.PopoverTrigger asChild>
       <Core.Button css={triggerBtnStyle}>
@@ -32,4 +30,4 @@ export const SubmitBtn = memo(() => (
       </Link>
     </Core.PopoverContent>
   </Core.Popover>
-));
+);

@@ -1,13 +1,4 @@
-import {
-  forwardRef,
-  KeyboardEvent,
-  ReactEventHandler,
-  useCallback,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import {forwardRef, KeyboardEvent, ReactEventHandler, useCallback, useImperativeHandle, useRef, useState} from 'react';
 
 import {faSearch, faXmark} from '@fortawesome/free-solid-svg-icons';
 
@@ -98,14 +89,10 @@ export const SearchBar = forwardRef<SearchBarHandler, PropTypes>(
           ref={searchBarRef}
           size={'small'}
         />
-        {useMemo(
-          () =>
-            hasValue && (
-              <Core.Button disabled={disabled} kind={'text'} onClick={onClick}>
-                <Core.Icon icon={faXmark} size={'lg'} />
-              </Core.Button>
-            ),
-          [onClick, hasValue, disabled]
+        {hasValue && (
+          <Core.Button disabled={disabled} kind={'text'} onClick={onClick}>
+            <Core.Icon icon={faXmark} size={'lg'} />
+          </Core.Button>
         )}
       </Core.InputContainer>
     );

@@ -7,7 +7,6 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useRef,
   useState
 } from 'react';
@@ -101,49 +100,22 @@ export const Pagination = forwardRef<PaginationHandler, PropTypes>(
       }),
       [pageChangeHandler]
     );
-
-    const LeftIcon = useMemo(() => <Core.Icon icon={faChevronLeft} />, []),
-      RightIcon = useMemo(() => <Core.Icon icon={faChevronRight} />, []),
-      LeftBtn = useMemo(
-        () => (
-          <Core.Button
-            disabled={disablePaginated || isFirstPage}
-            kind={'outline'}
-            onClick={onBtnClick}
-            ref={leftBtnRef}>
-            {LeftIcon}
-          </Core.Button>
-        ),
-        [disablePaginated, isFirstPage, onBtnClick, LeftIcon]
-      ),
-      RightBtn = useMemo(
-        () => (
-          <Core.Button
-            disabled={disablePaginated || isLastPage}
-            kind={'outline'}
-            onClick={onBtnClick}
-            ref={rightBtnRef}>
-            {RightIcon}
-          </Core.Button>
-        ),
-        [disablePaginated, isLastPage, onBtnClick, RightIcon]
-      ),
-      Children = useMemo(
-        () => (
-          <>
-            {LeftBtn}
-            <Core.Input
-              defaultValue={defaultPage}
-              disabled={disablePaginated || totalPage === 1}
-              onBlur={onBlur}
-              onKeyPress={onEnter}
-              ref={inputRef}
-            />
-            {RightBtn}
-          </>
-        ),
-        [LeftBtn, RightBtn, defaultPage, disablePaginated, totalPage, onBlur, onEnter]
-      );
-    return <StitchesPagination css={css}>{Children}</StitchesPagination>;
+    return (
+      <StitchesPagination css={css}>
+        <Core.Button disabled={disablePaginated || isFirstPage} kind={'outline'} onClick={onBtnClick} ref={leftBtnRef}>
+          <Core.Icon icon={faChevronLeft} />
+        </Core.Button>
+        <Core.Input
+          defaultValue={defaultPage}
+          disabled={disablePaginated || totalPage === 1}
+          onBlur={onBlur}
+          onKeyPress={onEnter}
+          ref={inputRef}
+        />
+        <Core.Button disabled={disablePaginated || isLastPage} kind={'outline'} onClick={onBtnClick} ref={rightBtnRef}>
+          <Core.Icon icon={faChevronRight} />
+        </Core.Button>
+      </StitchesPagination>
+    );
   }
 );

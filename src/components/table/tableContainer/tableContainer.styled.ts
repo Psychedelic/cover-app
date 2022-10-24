@@ -1,32 +1,28 @@
-import {memo} from 'react';
-
 import {defaultStitches} from '@/themes';
 const {styled} = defaultStitches;
 
-export const StitchesTableContainer = memo(
-  styled('div', {
-    border: '1px solid $coverMediumGray',
-    borderRadius: '$8',
-    '& table': {
-      width: '100%',
-      tableLayout: 'fixed',
-      '& thead': {
-        borderBottom: '1px solid $coverMediumGray'
-      },
-      '& tr': {
-        height: '$32',
-        '& th, td': {
-          textAlign: 'left',
-          verticalAlign: 'middle',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          fontWeight: '$normal'
-        }
-      }
+export const StitchesTableContainer = styled('div', {
+  border: '1px solid $coverMediumGray',
+  borderRadius: '$8',
+  '& table': {
+    width: '100%',
+    tableLayout: 'fixed',
+    '& thead': {
+      borderBottom: '1px solid $coverMediumGray'
     },
-    color: '$coverLightGray',
-    fontSize: '$xs',
-    fontWeight: '$normal'
-  })
-);
+    '& tr': {
+      height: '$32',
+      '& th, td': {
+        textAlign: 'left',
+        verticalAlign: 'middle',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        fontWeight: '$normal'
+      }
+    }
+  },
+  color: '$coverLightGray',
+  fontSize: '$xs',
+  fontWeight: '$normal'
+});

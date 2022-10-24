@@ -1,4 +1,4 @@
-import {ComponentProps, FC, memo, ReactNode} from 'react';
+import {ComponentProps, FC, ReactNode} from 'react';
 
 import {CSS} from '@stitches/react';
 
@@ -11,7 +11,7 @@ interface PropTypes extends ComponentProps<typeof StitchesTableHeader> {
   css?: CSS;
 }
 
-export const TableHeader: FC<PropTypes> = memo(({css, children}) => (
+export const TableHeader: FC<PropTypes> = ({css, children}) => (
   <StitchesTableHeader css={css}>
     <tr>
       <th>
@@ -20,4 +20,4 @@ export const TableHeader: FC<PropTypes> = memo(({css, children}) => (
       {children}
     </tr>
   </StitchesTableHeader>
-));
+);

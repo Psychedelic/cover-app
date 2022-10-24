@@ -1,4 +1,4 @@
-import {FC, memo, useCallback, useEffect, useRef} from 'react';
+import {FC, useCallback, useEffect, useRef} from 'react';
 
 import {faClock, faGear, faRotate} from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +8,7 @@ import {isPositiveNum} from '@/utils';
 
 import {rowDisableStyle, StitchesSettingsLeft, StitchesSettingsRight, StitchesSettingsRow} from './settings.styled';
 
-export const Settings: FC = memo(() => {
+export const Settings: FC = () => {
   const refreshIntervalRef = useRef<FormInputHandler>(null);
 
   const {
@@ -78,4 +78,4 @@ export const Settings: FC = memo(() => {
       </Core.PopoverContent>
     </Core.Popover>
   );
-});
+};
