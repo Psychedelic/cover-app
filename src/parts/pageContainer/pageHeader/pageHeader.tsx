@@ -27,7 +27,7 @@ import {SubmitBtn} from './submitBtn';
 export const PageHeader: FC = () => {
   const lastParam = getCurrentPath().split('/').pop() || '';
   const canisterIdParam = isPrincipal(lastParam) ? lastParam : '';
-  const lastSearchCanisterId = useRef(canisterIdParam);
+  const lastSearchCanisterIdRef = useRef(canisterIdParam);
   const searchBarRef = useRef<SearchBarHandler>(null);
   const navigate = useNavigate();
   const {
@@ -40,13 +40,13 @@ export const PageHeader: FC = () => {
   const onBlur = useCallback(
       (value: string) => {
         // Only difference value each time is called can be dispatched
-        if (value !== lastSearchCanisterId.current) {
+        if (value !== lastSearchCanisterIdRef.current) {
           isPrincipal(value)
             ? navigate(
                 (isDashboardPage() ? CANISTER_DETAIL_ROUTE : MY_CANISTER_DETAIL_ROUTE).replaceAll(':canisterId', value)
               )
             : value === '' && navigate(isCanisterDetailPage() ? DASHBOARD_PATH : MY_CANISTER_PATH);
-          lastSearchCanisterId.current = value;
+          lastSearchCanisterIdRef.current = value;
         }
       },
       [navigate]
@@ -64,7 +64,7 @@ export const PageHeader: FC = () => {
   useEffect(() => {
     if (!canisterIdParam) {
       searchBarRef.current?.clearInput();
-      lastSearchCanisterId.current = '';
+      lastSearchCanisterIdRef.current = '';
     }
   }, [canisterIdParam]);
 

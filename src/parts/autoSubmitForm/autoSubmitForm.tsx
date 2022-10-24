@@ -25,7 +25,7 @@ import {StitchesAutoSubmitForm} from './autoSubmitForm.styled';
 export const AutoSubmitForm: FC = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [coverMetadata, setCoverMetadata] = useState<CoverMetadata>();
-  const canisterIdTemp = useRef<string>();
+  const canisterIdTempRef = useRef<string>();
   const canisterIdRef = useRef<FormInputHandler>(null),
     repoAccessTokenRef = useRef<FormInputHandler>(null);
   const errDialogRef = useRef<ErrorDialogHandler>(null),
@@ -34,8 +34,8 @@ export const AutoSubmitForm: FC = () => {
   const navigate = useNavigate();
   const goToDashboard = useCallback(() => navigate(DASHBOARD_PATH), [navigate]);
   const onCanisterIdChanged = useCallback((canisterId: string) => {
-    if (canisterIdTemp.current === canisterId) return;
-    canisterIdTemp.current = canisterId;
+    if (canisterIdTempRef.current === canisterId) return;
+    canisterIdTempRef.current = canisterId;
     setIsFetched(false);
     setCoverMetadata({
       dfx_version: '',

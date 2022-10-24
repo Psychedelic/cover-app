@@ -18,10 +18,10 @@ interface PropTypes extends ComponentProps<typeof StitchesCopyableText> {
 export const CopyableText: FC<PropTypes> = ({children, css, color, rawText}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const content = useRef(children || '');
+  const contentRef = useRef(children || '');
 
   const onClick = useCallback<ReactEventHandler>(_ => {
-    navigator.clipboard.writeText(content.current);
+    navigator.clipboard.writeText(contentRef.current);
     setIsClicked(true);
     setTimeout(() => {
       setIsClicked(false);
