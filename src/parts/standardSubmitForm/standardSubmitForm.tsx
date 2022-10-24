@@ -17,7 +17,7 @@ import {anonymousBuild} from '@/utils';
 import {BuildInfo, BuildInfoStep} from './buildInfoStep';
 import {GeneralInfo, GeneralInfoStep} from './generalInfoStep';
 
-export const MultiStepForm: FC = () => {
+export const StandardSubmitForm: FC = () => {
   const [steps, setSteps] = useState({generalInfoStep: true, buildInfoStep: false});
   const generalInfoRef = useRef<GeneralInfo>(),
     buildInfoRef = useRef<BuildInfo>();
