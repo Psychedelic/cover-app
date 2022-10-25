@@ -9,6 +9,10 @@ import {btnRow, tableRowSelected} from './buildConfigRow.styled';
 
 interface PropTypes {
   buildConfig: BuildConfig;
+
+  // Mean the canister hasn't submitted before
+  isNew: boolean;
+
   isSelected: boolean;
   setCanisterIdSelected: (canisterId: string) => void;
   disableCollapseBtn?: boolean;
@@ -59,7 +63,8 @@ export const BuildConfigRow: FC<PropTypes> = ({
   disableCollapseBtn,
   onDeleteHandler,
   onEditHandler,
-  onResubmitHandler
+  onResubmitHandler,
+  isNew
 }) => {
   const onCollapse = useCallback(
     (canisterId: string) => {
@@ -150,7 +155,7 @@ export const BuildConfigRow: FC<PropTypes> = ({
                   {'Edit'}
                 </Core.Button>
                 <Core.Button kind={'main'} onClick={onResubmitHandlerCb}>
-                  {'Submit'}
+                  {isNew ? 'Submit' : 'Resubmit'}
                 </Core.Button>
               </td>
             ]}
