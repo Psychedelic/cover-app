@@ -150,7 +150,7 @@ export const BuildConfigRow: FC<PropTypes> = ({
                   {'Edit'}
                 </Core.Button>
                 <Core.Button kind={'main'} onClick={onResubmitHandlerCb}>
-                  {'Resubmit'}
+                  {'Submit'}
                 </Core.Button>
               </td>
             ]}
