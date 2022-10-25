@@ -1,4 +1,4 @@
-import {createRef, FC, useCallback, useEffect, useState} from 'react';
+import {FC, useCallback, useEffect, useRef, useState} from 'react';
 
 import {Principal} from '@dfinity/principal';
 import {faRotate} from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
 import {NOT_FOUND_PATH} from '@/constants';
 import {
+  autoRefresh,
   DEFAULT_VERIFICATIONS,
   fetchVerificationByCanisterId,
   fetchVerifications,
@@ -36,11 +37,11 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
   const {canisterId: canisterIdParam} = useParams(),
     [canisterIdSelected, setCanisterIdSelected] = useState(''),
     navigate = useNavigate(),
-    paginationRef = createRef<PaginationHandler>(),
+    paginationRef = useRef<PaginationHandler>(null),
     resetPage = useCallback(() => {
       fetchVerifications(dispatch);
       paginationRef.current?.forceReset();
-    }, [paginationRef, dispatch]),
+    }, [dispatch]),
     onPageChanged = useCallback(
       (pageNum: number) => {
         fetchVerifications(dispatch, pageNum);
@@ -54,31 +55,21 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
   useEffect(() => {
     if (!(isDashboardPage() || isDetailPage) || (isCanisterNotFound && isDetailPage)) {
       navigate(NOT_FOUND_PATH);
-      return () => {
-        // Do nothing.
-      };
+      return;
     }
     isDetailPage
       ? fetchVerificationByCanisterId(dispatch, Principal.fromText(canisterIdParam))
       : fetchVerifications(dispatch);
-    let timer: ReturnType<typeof setInterval> | null = null;
-    if (!isDetailPage && coverSettings.isAutoRefresh) {
-      timer = setInterval(() => {
+    paginationRef.current?.forceReset();
+    return autoRefresh(
+      coverSettings,
+      () => {
         fetchVerifications(dispatch);
-      }, parseInt(coverSettings.refreshInterval, 10) * 60_000);
-    }
-    return () => {
-      timer && clearTimeout(timer);
-    };
-  }, [
-    dispatch,
-    coverSettings.isAutoRefresh,
-    coverSettings.refreshInterval,
-    canisterIdParam,
-    isDetailPage,
-    isCanisterNotFound,
-    navigate
-  ]);
+        paginationRef.current?.forceReset();
+      },
+      !isDetailPage
+    );
+  }, [dispatch, coverSettings, canisterIdParam, isDetailPage, isCanisterNotFound, navigate]);
 
   return (
     <TableContainer

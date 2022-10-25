@@ -56,16 +56,16 @@ export const createProvider =
     initState: State
   ): FC<PropsWithChildren<unknown>> =>
   ({children}) => {
-    const isMounted = useRef<boolean | undefined>();
+    const isMountedRef = useRef<boolean | undefined>();
     const [state, dispatch] = useReducer(reducer, initState);
     useEffect(() => {
-      isMounted.current = true;
+      isMountedRef.current = true;
       return () => {
-        isMounted.current = false;
+        isMountedRef.current = false;
       };
     });
     const dispatchWrapper = useCallback((action: Action) => {
-      isMounted.current !== false && dispatch(action);
+      isMountedRef.current !== false && dispatch(action);
     }, []);
     const value = useMemo(
       () => ({

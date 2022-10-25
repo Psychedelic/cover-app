@@ -1,11 +1,11 @@
 import {
   ComponentProps,
-  createRef,
   forwardRef,
   ReactEventHandler,
   RefObject,
   useCallback,
   useImperativeHandle,
+  useRef,
   useState
 } from 'react';
 
@@ -65,7 +65,7 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
   ) => {
     const [hasError, setHasError] = useState(false);
 
-    const inputRef = createRef<HTMLInputElement | HTMLTextAreaElement>();
+    const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
     const onBlur = useCallback<ReactEventHandler>(
       _ => {
@@ -75,7 +75,7 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
           validations && setHasError(Boolean(value) && isValidateFailed(validations, value));
         }
       },
-      [validations, inputRef, onBlurHandler]
+      [validations, onBlurHandler]
     );
 
     const onInput = useCallback<ReactEventHandler>(_ => {
@@ -104,7 +104,7 @@ export const FormInput = forwardRef<FormInputHandler, PropTypes>(
         value: () => (inputRef.current ? (inputRef.current as HTMLInputElement | HTMLTextAreaElement).value : ''),
         setValue: (value: string) => ((inputRef.current as HTMLInputElement | HTMLTextAreaElement).value = value)
       }),
-      [required, validations, validationIf, inputRef]
+      [required, validations, validationIf]
     );
 
     return (

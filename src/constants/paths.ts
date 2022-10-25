@@ -5,6 +5,7 @@ export const MY_CANISTER_PATH = '/my-canister';
 
 export const STANDARD_SUBMIT_PATH = '/submit/standard';
 export const AUTOMATIC_SUBMIT_PATH = '/submit/automatic';
+export const BUILD_CONFIG_SUBMIT_PATH = '/submit/build-config';
 
 export const NOT_FOUND_PATH = '/not-found';
 
@@ -17,5 +18,6 @@ export const CANISTER_DETAIL_ROUTE = 'canister/:canisterId';
 export const SUBMIT_ROUTE = 'submit/*';
 export const STANDARD_SUBMIT_ROUTE = 'standard';
 export const AUTOMATIC_SUBMIT_ROUTE = 'automatic';
+export const BUILD_CONFIG_SUBMIT_ROUTE = 'build-config';
 
 export const NOT_FOUND_ROUTE = 'not-found';

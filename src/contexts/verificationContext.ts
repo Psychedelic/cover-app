@@ -76,6 +76,10 @@ export const DEFAULT_VERIFICATIONS = Array<Verification>(ITEMS_PER_PAGE).fill({}
  * REDUCER
  * ========================================================================================================
  */
+const calculatePendingAfterAction = (state: State) => ({
+  pendingFetchCount: state.pendingFetchCount - 1,
+  isFetching: state.pendingFetchCount - 1 > 0
+});
 const verificationReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
@@ -87,8 +91,7 @@ const verificationReducer = (state: State, action: Action): State => {
       };
     }
     case 'fetchVerifications': {
-      const pendingFetchCount = state.pendingFetchCount - 1;
-      const isFetching = pendingFetchCount > 0;
+      const {isFetching, pendingFetchCount} = calculatePendingAfterAction(state);
       return {
         verifications: isFetching ? DEFAULT_VERIFICATIONS : action.payload.verifications,
         atPage: action.payload.atPage,
@@ -99,8 +102,7 @@ const verificationReducer = (state: State, action: Action): State => {
       };
     }
     case 'fetchVerificationByCanisterId': {
-      const pendingFetchCount = state.pendingFetchCount - 1;
-      const isFetching = pendingFetchCount > 0;
+      const {isFetching, pendingFetchCount} = calculatePendingAfterAction(state);
       return {
         verifications: isFetching ? DEFAULT_VERIFICATIONS : action.payload.verifications,
         atPage: 1,
@@ -149,7 +151,6 @@ export const fetchVerifications = async (
     });
   } catch (e) {
     console.error(e);
-    dispatch({type: 'fetchPending'});
   }
 };
 
@@ -169,7 +170,6 @@ export const fetchVerificationByCanisterId = async (
     });
   } catch (e) {
     console.error(e);
-    dispatch({type: 'fetchPending'});
   }
 };
 

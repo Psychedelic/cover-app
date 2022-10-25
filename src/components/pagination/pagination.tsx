@@ -1,6 +1,5 @@
 import {
   ComponentProps,
-  createRef,
   forwardRef,
   KeyboardEvent,
   KeyboardEventHandler,
@@ -37,18 +36,18 @@ export const Pagination = forwardRef<PaginationHandler, PropTypes>(
   ({css, defaultPage = 1, onPageChanged, totalPage = 1, disablePaginated}, ref) => {
     const [isFirstPage, setIsFirstPage] = useState(defaultPage === 1),
       [isLastPage, setIsLastPage] = useState(defaultPage === totalPage);
-    const page = useRef(defaultPage),
-      leftBtn = createRef<HTMLButtonElement>(),
-      rightBtn = createRef<HTMLButtonElement>(),
-      inputRef = createRef<HTMLInputElement>();
+    const pageRef = useRef(defaultPage),
+      leftBtnRef = useRef<HTMLButtonElement>(null),
+      rightBtnRef = useRef<HTMLButtonElement>(null),
+      inputRef = useRef<HTMLInputElement>(null);
     const isPageChanged = useCallback(
         (newPage: string): boolean => {
           if (isPositiveNum(newPage)) {
-            const oldPage = page.current;
+            const oldPage = pageRef.current;
             // Fall back to the last page.
-            page.current = Math.min(totalPage, Number.parseInt(newPage, 10));
+            pageRef.current = Math.min(totalPage, Number.parseInt(newPage, 10));
             // Still in range, but the page has changed.
-            return page.current <= totalPage && page.current !== oldPage;
+            return pageRef.current <= totalPage && pageRef.current !== oldPage;
           }
           return false;
         },
@@ -58,27 +57,27 @@ export const Pagination = forwardRef<PaginationHandler, PropTypes>(
         if (inputRef.current) {
           // Check if the page is changed and should fall back
           if (isPageChanged((inputRef.current as HTMLInputElement).value)) {
-            onPageChanged && onPageChanged(page.current);
+            onPageChanged && onPageChanged(pageRef.current);
           }
-          (inputRef.current as HTMLInputElement).value = String(page.current);
-          setIsFirstPage(page.current === 1);
-          setIsLastPage(page.current === totalPage);
+          (inputRef.current as HTMLInputElement).value = String(pageRef.current);
+          setIsFirstPage(pageRef.current === 1);
+          setIsLastPage(pageRef.current === totalPage);
         }
-      }, [isPageChanged, totalPage, onPageChanged, inputRef]),
+      }, [isPageChanged, totalPage, onPageChanged]),
       onBlur = useCallback(pageChangeHandler, [pageChangeHandler]),
       onBtnClick = useCallback<ReactEventHandler>(
         ({target}) => {
-          const isMinus = leftBtn.current && (leftBtn.current as HTMLButtonElement).contains(target as Node);
+          const isMinus = leftBtnRef.current && (leftBtnRef.current as HTMLButtonElement).contains(target as Node);
           if (inputRef.current) {
-            const newPage = page.current + (isMinus ? -1 : 1);
+            const newPage = pageRef.current + (isMinus ? -1 : 1);
             (inputRef.current as HTMLInputElement).value = `${newPage}`;
-            page.current = newPage;
-            setIsFirstPage(page.current === 1);
-            setIsLastPage(page.current === totalPage);
-            onPageChanged && onPageChanged(page.current);
+            pageRef.current = newPage;
+            setIsFirstPage(pageRef.current === 1);
+            setIsLastPage(pageRef.current === totalPage);
+            onPageChanged && onPageChanged(pageRef.current);
           }
         },
-        [onPageChanged, totalPage, inputRef, leftBtn]
+        [onPageChanged, totalPage]
       ),
       onEnter = useCallback<KeyboardEventHandler>(
         (e: KeyboardEvent) => {
@@ -89,8 +88,8 @@ export const Pagination = forwardRef<PaginationHandler, PropTypes>(
         [pageChangeHandler]
       );
     useEffect(() => {
-      setIsFirstPage(page.current === 1);
-      setIsLastPage(page.current === totalPage);
+      setIsFirstPage(pageRef.current === 1);
+      setIsLastPage(pageRef.current === totalPage);
     }, [totalPage]);
     useImperativeHandle(
       ref,
@@ -100,11 +99,11 @@ export const Pagination = forwardRef<PaginationHandler, PropTypes>(
           pageChangeHandler();
         }
       }),
-      [pageChangeHandler, inputRef]
+      [pageChangeHandler]
     );
     return (
       <StitchesPagination css={css}>
-        <Core.Button disabled={disablePaginated || isFirstPage} kind={'outline'} onClick={onBtnClick} ref={leftBtn}>
+        <Core.Button disabled={disablePaginated || isFirstPage} kind={'outline'} onClick={onBtnClick} ref={leftBtnRef}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </Core.Button>
         <Core.Input
@@ -114,7 +113,7 @@ export const Pagination = forwardRef<PaginationHandler, PropTypes>(
           onKeyPress={onEnter}
           ref={inputRef}
         />
-        <Core.Button disabled={disablePaginated || isLastPage} kind={'outline'} onClick={onBtnClick} ref={rightBtn}>
+        <Core.Button disabled={disablePaginated || isLastPage} kind={'outline'} onClick={onBtnClick} ref={rightBtnRef}>
           <FontAwesomeIcon icon={faChevronRight} />
         </Core.Button>
       </StitchesPagination>

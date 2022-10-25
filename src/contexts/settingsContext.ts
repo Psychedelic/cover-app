@@ -10,8 +10,30 @@ import {ActionBase, createContext, createProvider} from './helper';
 const saveCoverSettings = (coverSettings: CoverSettings) => {
   localStorage.setItem('cover_settings', JSON.stringify(coverSettings));
 };
+
 const readCoverSettings = (): CoverSettings =>
   JSON.parse(localStorage.getItem('cover_settings') || '{"isAutoRefresh":true,"refreshInterval":"1"}');
+
+/*
+ * NOTE: must return
+ * Example:
+ *
+ *  ```javascript
+ *  useEffect(() => {
+ *    fetch(dispatch);
+ *    return autoRefresh(coverSettings, () => fetch(dispatch));
+ *  }, [dispatch, coverSettings]);
+ * ```
+ */
+export const autoRefresh = (
+  {isAutoRefresh, refreshInterval}: CoverSettings,
+  onRefresh: () => void,
+  conditioner = true
+): (() => void) | undefined => {
+  let timer: ReturnType<typeof setInterval>;
+  if (conditioner && isAutoRefresh) timer = setInterval(onRefresh, parseInt(refreshInterval, 10) * 60_000);
+  return () => clearInterval(timer);
+};
 
 /*
  * ========================================================================================================

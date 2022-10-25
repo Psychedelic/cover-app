@@ -1,12 +1,12 @@
 import {FC} from 'react';
 
-import {faChevronDown, faLightbulb, faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
+import {faChevronDown, faLightbulb, faRightFromBracket, faScrewdriverWrench} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Link} from 'react-router-dom';
 
 import {Core} from '@/components';
-import {MY_CANISTER_PATH} from '@/constants';
-import {isMyCanisterPage, trim} from '@/utils';
+import {BUILD_CONFIG_SUBMIT_PATH, MY_CANISTER_PATH} from '@/constants';
+import {isBuildConfigSubmitPage, isMyCanisterPage, trim} from '@/utils';
 
 import {popoverContentStyle, submitItemStyle, triggerBtnStyle} from './submitBtn.styled';
 
@@ -28,6 +28,12 @@ export const AuthenticatedBtn: FC<PropTypes> = ({pid, onLogOut}) => (
         <Core.Button css={submitItemStyle} disabled={isMyCanisterPage()} kind={'text'}>
           <FontAwesomeIcon icon={faLightbulb} />
           {'My Canisters'}
+        </Core.Button>
+      </Link>
+      <Link to={BUILD_CONFIG_SUBMIT_PATH}>
+        <Core.Button css={submitItemStyle} disabled={isBuildConfigSubmitPage()} kind={'text'}>
+          <FontAwesomeIcon icon={faScrewdriverWrench} />
+          {'Add build config'}
         </Core.Button>
       </Link>
       <Core.Button css={submitItemStyle} kind={'text'} onClick={onLogOut}>

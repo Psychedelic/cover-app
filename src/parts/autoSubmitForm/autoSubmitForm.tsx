@@ -1,4 +1,4 @@
-import {createRef, FC, FormEvent, Fragment, RefObject, useCallback, useRef, useState} from 'react';
+import {FC, FormEvent, Fragment, useCallback, useRef, useState} from 'react';
 
 import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -22,39 +22,20 @@ import {anonymousCoverMetadata, buildWithCoverMetadata, isPrincipal} from '@/uti
 
 import {StitchesAutoSubmitForm} from './autoSubmitForm.styled';
 
-interface InputRefs {
-  canisterId: RefObject<FormInputHandler>;
-  repoAccessToken: RefObject<FormInputHandler>;
-}
-
-const useInputRefs = (): InputRefs => ({
-  canisterId: createRef<FormInputHandler>(),
-  repoAccessToken: createRef<FormInputHandler>()
-});
-
-interface DialogRefs {
-  infoDialog: RefObject<InfoDialogHandler>;
-  errDialog: RefObject<ErrorDialogHandler>;
-  successDialog: RefObject<SuccessDialogHandler>;
-}
-
-const useDialogRefs = (): DialogRefs => ({
-  errDialog: createRef<ErrorDialogHandler>(),
-  infoDialog: createRef<InfoDialogHandler>(),
-  successDialog: createRef<SuccessDialogHandler>()
-});
-
 export const AutoSubmitForm: FC = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [coverMetadata, setCoverMetadata] = useState<CoverMetadata>();
-  const canisterIdTemp = useRef<string>();
-  const inputRefs = useInputRefs();
-  const dialogRefs = useDialogRefs();
+  const canisterIdTempRef = useRef<string>();
+  const canisterIdRef = useRef<FormInputHandler>(null),
+    repoAccessTokenRef = useRef<FormInputHandler>(null);
+  const errDialogRef = useRef<ErrorDialogHandler>(null),
+    infoDialogRef = useRef<InfoDialogHandler>(null),
+    successDialogRef = useRef<SuccessDialogHandler>(null);
   const navigate = useNavigate();
   const goToDashboard = useCallback(() => navigate(DASHBOARD_PATH), [navigate]);
   const onCanisterIdChanged = useCallback((canisterId: string) => {
-    if (canisterIdTemp.current === canisterId) return;
-    canisterIdTemp.current = canisterId;
+    if (canisterIdTempRef.current === canisterId) return;
+    canisterIdTempRef.current = canisterId;
     setIsFetched(false);
     setCoverMetadata({
       dfx_version: '',
@@ -68,7 +49,7 @@ export const AutoSubmitForm: FC = () => {
   const onSubmit = useCallback(
     (event?: FormEvent) => {
       event?.preventDefault();
-      const hasError = Object.values(inputRefs).reduce((result, ref) => {
+      const hasError = [canisterIdRef, repoAccessTokenRef].reduce((result, ref) => {
         if (ref.current) {
           return ref.current.hasError() || result;
         }
@@ -76,43 +57,43 @@ export const AutoSubmitForm: FC = () => {
       }, false);
       if (hasError) return;
       if (isFetched) {
-        dialogRefs.infoDialog.current?.open({
+        infoDialogRef.current?.open({
           title: 'Submission Processing',
           description: 'Your submission is processing, please allow some time for the verification to finish.'
         });
-        buildWithCoverMetadata(
-          inputRefs.canisterId.current?.value() as string,
-          inputRefs.repoAccessToken.current?.value() as string
-        )
+        buildWithCoverMetadata({
+          canisterId: canisterIdRef.current?.value() as string,
+          repoAccessToken: repoAccessTokenRef.current?.value() as string
+        })
           .then(() =>
-            dialogRefs.successDialog.current?.open({
+            successDialogRef.current?.open({
               description: 'Congrats!!! You have submitted verification successfully.',
               showActionBtn: true
             })
           )
-          .catch((e: ErrorResponse) => errorHandler(e, dialogRefs.errDialog.current as ErrorDialogHandler))
-          .finally(() => dialogRefs.infoDialog.current?.close());
+          .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
+          .finally(() => infoDialogRef.current?.close());
       } else {
-        dialogRefs.infoDialog.current?.open({
+        infoDialogRef.current?.open({
           title: 'Fetch Cover Metadata',
           description: 'Your submission is processing, please allow some time for the verification to finish.'
         });
-        anonymousCoverMetadata(inputRefs.canisterId.current?.value() as string)
+        anonymousCoverMetadata(canisterIdRef.current?.value() as string)
           .then(result => {
             setCoverMetadata(result);
             setIsFetched(true);
             return true;
           })
           .catch(_ => {
-            dialogRefs.errDialog.current?.open({
+            errDialogRef.current?.open({
               title: 'Failed to fetch Cover Metadata',
               description: 'The canister requested was not Cover Metadata supported.'
             });
           })
-          .finally(() => dialogRefs.infoDialog.current?.close());
+          .finally(() => infoDialogRef.current?.close());
       }
     },
-    [isFetched, inputRefs, dialogRefs]
+    [isFetched]
   );
   return (
     <StitchesAutoSubmitForm>
@@ -140,7 +121,7 @@ export const AutoSubmitForm: FC = () => {
           infoTooltip={'The canister ID associated with this verification'}
           label={'Canister ID'}
           onBlurHandler={onCanisterIdChanged}
-          ref={inputRefs.canisterId}
+          ref={canisterIdRef}
           required
           validations={[isPrincipal]}
         />
@@ -149,7 +130,7 @@ export const AutoSubmitForm: FC = () => {
             'Personal Access Token of a github account that has READ permission. Leave it empty if your repo is public'
           }
           label={'Repo Access Token'}
-          ref={inputRefs.repoAccessToken}
+          ref={repoAccessTokenRef}
         />
         {isFetched && (
           <>
@@ -173,13 +154,13 @@ export const AutoSubmitForm: FC = () => {
           <Core.Button size={'large'}>{isFetched ? 'Submit' : 'Verify Information'}</Core.Button>
         </div>
       </FormContainer>
-      <SuccessDialog actionContent={'Go back to Dashboard'} onAction={goToDashboard} ref={dialogRefs.successDialog} />
-      <InfoDialog ref={dialogRefs.infoDialog} />
+      <SuccessDialog actionContent={'Go back to Dashboard'} onAction={goToDashboard} ref={successDialogRef} />
+      <InfoDialog ref={infoDialogRef} />
       <ErrorDialog
         actionContent={'Retry Verification'}
         cancelContent={'Close'}
         onAction={onSubmit}
-        ref={dialogRefs.errDialog}
+        ref={errDialogRef}
       />
     </StitchesAutoSubmitForm>
   );

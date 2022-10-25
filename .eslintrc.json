@@ -27,7 +27,7 @@
     "no-nested-ternary": "off",
     "one-var": "off",
     "id-length": "off",
-    "max-lines-per-function": ["error", {"max": 150}],
+    "max-lines-per-function": ["error", {"max": 200}],
     "sort-keys": "off",
     "sort-vars": "off",
     "no-magic-numbers": "off",
@@ -91,8 +91,10 @@
     "sonarjs/no-duplicate-string": ["error", 5],
     "sonarjs/cognitive-complexity": ["error", 25],
     "promise/catch-or-return": ["error", {"allowFinally": true}],
-    "max-statements": ["error", 15],
-    "no-console": ["error", {"allow": ["error"]}]
+    "no-console": ["error", {"allow": ["error"]}],
+    "init-declarations": "off",
+    "consistent-return": "off",
+    "max-params": ["error", 5]
   },
   "overrides": [
     {"files": ["*.test.*"], "rules": {"react/jsx-no-bind": "off", "max-statements": "off"}},

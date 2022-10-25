@@ -1,4 +1,4 @@
-import {createRef, FC, useCallback, useEffect} from 'react';
+import {FC, useCallback, useEffect, useRef} from 'react';
 
 import {faClock, faGear, faRotate} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -10,7 +10,7 @@ import {isPositiveNum} from '@/utils';
 import {rowDisableStyle, StitchesSettingsLeft, StitchesSettingsRight, StitchesSettingsRow} from './settings.styled';
 
 export const Settings: FC = () => {
-  const refreshIntervalRef = createRef<FormInputHandler>();
+  const refreshIntervalRef = useRef<FormInputHandler>(null);
 
   const {
     state: {coverSettings},
@@ -40,7 +40,7 @@ export const Settings: FC = () => {
       const newSettings = {isAutoRefresh: coverSettings.isAutoRefresh, refreshInterval: newInterval};
       setCoverSettings(newSettings, dispatch);
     },
-    [coverSettings, dispatch, refreshIntervalRef]
+    [coverSettings, dispatch]
   );
 
   return (

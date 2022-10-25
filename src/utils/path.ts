@@ -1,4 +1,10 @@
-import {AUTOMATIC_SUBMIT_PATH, DASHBOARD_PATH, MY_CANISTER_PATH, STANDARD_SUBMIT_PATH} from '@/constants';
+import {
+  AUTOMATIC_SUBMIT_PATH,
+  BUILD_CONFIG_SUBMIT_PATH,
+  DASHBOARD_PATH,
+  MY_CANISTER_PATH,
+  STANDARD_SUBMIT_PATH
+} from '@/constants';
 
 export const getCurrentPath = (): string => window.location.pathname;
 
@@ -10,3 +16,4 @@ export const isMyCanisterDetailPage = () => getCurrentPath().includes('/my-canis
 
 export const isStandardSubmitPage = () => getCurrentPath() === STANDARD_SUBMIT_PATH;
 export const isAutoSubmitPage = () => getCurrentPath() === AUTOMATIC_SUBMIT_PATH;
+export const isBuildConfigSubmitPage = () => getCurrentPath() === BUILD_CONFIG_SUBMIT_PATH;
