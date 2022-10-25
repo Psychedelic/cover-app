@@ -27,7 +27,7 @@
     "no-nested-ternary": "off",
     "one-var": "off",
     "id-length": "off",
-    "max-lines-per-function": ["error", {"max": 190}],
+    "max-lines-per-function": ["error", {"max": 200}],
     "sort-keys": "off",
     "sort-vars": "off",
     "no-magic-numbers": "off",

@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {Core, TableContainer, TableContent, TableHeader} from '@/components';
-import {DASHBOARD_PATH, NOT_FOUND_PATH} from '@/constants';
+import {BUILD_CONFIG_SUBMIT_PATH, DASHBOARD_PATH, NOT_FOUND_PATH} from '@/constants';
 import {
   autoRefresh,
   DEFAULT_BUILD_CONFIGS,
@@ -58,9 +58,10 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       },
       [dispatch]
     ),
-    onEditHandler = useCallback((_buildConfig: BuildConfig) => {
-      // Do nothing.
-    }, []),
+    onEditHandler = useCallback(
+      (buildConfig: BuildConfig) => navigate(BUILD_CONFIG_SUBMIT_PATH, {state: {buildConfig}}),
+      [navigate]
+    ),
     onResubmitHandler = useCallback((_buildConfig: BuildConfig) => {
       // Do nothing.
     }, []);
