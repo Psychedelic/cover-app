@@ -61,7 +61,10 @@ export const AutoSubmitForm: FC = () => {
           title: 'Submission Processing',
           description: 'Your submission is processing, please allow some time for the verification to finish.'
         });
-        buildWithCoverMetadata(canisterIdRef.current?.value() as string, repoAccessTokenRef.current?.value() as string)
+        buildWithCoverMetadata({
+          canisterId: canisterIdRef.current?.value() as string,
+          repoAccessToken: repoAccessTokenRef.current?.value() as string
+        })
           .then(() =>
             successDialogRef.current?.open({
               description: 'Congrats!!! You have submitted verification successfully.',

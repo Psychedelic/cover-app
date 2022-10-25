@@ -1,16 +1,31 @@
 import {Ed25519KeyIdentity} from '@dfinity/identity';
 import {Principal} from '@dfinity/principal';
-import {AnonymousBuildRequest, Cover, CoverMetadata} from '@psychedelic/cover';
+import {
+  AnonymousBuildConfigRequest,
+  AnonymousBuildRequest,
+  AnonymousBuildWithConfigRequest,
+  Cover,
+  CoverMetadata,
+  CoverMetadataRequest
+} from '@psychedelic/cover';
 
 export const coverSDK = new Cover(Ed25519KeyIdentity.generate(), {
   isDevelopment: import.meta.env.VITE_SDK_MODE === 'development'
 });
 
-export const anonymousBuild = (buildConfig: AnonymousBuildRequest) =>
-  Cover.anonymousBuild(buildConfig, {isDevelopment: import.meta.env.VITE_SDK_MODE === 'development'});
+export const anonymousBuild = (buildRequest: AnonymousBuildRequest) =>
+  Cover.anonymousBuild(buildRequest, {isDevelopment: import.meta.env.VITE_SDK_MODE === 'development'});
 
-export const buildWithCoverMetadata = (canisterId: string, repoAccessToken?: string) =>
-  Cover.buildWithCoverMetadata(canisterId, repoAccessToken, {
+export const anonymousSaveBuildConfig = (buildConfigRequest: AnonymousBuildConfigRequest) =>
+  Cover.anonymousSaveBuildConfig(buildConfigRequest, {isDevelopment: import.meta.env.VITE_SDK_MODE === 'development'});
+
+export const anonymousBuildWithConfig = (buildWithConfigRequest: AnonymousBuildWithConfigRequest) =>
+  Cover.anonymousBuildWithConfig(buildWithConfigRequest, {
+    isDevelopment: import.meta.env.VITE_SDK_MODE === 'development'
+  });
+
+export const buildWithCoverMetadata = (coverMetadataRequest: CoverMetadataRequest) =>
+  Cover.buildWithCoverMetadata(coverMetadataRequest, {
     isDevelopment: import.meta.env.VITE_SDK_MODE === 'development'
   });
 
