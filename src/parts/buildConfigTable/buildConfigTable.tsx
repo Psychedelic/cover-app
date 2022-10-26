@@ -57,21 +57,17 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
 
   const {canisterId: canisterIdParam} = useParams(),
     [canisterIdSelected, setCanisterIdSelected] = useState(''),
-    resetPage = useCallback(() => {
-      fetchBuildConfigs(dispatch);
-    }, [dispatch]),
+    resetPage = useCallback(() => fetchBuildConfigs(dispatch), [dispatch]),
     navigate = useNavigate();
 
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam),
     isCanisterNotFound = buildConfigs?.length === 0;
 
   const onDeleteHandler = useCallback(
-      (buildConfig: BuildConfig) => {
-        (async () => {
-          await deleteBuildConfig(dispatch, Principal.fromText(buildConfig.canisterId as string));
-          await fetchBuildConfigs(dispatch);
-        })();
-      },
+      (buildConfig: BuildConfig) =>
+        deleteBuildConfig(dispatch, Principal.fromText(buildConfig.canisterId as string)).then(() =>
+          fetchBuildConfigs(dispatch)
+        ),
       [dispatch]
     ),
     onEditHandler = useCallback(
@@ -102,9 +98,7 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
     }, []);
 
   useEffect(() => {
-    if (typeof isPending === 'undefined' || isPending) {
-      return;
-    }
+    if (typeof isPending === 'undefined' || isPending) return;
     if (!isAuthenticated) {
       navigate(DASHBOARD_PATH);
       return;

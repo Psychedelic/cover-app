@@ -211,14 +211,9 @@ Leave it empty if you don't use it.`}
           <Core.Button size={'large'}>{'Save'}</Core.Button>
         </div>
       </FormContainer>
-      <SuccessDialog actionContent={'Go back to Dashboard'} onAction={goToMyCanisterPath} ref={successDialogRef} />
+      <SuccessDialog actionContent={'Go back to My Canister'} onAction={goToMyCanisterPath} ref={successDialogRef} />
       <InfoDialog ref={infoDialogRef} />
-      <ErrorDialog
-        actionContent={'Retry Verification'}
-        cancelContent={'Close'}
-        onAction={onSubmit}
-        ref={errDialogRef}
-      />
+      <ErrorDialog actionContent={'Retry'} cancelContent={'Close'} onAction={onSubmit} ref={errDialogRef} />
     </StitchesBuildConfigForm>
   );
 };

@@ -28,17 +28,14 @@ const renderItems = (label: string, value?: string) => [
 
 export const StatsTable: FC<PropTypes> = ({defaultStats = DEFAULT_STATS}) => {
   const {
-    state: {stats = defaultStats, isFetching},
-    dispatch
-  } = useStatsContext();
+      state: {stats = defaultStats, isFetching},
+      dispatch
+    } = useStatsContext(),
+    {
+      state: {coverSettings}
+    } = useCoverSettingsContext();
 
-  const {
-    state: {coverSettings}
-  } = useCoverSettingsContext();
-
-  const resetPage = useCallback(() => {
-    fetchStats(dispatch);
-  }, [dispatch]);
+  const resetPage = useCallback(() => fetchStats(dispatch), [dispatch]);
 
   useEffect(() => {
     fetchStats(dispatch);

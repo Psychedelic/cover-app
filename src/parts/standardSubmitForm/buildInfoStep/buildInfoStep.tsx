@@ -43,9 +43,7 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
         signatureRef,
         publicKeyRef
       ].reduce((result, ref) => {
-        if (ref.current) {
-          return ref.current.hasError() || result;
-        }
+        if (ref.current) return ref.current.hasError() || result;
         return result;
       }, false);
       if (hasError) return;
@@ -60,16 +58,18 @@ export const BuildInfoStep: FC<PropTypes> = ({onCompleted, defaultValue, onGoBac
     },
     [onCompleted]
   );
-  const goBackHandler = useCallback(() => {
-    onGoBack({
-      rustVersion: rustVersionRef.current?.value() || '',
-      dfxVersion: dfxVersionRef.current?.value() || '',
-      optimizeCount: optimizeCountRef.current?.value() || '',
-      timestamp: timestampRef.current?.value() || '',
-      signature: signatureRef.current?.value() || '',
-      publicKey: publicKeyRef.current?.value() || ''
-    });
-  }, [onGoBack]);
+  const goBackHandler = useCallback(
+    () =>
+      onGoBack({
+        rustVersion: rustVersionRef.current?.value() || '',
+        dfxVersion: dfxVersionRef.current?.value() || '',
+        optimizeCount: optimizeCountRef.current?.value() || '',
+        timestamp: timestampRef.current?.value() || '',
+        signature: signatureRef.current?.value() || '',
+        publicKey: publicKeyRef.current?.value() || ''
+      }),
+    [onGoBack]
+  );
   return (
     <StitchesBuildInfoStep>
       <FormContainer autoComplete={'off'} onSubmit={onSubmit}>

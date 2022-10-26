@@ -42,12 +42,7 @@ export const VerificationTable: FC<PropTypes> = ({defaultVerifications = DEFAULT
       fetchVerifications(dispatch);
       paginationRef.current?.forceReset();
     }, [dispatch]),
-    onPageChanged = useCallback(
-      (pageNum: number) => {
-        fetchVerifications(dispatch, pageNum);
-      },
-      [dispatch]
-    );
+    onPageChanged = useCallback((pageNum: number) => fetchVerifications(dispatch, pageNum), [dispatch]);
 
   const isDetailPage = typeof canisterIdParam === 'string' && isPrincipal(canisterIdParam),
     isCanisterNotFound = verifications?.length === 0;

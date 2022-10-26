@@ -22,20 +22,14 @@ interface PropTypes {
 
 export const ActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITIES}) => {
   const {
-    state: {activities = defaultActivity, totalPage, disablePaginated},
-    dispatch
-  } = useActivityContext();
+      state: {activities = defaultActivity, totalPage, disablePaginated},
+      dispatch
+    } = useActivityContext(),
+    {
+      state: {coverSettings}
+    } = useCoverSettingsContext();
 
-  const {
-    state: {coverSettings}
-  } = useCoverSettingsContext();
-
-  const onPageChange = useCallback(
-    (pageNum: number) => {
-      fetchActivities(dispatch, pageNum);
-    },
-    [dispatch]
-  );
+  const onPageChange = useCallback((pageNum: number) => fetchActivities(dispatch, pageNum), [dispatch]);
 
   const paginationRef = useRef<PaginationHandler>(null);
 
