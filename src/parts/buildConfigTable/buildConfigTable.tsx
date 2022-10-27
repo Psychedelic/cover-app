@@ -34,6 +34,7 @@ import {
 import {BuildConfig} from '@/models';
 import {anonymousBuildWithConfig, isMyCanisterPage, isPrincipal} from '@/utils';
 
+import {BuildConfigEmpty} from './buildConfigEmpty';
 import {BuildConfigRow} from './buildConfigRow';
 import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './buildConfigTable.styled';
 
@@ -154,19 +155,23 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
         </th>
       </TableHeader>
       <TableContent css={canisterIdSelected === '' ? {} : tableContentTransparent}>
-        {buildConfigs?.map((buildConfig, index) => (
-          <BuildConfigRow
-            buildConfig={buildConfig}
-            disableCollapseBtn={Boolean(currentCanisterId)}
-            isNew={!buildConfig.lastBuildWasmHash}
-            isSelected={(currentCanisterId || canisterIdSelected) === buildConfig.canisterId}
-            key={buildConfig.canisterId || index}
-            onDeleteHandler={onDeleteHandler}
-            onEditHandler={onEditHandler}
-            onResubmitHandler={onResubmitHandler}
-            setCanisterIdSelected={setCanisterIdSelected}
-          />
-        ))}
+        {isCanisterNotFound ? (
+          <BuildConfigEmpty />
+        ) : (
+          buildConfigs?.map((buildConfig, index) => (
+            <BuildConfigRow
+              buildConfig={buildConfig}
+              disableCollapseBtn={Boolean(currentCanisterId)}
+              isNew={!buildConfig.lastBuildWasmHash}
+              isSelected={(currentCanisterId || canisterIdSelected) === buildConfig.canisterId}
+              key={buildConfig.canisterId || index}
+              onDeleteHandler={onDeleteHandler}
+              onEditHandler={onEditHandler}
+              onResubmitHandler={onResubmitHandler}
+              setCanisterIdSelected={setCanisterIdSelected}
+            />
+          ))
+        )}
       </TableContent>
       <SuccessDialog ref={successDialogRef} />
       <InfoDialog ref={infoDialogRef} />
