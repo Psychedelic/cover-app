@@ -43,9 +43,7 @@ export const GeneralInfoStep: FC<PropTypes> = ({onCompleted, defaultValue}) => {
         commitHashRef,
         repoAccessTokenRef
       ].reduce((result, ref) => {
-        if (ref.current) {
-          return ref.current.hasError() || result;
-        }
+        if (ref.current) return ref.current.hasError() || result;
         return result;
       }, false);
       if (hasError) return;
