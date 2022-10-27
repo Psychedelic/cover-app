@@ -7,6 +7,8 @@ import {ErrorResponse} from '@psychedelic/cover';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {
+  ConfirmDialog,
+  ConfirmDialogHandler,
   Core,
   ErrorDialog,
   ErrorDialogHandler,
@@ -18,7 +20,7 @@ import {
   TableContent,
   TableHeader
 } from '@/components';
-import {BUILD_CONFIG_SUBMIT_PATH, DASHBOARD_PATH, NOT_FOUND_PATH} from '@/constants';
+import {BUILD_CONFIG_SUBMIT_PATH, DASHBOARD_PATH, MY_CANISTER_PATH, NOT_FOUND_PATH} from '@/constants';
 import {
   autoRefresh,
   DEFAULT_BUILD_CONFIGS,
@@ -51,7 +53,8 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       state: {isPending, isAuthenticated}
     } = useAuthenticationContext();
 
-  const errDialogRef = useRef<ErrorDialogHandler>(null),
+  const confirmDialogRef = useRef<ConfirmDialogHandler>(null),
+    errDialogRef = useRef<ErrorDialogHandler>(null),
     infoDialogRef = useRef<InfoDialogHandler>(null),
     successDialogRef = useRef<SuccessDialogHandler>(null);
 
@@ -64,11 +67,24 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
     isCanisterNotFound = buildConfigs?.length === 0;
 
   const onDeleteHandler = useCallback(
-      (buildConfig: BuildConfig) =>
-        deleteBuildConfig(dispatch, Principal.fromText(buildConfig.canisterId as string)).then(() =>
-          fetchBuildConfigs(dispatch)
-        ),
-      [dispatch]
+      () =>
+        confirmDialogRef.current?.open({
+          title: 'Delete Canister Build Config?',
+          description:
+            'You will not be able to recover the Canister Build Config. Are you sure you want to have it deleted?'
+        }),
+      []
+    ),
+    onDeleteConfirm = useCallback(
+      () =>
+        deleteBuildConfig(dispatch, Principal.fromText(currentCanisterId || canisterIdSelected)).finally(() => {
+          if (isDetailPage) navigate(MY_CANISTER_PATH);
+          else {
+            fetchBuildConfigs(dispatch);
+            confirmDialogRef.current?.close();
+          }
+        }),
+      [currentCanisterId, canisterIdSelected, dispatch, navigate, isDetailPage]
     ),
     onEditHandler = useCallback(
       (buildConfig: BuildConfig) => navigate(BUILD_CONFIG_SUBMIT_PATH, {state: {buildConfig}}),
@@ -155,6 +171,7 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       <SuccessDialog ref={successDialogRef} />
       <InfoDialog ref={infoDialogRef} />
       <ErrorDialog ref={errDialogRef} />
+      <ConfirmDialog actionContent={'Yes, Delete it'} onAction={onDeleteConfirm} ref={confirmDialogRef} />
     </TableContainer>
   );
 };

@@ -202,7 +202,8 @@ const mapFullBuildConfig = async (data: CanisterBuildConfig[]): Promise<BuildCon
   const aggregator = data.reduce(
     (acc, v) => {
       acc.buildConfigs.push(mapPartialBuildConfig(v));
-      acc.hashPromises.push(coverSDK.getICHash(v.canister_id));
+      // NOTE: fix this when Plug uses `"@dfinity/identity": "^0.14.0"`
+      acc.hashPromises.push(coverSDK.getICHash(Principal.fromUint8Array(v.canister_id.toUint8Array())));
       acc.lastBuildPromises.push(coverSDK.getVerificationByCanisterId(v.canister_id));
       return acc;
     },
