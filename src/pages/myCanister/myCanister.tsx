@@ -4,7 +4,7 @@ import {Navigate, Route, Routes} from 'react-router-dom';
 
 import {MY_CANISTER_DETAIL_ROUTE, NOT_FOUND_PATH} from '@/constants';
 import {ActivityProvider, BuildConfigProvider, StatsProvider} from '@/contexts';
-import {ActivityTable, BuildConfigTable, PageContainer, StatsTable} from '@/parts';
+import {BuildConfigTable, MyActivityTable, PageContainer, StatsTable} from '@/parts';
 
 import {ContentContainer, ContentContainerOuter, LeftContent, RightContent, Title} from './myCanister.styled';
 
@@ -26,7 +26,7 @@ export const MyCanister: FC = () => (
               <StatsTable />
             </StatsProvider>
             <ActivityProvider>
-              <ActivityTable />
+              <MyActivityTable />
             </ActivityProvider>
           </RightContent>
         </ContentContainer>
