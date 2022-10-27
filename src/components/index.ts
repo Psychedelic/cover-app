@@ -8,3 +8,4 @@ export * from './infoDialog';
 export * from './successDialog';
 export * from './menuItems';
 export * from './settings';
+export * from './confirmDialog';
