@@ -5,7 +5,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {logo} from '@/assets';
 import {Core, MenuItems, SearchBar, SearchBarHandler, Settings} from '@/components';
 import {CANISTER_DETAIL_ROUTE, DASHBOARD_PATH, MY_CANISTER_DETAIL_ROUTE, MY_CANISTER_PATH} from '@/constants';
-import {authenticate, logOut, useAuthenticationContext, useVerificationContext} from '@/contexts';
+import {authenticate, logOut, useAuthenticationContext, useBuildConfigContext, useVerificationContext} from '@/contexts';
 import {
   getCurrentPath,
   isCanisterDetailPage,
@@ -31,8 +31,11 @@ export const PageHeader: FC = () => {
   const searchBarRef = useRef<SearchBarHandler>(null);
   const navigate = useNavigate();
   const {
-      state: {isFetching}
+      state: {isFetching: isVerificationFetching}
     } = useVerificationContext(),
+    {
+      state: {isFetching: isBuildConfigFetching}
+    } = useBuildConfigContext(),
     {
       state: {isPending, isAuthenticated, pid},
       dispatch
@@ -77,7 +80,8 @@ export const PageHeader: FC = () => {
         <SearchBar
           defaultValue={canisterIdParam}
           disabled={
-            isFetching ||
+            isVerificationFetching ||
+            isBuildConfigFetching ||
             !(isDashboardPage() || isCanisterDetailPage() || isMyCanisterPage() || isMyCanisterDetailPage())
           }
           onBlurOrEnter={onBlur}
