@@ -5,7 +5,13 @@ import {Link, useNavigate} from 'react-router-dom';
 import {logo} from '@/assets';
 import {Core, MenuItems, SearchBar, SearchBarHandler, Settings} from '@/components';
 import {CANISTER_DETAIL_ROUTE, DASHBOARD_PATH, MY_CANISTER_DETAIL_ROUTE, MY_CANISTER_PATH} from '@/constants';
-import {authenticate, logOut, useAuthenticationContext, useBuildConfigContext, useVerificationContext} from '@/contexts';
+import {
+  authenticate,
+  logOut,
+  useAuthenticationContext,
+  useBuildConfigContext,
+  useVerificationContext
+} from '@/contexts';
 import {
   getCurrentPath,
   isCanisterDetailPage,
