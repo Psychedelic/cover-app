@@ -59,7 +59,7 @@ export const MyActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVI
       ref={paginationRef}
       totalPage={totalPage}>
       <TableHeader>
-        <th colSpan={2}>{'Recent Activities'}</th>
+        <th colSpan={2}>{'My Recent Activities'}</th>
         <th>
           <Core.Button disabled={disablePaginated} kind={'text'} onClick={resetPage}>
             <FontAwesomeIcon icon={faRotate} spin={coverSettings.isAutoRefresh} />
