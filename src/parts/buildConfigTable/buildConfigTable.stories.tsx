@@ -93,3 +93,9 @@ export const WithData: ComponentStoryObj<typeof BuildConfigTable> = {
 export const Loading: ComponentStoryObj<typeof BuildConfigTable> = {
   args: {}
 };
+
+export const Empty: ComponentStoryObj<typeof BuildConfigTable> = {
+  args: {
+    defaultBuildConfigs: []
+  }
+};
