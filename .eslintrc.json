@@ -89,7 +89,7 @@
     ],
     "@typescript-eslint/no-unused-vars": ["error"],
     "sonarjs/no-duplicate-string": ["error", 5],
-    "sonarjs/cognitive-complexity": ["error", 25],
+    "sonarjs/cognitive-complexity": ["error", 30],
     "promise/catch-or-return": ["error", {"allowFinally": true}],
     "no-console": ["error", {"allow": ["error"]}],
     "init-declarations": "off",
