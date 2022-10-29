@@ -82,6 +82,7 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
         deleteBuildConfig(dispatch, Principal.fromText(currentCanisterId || canisterIdSelected)).finally(() => {
           if (isDetailPage) navigate(MY_CANISTER_PATH);
           else {
+            setCanisterIdSelected('');
             fetchBuildConfigs(dispatch);
             confirmDialogRef.current?.close();
           }
