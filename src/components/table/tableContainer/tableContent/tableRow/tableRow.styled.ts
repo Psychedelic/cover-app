@@ -7,5 +7,8 @@ export const StitchesTableRow = styled('tr', {
     '& svg': {
       cursor: 'default'
     }
+  },
+  '& td:has(> div[data-loading-mask=true])': {
+    opacity: 1
   }
 });
