@@ -136,7 +136,7 @@ export const BuildConfigProvider = createProvider(context, buildConfigReducer, I
 export const fetchBuildConfigs = async (dispatch: Dispatch<ReducerAction<typeof buildConfigReducer>>) => {
   dispatch({type: 'fetchPending'});
   try {
-    const result = await getPlugCoverActor().getBuildConfigs();
+    const result = await getPlugCoverActor().getMyBuildConfigs();
     dispatch({
       type: 'fetchBuildConfigs',
       payload: {
@@ -154,7 +154,7 @@ export const fetchBuildConfigByCanisterId = async (
 ) => {
   dispatch({type: 'fetchPending'});
   try {
-    const result = await getPlugCoverActor().getBuildConfigById(currentCanisterId);
+    const result = await getPlugCoverActor().getMyBuildConfigById(currentCanisterId);
     dispatch({
       type: 'fetchBuildConfigByCanisterId',
       payload: {
@@ -173,7 +173,7 @@ export const deleteBuildConfig = async (
 ) => {
   dispatch({type: 'fetchPending'});
   try {
-    await getPlugCoverActor().deleteBuildConfig(canisterId);
+    await getPlugCoverActor().deleteMyBuildConfig(canisterId);
     dispatch({type: 'deleteBuildConfig'});
   } catch (e) {
     console.error(e);
