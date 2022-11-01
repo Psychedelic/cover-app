@@ -12,6 +12,7 @@ import {
   FormInputHandler,
   InfoDialog,
   InfoDialogHandler,
+  Loading,
   SuccessDialog,
   SuccessDialogHandler
 } from '@/components';
@@ -102,7 +103,9 @@ export const BuildConfigForm = () => {
     if (typeof isPending === 'undefined' || isPending) return;
     if (!isAuthenticated) navigate(DASHBOARD_PATH);
   }, [isPending, isAuthenticated, navigate]);
-  return (
+  return typeof isPending === 'undefined' || isPending || !isAuthenticated ? (
+    <Loading />
+  ) : (
     <StitchesBuildConfigForm>
       <FormContainer autoComplete={'off'} onSubmit={onSubmit}>
         <div className={'header'}>

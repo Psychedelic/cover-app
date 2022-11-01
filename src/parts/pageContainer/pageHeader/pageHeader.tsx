@@ -52,7 +52,10 @@ export const PageHeader: FC = () => {
         if (value !== lastSearchCanisterIdRef.current) {
           isPrincipal(value)
             ? navigate(
-                (isDashboardPage() ? CANISTER_DETAIL_ROUTE : MY_CANISTER_DETAIL_ROUTE).replaceAll(':canisterId', value)
+                (isDashboardPage() || isCanisterDetailPage()
+                  ? CANISTER_DETAIL_ROUTE
+                  : MY_CANISTER_DETAIL_ROUTE
+                ).replaceAll(':canisterId', value)
               )
             : value === '' && navigate(isCanisterDetailPage() ? DASHBOARD_PATH : MY_CANISTER_PATH);
           lastSearchCanisterIdRef.current = value;

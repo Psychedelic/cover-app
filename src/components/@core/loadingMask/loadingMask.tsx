@@ -14,5 +14,5 @@ export const LoadingMask: FC<PropTypes> = ({children, size, depth = 1}) => {
     child = child?.props?.children;
     depthCount += 1;
   }
-  return child ? (children as ReactElement) : <StitchesLoadingMask size={size} />;
+  return child ? (children as ReactElement) : <StitchesLoadingMask data-loading-mask={'true'} size={size} />;
 };

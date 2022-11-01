@@ -14,6 +14,7 @@ import {
   ErrorDialogHandler,
   InfoDialog,
   InfoDialogHandler,
+  Loading,
   SuccessDialog,
   SuccessDialogHandler,
   TableContainer,
@@ -81,6 +82,7 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
         deleteBuildConfig(dispatch, Principal.fromText(currentCanisterId || canisterIdSelected)).finally(() => {
           if (isDetailPage) navigate(MY_CANISTER_PATH);
           else {
+            setCanisterIdSelected('');
             fetchBuildConfigs(dispatch);
             confirmDialogRef.current?.close();
           }
@@ -139,7 +141,9 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
     navigate
   ]);
 
-  return (
+  return typeof isPending === 'undefined' || isPending || !isAuthenticated ? (
+    <Loading />
+  ) : (
     <TableContainer css={tableContainerStyle} paginated={false}>
       <TableHeader css={tableHeaderStyle}>
         <th>{'Canister ID'}</th>
