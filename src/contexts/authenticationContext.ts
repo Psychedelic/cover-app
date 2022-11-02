@@ -38,7 +38,7 @@ interface LogOutAction extends ActionBase {
 interface State {
   isAuthenticated?: boolean;
   pid?: string;
-  isPending?: boolean;
+  isFetching?: boolean;
 }
 const INIT_STATE: State = {};
 
@@ -59,7 +59,7 @@ const authenticationReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
       return {
-        isPending: true,
+        isFetching: true,
         isAuthenticated: false
       };
     }
@@ -67,13 +67,13 @@ const authenticationReducer = (_: State, action: Action): State => {
       return {
         isAuthenticated: action.payload.isAuthenticated,
         pid: action.payload.pid,
-        isPending: false
+        isFetching: false
       };
     }
     case 'logOutAction': {
       return {
         isAuthenticated: false,
-        isPending: false
+        isFetching: false
       };
     }
     default: {

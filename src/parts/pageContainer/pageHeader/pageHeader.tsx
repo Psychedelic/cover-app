@@ -43,7 +43,7 @@ export const PageHeader: FC = () => {
       state: {isFetching: isBuildConfigFetching}
     } = useBuildConfigContext(),
     {
-      state: {isPending, isAuthenticated, pid},
+      state: {isFetching: isAuthenticationFetching, isAuthenticated, pid},
       dispatch
     } = useAuthenticationContext();
   const onBlur = useCallback(
@@ -100,7 +100,7 @@ export const PageHeader: FC = () => {
       </StitchesPageMainHeader>
       <StitchesPageSecondaryHeader>
         <SubmitBtn />
-        {isPending ? (
+        {isAuthenticationFetching ? (
           <Core.Button disabled kind={'text'}>
             {'Loading...'}
           </Core.Button>

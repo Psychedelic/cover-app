@@ -10,13 +10,13 @@ import {ContentContainer, ContentContainerOuter, LeftContent, RightContent, Titl
 
 export const MyCanister: FC = () => {
   const {
-    state: {isPending, isAuthenticated}
+    state: {isFetching, isAuthenticated}
   } = useAuthenticationContext();
   return (
     <BuildConfigProvider>
       <PageContainer>
         <ContentContainerOuter>
-          {isPending === false && isAuthenticated && <Title>{'My Canisters'}</Title>}
+          {isFetching === false && isAuthenticated && <Title>{'My Canisters'}</Title>}
           <ContentContainer>
             <LeftContent>
               <Routes>
@@ -25,7 +25,7 @@ export const MyCanister: FC = () => {
                 <Route element={<Navigate to={NOT_FOUND_PATH} />} path={'*'} />
               </Routes>
             </LeftContent>
-            {isPending === false && isAuthenticated && (
+            {isFetching === false && isAuthenticated && (
               <RightContent>
                 <StatsProvider>
                   <StatsTable />

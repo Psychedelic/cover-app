@@ -52,7 +52,7 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       state: {coverSettings}
     } = useCoverSettingsContext(),
     {
-      state: {isPending, isAuthenticated}
+      state: {isFetching, isAuthenticated}
     } = useAuthenticationContext();
 
   const confirmDialogRef = useRef<ConfirmDialogHandler>(null),
@@ -117,7 +117,7 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
     }, []);
 
   useEffect(() => {
-    if (typeof isPending === 'undefined' || isPending) return;
+    if (typeof isFetching === 'undefined' || isFetching) return;
     if (!isAuthenticated) {
       navigate(DASHBOARD_PATH);
       return;
@@ -136,12 +136,12 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
     canisterIdParam,
     isDetailPage,
     isCanisterNotFound,
-    isPending,
+    isFetching,
     isAuthenticated,
     navigate
   ]);
 
-  return typeof isPending === 'undefined' || isPending || !isAuthenticated ? (
+  return typeof isFetching === 'undefined' || isFetching || !isAuthenticated ? (
     <Loading />
   ) : (
     <TableContainer css={tableContainerStyle} paginated={false}>

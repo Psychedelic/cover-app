@@ -97,13 +97,13 @@ export const BuildConfigForm = () => {
         .finally(() => infoDialogRef.current?.close());
     }, []);
   const {
-    state: {pid, isPending, isAuthenticated}
+    state: {pid, isFetching, isAuthenticated}
   } = useAuthenticationContext();
   useEffect(() => {
-    if (typeof isPending === 'undefined' || isPending) return;
+    if (typeof isFetching === 'undefined' || isFetching) return;
     if (!isAuthenticated) navigate(DASHBOARD_PATH);
-  }, [isPending, isAuthenticated, navigate]);
-  return typeof isPending === 'undefined' || isPending || !isAuthenticated ? (
+  }, [isFetching, isAuthenticated, navigate]);
+  return typeof isFetching === 'undefined' || isFetching || !isAuthenticated ? (
     <Loading />
   ) : (
     <StitchesBuildConfigForm>
