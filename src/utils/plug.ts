@@ -2,18 +2,32 @@ import {_SERVICE as CoverActor, idlFactory} from '@psychedelic/cover';
 
 import {COVER_CANISTER_ID} from '@/constants';
 
+interface PublicKey {
+  derKey: {
+    data: Uint8Array;
+    type: string;
+  };
+  rawKey: {
+    data: Uint8Array;
+    type: string;
+  };
+}
+
 interface Plug {
   ic?: {
     plug?: {
       isConnected: () => Promise<boolean>;
       disconnect: () => Promise<void>;
-      requestConnect: (opts: {whitelist: string[]; host: string}) => Promise<void>;
+      requestConnect: (opts: {whitelist: string[]; host: string}) => Promise<PublicKey>;
       createActor: (opts: {canisterId: string; interfaceFactory: unknown}) => Promise<CoverActor>;
       sessionManager: {
         coverActor?: CoverActor | null;
         onConnectionUpdate?: (() => Promise<void>) | null;
         sessionData?: {
           principalId: string;
+          agent: {
+            _identity: Promise<{publicKey: PublicKey}>;
+          };
         };
       };
     };
@@ -49,15 +63,15 @@ export const getPlugPrincipalId = () => getPlugInstance().sessionManager.session
 
 export const getPlugAuthentication = async () => {
   const isAuthenticated = await getPlugInstance().isConnected();
-  return {isAuthenticated, pid: getPlugPrincipalId()};
+  const publicKey = (await getPlugInstance().sessionManager.sessionData?.agent._identity)?.publicKey;
+  return {publicKey, isAuthenticated, pid: getPlugPrincipalId()};
 };
 
-export const plugConnect = async () => {
-  await getPlugInstance().requestConnect({
+export const plugConnect = () =>
+  getPlugInstance().requestConnect({
     whitelist: [COVER_CANISTER_ID],
     host: 'https://mainnet.dfinity.network'
   });
-};
 
 export const getPlugCoverActor = (): CoverActor => {
   const coverActor = getPlugInstance().sessionManager.coverActor;

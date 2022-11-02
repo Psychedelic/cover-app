@@ -22,12 +22,12 @@ export const WithData: ComponentStoryObj<typeof MyActivityTable> = {
         datetime: new Date(Date.now() - 59 * 1000)
       },
       {
-        buildStatus: 'Pending',
+        buildConfigStatus: 'Save Config',
         canisterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
         datetime: new Date(Date.now() - 60 * 1000)
       },
       {
-        buildStatus: 'Pending',
+        buildStatus: 'Error',
         canisterId: 'iftvq-niaaa-aaaai-qasga-cai',
         datetime: new Date(Date.now() - 60 * 1000 * 59)
       },
@@ -37,7 +37,7 @@ export const WithData: ComponentStoryObj<typeof MyActivityTable> = {
         datetime: new Date(Date.now() - 60 * 1000 * 60)
       },
       {
-        buildStatus: 'Building',
+        buildConfigStatus: 'Save Config',
         canisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
         datetime: new Date(Date.now() - 60 * 1000 * 60 * 23)
       },
@@ -47,7 +47,7 @@ export const WithData: ComponentStoryObj<typeof MyActivityTable> = {
         datetime: new Date(Date.now() - 60 * 1000 * 60 * 24)
       },
       {
-        buildStatus: 'Pending',
+        buildConfigStatus: 'Delete Config',
         canisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
         datetime: new Date(Date.now() - 60 * 1000 * 60 * 99999)
       }

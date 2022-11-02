@@ -9,6 +9,7 @@ import {ActionBase, createContext, createProvider} from './helper';
  * UTILS
  * ========================================================================================================
  */
+const toHex = (bytes?: Uint8Array) => bytes?.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
 
 /*
  * ========================================================================================================
@@ -24,6 +25,7 @@ interface AuthenticationAction extends ActionBase {
   payload: {
     isAuthenticated: boolean;
     pid?: string;
+    publicKey?: string;
   };
 }
 interface LogOutAction extends ActionBase {
@@ -38,7 +40,8 @@ interface LogOutAction extends ActionBase {
 interface State {
   isAuthenticated?: boolean;
   pid?: string;
-  isPending?: boolean;
+  isFetching?: boolean;
+  publicKey?: string;
 }
 const INIT_STATE: State = {};
 
@@ -59,7 +62,7 @@ const authenticationReducer = (_: State, action: Action): State => {
   switch (action.type) {
     case 'fetchPending': {
       return {
-        isPending: true,
+        isFetching: true,
         isAuthenticated: false
       };
     }
@@ -67,13 +70,14 @@ const authenticationReducer = (_: State, action: Action): State => {
       return {
         isAuthenticated: action.payload.isAuthenticated,
         pid: action.payload.pid,
-        isPending: false
+        publicKey: action.payload.publicKey,
+        isFetching: false
       };
     }
     case 'logOutAction': {
       return {
         isAuthenticated: false,
-        isPending: false
+        isFetching: false
       };
     }
     default: {
@@ -96,23 +100,26 @@ export const AuthenticationProvider = createProvider(context, authenticationRedu
  */
 const refetchAuthenticationState = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
   dispatch({type: 'fetchPending'});
-  const {isAuthenticated, pid} = await getPlugAuthentication();
-  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
+  const {isAuthenticated, pid, publicKey} = await getPlugAuthentication();
+  dispatch({type: 'authenticationAction', payload: {publicKey: toHex(publicKey?.rawKey.data), isAuthenticated, pid}});
 };
 
 export const verifyPlugAuthentication = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
   dispatch({type: 'fetchPending'});
-  const {isAuthenticated, pid} = await getPlugAuthentication();
+  const {isAuthenticated, pid, publicKey} = await getPlugAuthentication();
   await initPlugPersistenceData(isAuthenticated, () => refetchAuthenticationState(dispatch));
-  dispatch({type: 'authenticationAction', payload: {isAuthenticated, pid}});
+  dispatch({type: 'authenticationAction', payload: {publicKey: toHex(publicKey?.rawKey.data), isAuthenticated, pid}});
 };
 
 export const authenticate = async (dispatch: Dispatch<ReducerAction<typeof authenticationReducer>>) => {
   dispatch({type: 'fetchPending'});
   try {
-    await plugConnect();
+    const publicKey = await plugConnect();
     await initPlugPersistenceData(true, () => refetchAuthenticationState(dispatch));
-    dispatch({type: 'authenticationAction', payload: {isAuthenticated: true, pid: getPlugPrincipalId()}});
+    dispatch({
+      type: 'authenticationAction',
+      payload: {publicKey: toHex(publicKey.rawKey.data), isAuthenticated: true, pid: getPlugPrincipalId()}
+    });
   } catch (_) {
     plugDisconnect();
     dispatch({type: 'logOutAction'});

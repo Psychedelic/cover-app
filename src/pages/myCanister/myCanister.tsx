@@ -3,20 +3,20 @@ import {FC} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 
 import {MY_CANISTER_DETAIL_ROUTE, NOT_FOUND_PATH} from '@/constants';
-import {ActivityProvider, BuildConfigProvider, StatsProvider, useAuthenticationContext} from '@/contexts';
+import {BuildConfigProvider, MyActivityProvider, StatsProvider, useAuthenticationContext} from '@/contexts';
 import {BuildConfigTable, MyActivityTable, PageContainer, StatsTable} from '@/parts';
 
 import {ContentContainer, ContentContainerOuter, LeftContent, RightContent, Title} from './myCanister.styled';
 
 export const MyCanister: FC = () => {
   const {
-    state: {isPending, isAuthenticated}
+    state: {isFetching, isAuthenticated}
   } = useAuthenticationContext();
   return (
     <BuildConfigProvider>
       <PageContainer>
         <ContentContainerOuter>
-          {isPending === false && isAuthenticated && <Title>{'My Canisters'}</Title>}
+          {isFetching === false && isAuthenticated && <Title>{'My Canisters'}</Title>}
           <ContentContainer>
             <LeftContent>
               <Routes>
@@ -25,14 +25,14 @@ export const MyCanister: FC = () => {
                 <Route element={<Navigate to={NOT_FOUND_PATH} />} path={'*'} />
               </Routes>
             </LeftContent>
-            {isPending === false && isAuthenticated && (
+            {isFetching === false && isAuthenticated && (
               <RightContent>
                 <StatsProvider>
                   <StatsTable />
                 </StatsProvider>
-                <ActivityProvider>
+                <MyActivityProvider>
                   <MyActivityTable />
-                </ActivityProvider>
+                </MyActivityProvider>
               </RightContent>
             )}
           </ContentContainer>

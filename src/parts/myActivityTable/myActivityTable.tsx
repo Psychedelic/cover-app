@@ -6,46 +6,46 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Core, PaginationHandler, TableContainer, TableContent, TableHeader} from '@/components';
 import {
   autoRefresh,
-  DEFAULT_ACTIVITIES,
-  fetchActivities,
-  useActivityContext,
-  useCoverSettingsContext
+  DEFAULT_MY_ACTIVITIES,
+  fetchMyActivities,
+  useCoverSettingsContext,
+  useMyActivityContext
 } from '@/contexts';
-import {Activity} from '@/models';
-import {ActivityRow} from '@/parts';
+import {MyActivity} from '@/models';
 
-import {ActivityEmpty} from './activityEmpty';
+import {MyActivityEmpty} from './myActivityEmpty';
+import {MyActivityRow} from './myActivityRow';
 import {tableBodyStyle, tableContainerStyle} from './myActivityTable.styled';
 
 interface PropTypes {
-  defaultActivity?: Activity[];
+  defaultActivity?: MyActivity[];
 }
 
-export const MyActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVITIES}) => {
+export const MyActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_MY_ACTIVITIES}) => {
   const {
-      state: {activities = defaultActivity, totalPage, disablePaginated},
+      state: {myActivities = defaultActivity, totalPage, disablePaginated},
       dispatch
-    } = useActivityContext(),
+    } = useMyActivityContext(),
     {
       state: {coverSettings}
     } = useCoverSettingsContext();
 
-  const onPageChange = useCallback((pageNum: number) => fetchActivities(dispatch, pageNum), [dispatch]);
+  const onPageChange = useCallback((pageNum: number) => fetchMyActivities(dispatch, pageNum), [dispatch]);
 
   const paginationRef = useRef<PaginationHandler>(null);
 
   const resetPage = useCallback(() => {
-    fetchActivities(dispatch);
+    fetchMyActivities(dispatch);
     paginationRef.current?.forceReset();
   }, [dispatch]);
 
-  const isActivityNotFound = activities.length < 1;
+  const isActivityNotFound = myActivities.length < 1;
 
   useEffect(() => {
-    fetchActivities(dispatch);
+    fetchMyActivities(dispatch);
     paginationRef.current?.forceReset();
     return autoRefresh(coverSettings, () => {
-      fetchActivities(dispatch);
+      fetchMyActivities(dispatch);
       paginationRef.current?.forceReset();
     });
   }, [dispatch, coverSettings]);
@@ -68,10 +68,11 @@ export const MyActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_ACTIVI
       </TableHeader>
       <TableContent css={tableBodyStyle}>
         {isActivityNotFound ? (
-          <ActivityEmpty />
+          <MyActivityEmpty />
         ) : (
-          activities?.map(({buildStatus, canisterId, datetime}, index) => (
-            <ActivityRow
+          myActivities?.map(({buildStatus, buildConfigStatus, canisterId, datetime}, index) => (
+            <MyActivityRow
+              buildConfigStatus={buildConfigStatus}
               buildStatus={buildStatus}
               canisterId={canisterId}
               dateTime={datetime}

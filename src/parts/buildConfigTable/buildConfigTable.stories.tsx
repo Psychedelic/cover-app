@@ -18,6 +18,8 @@ export default meta;
 
 export const WithData: ComponentStoryObj<typeof BuildConfigTable> = {
   args: {
+    defaultAuthentication: true,
+    defaultFetching: false,
     defaultBuildConfigs: [
       {
         canisterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
@@ -91,11 +93,16 @@ export const WithData: ComponentStoryObj<typeof BuildConfigTable> = {
 };
 
 export const Loading: ComponentStoryObj<typeof BuildConfigTable> = {
-  args: {}
+  args: {
+    defaultAuthentication: true,
+    defaultFetching: false
+  }
 };
 
 export const Empty: ComponentStoryObj<typeof BuildConfigTable> = {
   args: {
-    defaultBuildConfigs: []
+    defaultBuildConfigs: [],
+    defaultAuthentication: true,
+    defaultFetching: false
   }
 };

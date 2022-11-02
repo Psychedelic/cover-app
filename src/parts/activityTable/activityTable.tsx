@@ -12,8 +12,8 @@ import {
   useCoverSettingsContext
 } from '@/contexts';
 import {Activity} from '@/models';
-import {ActivityRow} from '@/parts';
 
+import {ActivityRow} from './activityRow';
 import {tableBodyStyle, tableContainerStyle} from './activityTable.styled';
 
 interface PropTypes {

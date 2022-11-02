@@ -41,9 +41,15 @@ import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './
 
 interface PropTypes {
   defaultBuildConfigs?: BuildConfig[];
+  defaultAuthentication?: boolean;
+  defaultFetching?: boolean;
 }
 
-export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_BUILD_CONFIGS}) => {
+export const BuildConfigTable: FC<PropTypes> = ({
+  defaultBuildConfigs = DEFAULT_BUILD_CONFIGS,
+  defaultAuthentication,
+  defaultFetching
+}) => {
   const {
       state: {buildConfigs = defaultBuildConfigs, currentCanisterId = ''},
       dispatch
@@ -52,7 +58,7 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       state: {coverSettings}
     } = useCoverSettingsContext(),
     {
-      state: {isPending, isAuthenticated}
+      state: {publicKey, isFetching = defaultFetching, isAuthenticated = defaultAuthentication}
     } = useAuthenticationContext();
 
   const confirmDialogRef = useRef<ConfirmDialogHandler>(null),
@@ -93,31 +99,34 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       (buildConfig: BuildConfig) => navigate(BUILD_CONFIG_SUBMIT_PATH, {state: {buildConfig}}),
       [navigate]
     ),
-    onResubmitHandler = useCallback((buildConfig: BuildConfig) => {
-      infoDialogRef.current?.open({
-        title: 'Submission Processing',
-        description: 'Your submission is processing, please allow some time for the verification to finish.'
-      });
-      anonymousBuildWithConfig({
-        canisterId: buildConfig.canisterId as string,
-        repoAccessToken: '',
-        callerId: buildConfig.callerId as string,
-        publicKey: '',
-        signature: '',
-        timestamp: 0
-      })
-        .then(() =>
-          successDialogRef.current?.open({
-            description: 'Congrats!!! You have submitted verification successfully.',
-            showActionBtn: true
-          })
-        )
-        .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
-        .finally(() => infoDialogRef.current?.close());
-    }, []);
+    onResubmitHandler = useCallback(
+      (buildConfig: BuildConfig) => {
+        infoDialogRef.current?.open({
+          title: 'Submission Processing',
+          description: 'Your submission is processing, please allow some time for the verification to finish.'
+        });
+        anonymousBuildWithConfig({
+          canisterId: buildConfig.canisterId as string,
+          repoAccessToken: '',
+          callerId: buildConfig.callerId as string,
+          publicKey: publicKey || '',
+          signature: '',
+          timestamp: 0
+        })
+          .then(() =>
+            successDialogRef.current?.open({
+              description: 'Congrats!!! You have submitted verification successfully.',
+              showActionBtn: true
+            })
+          )
+          .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
+          .finally(() => infoDialogRef.current?.close());
+      },
+      [publicKey]
+    );
 
   useEffect(() => {
-    if (typeof isPending === 'undefined' || isPending) return;
+    if (typeof isFetching === 'undefined' || isFetching) return;
     if (!isAuthenticated) {
       navigate(DASHBOARD_PATH);
       return;
@@ -136,12 +145,12 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
     canisterIdParam,
     isDetailPage,
     isCanisterNotFound,
-    isPending,
+    isFetching,
     isAuthenticated,
     navigate
   ]);
 
-  return typeof isPending === 'undefined' || isPending || !isAuthenticated ? (
+  return typeof isFetching === 'undefined' || isFetching || !isAuthenticated ? (
     <Loading />
   ) : (
     <TableContainer css={tableContainerStyle} paginated={false}>

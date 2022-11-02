@@ -5,9 +5,9 @@ import {
   StitchesTableEmptyContent,
   StitchesTableEmptyMainText,
   StitchesTableEmptyRow
-} from './activityEmpty.styled';
+} from './myActivityEmpty.styled';
 
-export const ActivityEmpty = () => (
+export const MyActivityEmpty = () => (
   <StitchesTableEmptyRow>
     <StitchesTableEmptyCell colSpan={4}>
       <StitchesTableEmptyContent>
