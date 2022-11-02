@@ -99,28 +99,31 @@ export const BuildConfigTable: FC<PropTypes> = ({
       (buildConfig: BuildConfig) => navigate(BUILD_CONFIG_SUBMIT_PATH, {state: {buildConfig}}),
       [navigate]
     ),
-    onResubmitHandler = useCallback((buildConfig: BuildConfig) => {
-      infoDialogRef.current?.open({
-        title: 'Submission Processing',
-        description: 'Your submission is processing, please allow some time for the verification to finish.'
-      });
-      anonymousBuildWithConfig({
-        canisterId: buildConfig.canisterId as string,
-        repoAccessToken: '',
-        callerId: buildConfig.callerId as string,
-        publicKey: publicKey || '',
-        signature: '',
-        timestamp: 0
-      })
-        .then(() =>
-          successDialogRef.current?.open({
-            description: 'Congrats!!! You have submitted verification successfully.',
-            showActionBtn: true
-          })
-        )
-        .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
-        .finally(() => infoDialogRef.current?.close());
-    }, [publicKey]);
+    onResubmitHandler = useCallback(
+      (buildConfig: BuildConfig) => {
+        infoDialogRef.current?.open({
+          title: 'Submission Processing',
+          description: 'Your submission is processing, please allow some time for the verification to finish.'
+        });
+        anonymousBuildWithConfig({
+          canisterId: buildConfig.canisterId as string,
+          repoAccessToken: '',
+          callerId: buildConfig.callerId as string,
+          publicKey: publicKey || '',
+          signature: '',
+          timestamp: 0
+        })
+          .then(() =>
+            successDialogRef.current?.open({
+              description: 'Congrats!!! You have submitted verification successfully.',
+              showActionBtn: true
+            })
+          )
+          .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
+          .finally(() => infoDialogRef.current?.close());
+      },
+      [publicKey]
+    );
 
   useEffect(() => {
     if (typeof isFetching === 'undefined' || isFetching) return;
