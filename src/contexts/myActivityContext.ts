@@ -125,6 +125,7 @@ const mapMyActivity = (data: CanisterMyActivity): MyActivity => ({
   canisterId: data.canister_id.toText(),
   buildStatus:
     data.build_status[0] && (Object.keys(data.build_status[0])[0] as 'Success' | 'Pending' | 'Error' | 'Building'),
-  buildConfigStatus: data.build_config_status[0] && `${(Object.keys(data.build_config_status[0])[0] as 'Save' | 'Delete')} Config`,
+  buildConfigStatus:
+    data.build_config_status[0] && `${Object.keys(data.build_config_status[0])[0] as 'Save' | 'Delete'} Config`,
   datetime: new Date(Number(data.created_at / BigInt(1_000_000)))
 });
