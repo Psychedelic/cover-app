@@ -8,8 +8,8 @@ import {
   autoRefresh,
   DEFAULT_MY_ACTIVITIES,
   fetchMyActivities,
-  useMyActivityContext,
-  useCoverSettingsContext
+  useCoverSettingsContext,
+  useMyActivityContext
 } from '@/contexts';
 import {MyActivity} from '@/models';
 
@@ -72,8 +72,8 @@ export const MyActivityTable: FC<PropTypes> = ({defaultActivity = DEFAULT_MY_ACT
         ) : (
           myActivities?.map(({buildStatus, buildConfigStatus, canisterId, datetime}, index) => (
             <MyActivityRow
-              buildStatus={buildStatus}
               buildConfigStatus={buildConfigStatus}
+              buildStatus={buildStatus}
               canisterId={canisterId}
               dateTime={datetime}
               key={(datetime && canisterId && `${datetime}${canisterId}`) || index}

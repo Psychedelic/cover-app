@@ -5,7 +5,7 @@ import {getDuration} from '@/utils';
 
 interface PropTypes {
   buildStatus?: 'Success' | 'Pending' | 'Error' | 'Building';
-  buildConfigStatus?: 'Save' | 'Delete';
+  buildConfigStatus?: 'Save Config' | 'Delete Config';
   canisterId?: string;
   dateTime?: Date;
 }
@@ -15,8 +15,8 @@ const activityStatus: {[key: string]: 'red' | 'yellow' | 'green'} = {
   Pending: 'yellow',
   Error: 'red',
   Building: 'yellow',
-  Save: 'green',
-  Delete: 'red'
+  'Save Config': 'green',
+  'Delete Config': 'red'
 };
 
 export const MyActivityRow: FC<PropTypes> = ({buildStatus, buildConfigStatus, canisterId, dateTime}) => (

@@ -1,6 +1,6 @@
 export interface MyActivity {
   buildStatus?: 'Success' | 'Pending' | 'Error' | 'Building';
-  buildConfigStatus?: 'Save' | 'Delete';
+  buildConfigStatus?: 'Save Config' | 'Delete Config';
   canisterId?: string;
   datetime?: Date;
 }
