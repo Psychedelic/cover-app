@@ -32,6 +32,9 @@ import {
 import {StitchesBuildConfigForm} from './buildConfigForm.styled';
 
 export const BuildConfigForm = () => {
+  const {
+    state: {pid, publicKey, isFetching, isAuthenticated}
+  } = useAuthenticationContext();
   const errDialogRef = useRef<ErrorDialogHandler>(null),
     infoDialogRef = useRef<InfoDialogHandler>(null),
     successDialogRef = useRef<SuccessDialogHandler>(null);
@@ -50,55 +53,55 @@ export const BuildConfigForm = () => {
     buildConfig: BuildConfig = location.state?.buildConfig || {};
   const navigate = useNavigate(),
     goToMyCanisterPath = useCallback(() => navigate(MY_CANISTER_PATH), [navigate]),
-    onSubmit = useCallback((event?: FormEvent) => {
-      event?.preventDefault();
-      const hasError = [
-        callerIdRef,
-        delegateCanisterIdRef,
-        canisterIdRef,
-        canisterNameRef,
-        repoUrlRef,
-        commitHashRef,
-        repoAccessTokenRef,
-        rustVersionRef,
-        dfxVersionRef,
-        optimizeCountRef
-      ].reduce((result, ref) => {
-        if (ref.current) return ref.current.hasError() || result;
-        return result;
-      }, false);
-      if (hasError) return;
-      infoDialogRef.current?.open({
-        title: 'Processing',
-        description: 'Please allow some time for the request to finish.'
-      });
-      anonymousSaveBuildConfig({
-        callerId: callerIdRef.current?.value() || '',
-        delegateCanisterId: delegateCanisterIdRef.current?.value() || '',
-        canisterId: canisterIdRef.current?.value() || '',
-        canisterName: canisterNameRef.current?.value() || '',
-        repoUrl: repoUrlRef.current?.value() || '',
-        commitHash: commitHashRef.current?.value() || '',
-        repoAccessToken: repoAccessTokenRef.current?.value() || '',
-        rustVersion: rustVersionRef.current?.value() || '',
-        dfxVersion: dfxVersionRef.current?.value() || '',
-        optimizeCount: parseInt(optimizeCountRef.current?.value() || '', 10),
-        timestamp: 0,
-        signature: '',
-        publicKey: ''
-      })
-        .then(() =>
-          successDialogRef.current?.open({
-            description: 'Congrats!!! You have saved build config successfully.',
-            showActionBtn: true
-          })
-        )
-        .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
-        .finally(() => infoDialogRef.current?.close());
-    }, []);
-  const {
-    state: {pid, isFetching, isAuthenticated}
-  } = useAuthenticationContext();
+    onSubmit = useCallback(
+      (event?: FormEvent) => {
+        event?.preventDefault();
+        const hasError = [
+          callerIdRef,
+          delegateCanisterIdRef,
+          canisterIdRef,
+          canisterNameRef,
+          repoUrlRef,
+          commitHashRef,
+          repoAccessTokenRef,
+          rustVersionRef,
+          dfxVersionRef,
+          optimizeCountRef
+        ].reduce((result, ref) => {
+          if (ref.current) return ref.current.hasError() || result;
+          return result;
+        }, false);
+        if (hasError) return;
+        infoDialogRef.current?.open({
+          title: 'Processing',
+          description: 'Please allow some time for the request to finish.'
+        });
+        anonymousSaveBuildConfig({
+          callerId: callerIdRef.current?.value() || '',
+          delegateCanisterId: delegateCanisterIdRef.current?.value() || '',
+          canisterId: canisterIdRef.current?.value() || '',
+          canisterName: canisterNameRef.current?.value() || '',
+          repoUrl: repoUrlRef.current?.value() || '',
+          commitHash: commitHashRef.current?.value() || '',
+          repoAccessToken: repoAccessTokenRef.current?.value() || '',
+          rustVersion: rustVersionRef.current?.value() || '',
+          dfxVersion: dfxVersionRef.current?.value() || '',
+          optimizeCount: parseInt(optimizeCountRef.current?.value() || '', 10),
+          timestamp: 0,
+          signature: '',
+          publicKey: publicKey || ''
+        })
+          .then(() =>
+            successDialogRef.current?.open({
+              description: 'Congrats!!! You have saved build config successfully.',
+              showActionBtn: true
+            })
+          )
+          .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
+          .finally(() => infoDialogRef.current?.close());
+      },
+      [publicKey]
+    );
   useEffect(() => {
     if (typeof isFetching === 'undefined' || isFetching) return;
     if (!isAuthenticated) navigate(DASHBOARD_PATH);

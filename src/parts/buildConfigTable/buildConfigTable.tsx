@@ -58,7 +58,7 @@ export const BuildConfigTable: FC<PropTypes> = ({
       state: {coverSettings}
     } = useCoverSettingsContext(),
     {
-      state: {isFetching = defaultFetching, isAuthenticated = defaultAuthentication}
+      state: {publicKey, isFetching = defaultFetching, isAuthenticated = defaultAuthentication}
     } = useAuthenticationContext();
 
   const confirmDialogRef = useRef<ConfirmDialogHandler>(null),
@@ -108,7 +108,7 @@ export const BuildConfigTable: FC<PropTypes> = ({
         canisterId: buildConfig.canisterId as string,
         repoAccessToken: '',
         callerId: buildConfig.callerId as string,
-        publicKey: '',
+        publicKey: publicKey || '',
         signature: '',
         timestamp: 0
       })
@@ -120,7 +120,7 @@ export const BuildConfigTable: FC<PropTypes> = ({
         )
         .catch((e: ErrorResponse) => errorHandler(e, errDialogRef.current as ErrorDialogHandler))
         .finally(() => infoDialogRef.current?.close());
-    }, []);
+    }, [publicKey]);
 
   useEffect(() => {
     if (typeof isFetching === 'undefined' || isFetching) return;
