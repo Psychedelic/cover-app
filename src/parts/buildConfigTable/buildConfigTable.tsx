@@ -41,9 +41,15 @@ import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './
 
 interface PropTypes {
   defaultBuildConfigs?: BuildConfig[];
+  defaultAuthentication?: boolean;
+  defaultFetching?: boolean;
 }
 
-export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_BUILD_CONFIGS}) => {
+export const BuildConfigTable: FC<PropTypes> = ({
+  defaultBuildConfigs = DEFAULT_BUILD_CONFIGS,
+  defaultAuthentication,
+  defaultFetching
+}) => {
   const {
       state: {buildConfigs = defaultBuildConfigs, currentCanisterId = ''},
       dispatch
@@ -52,7 +58,7 @@ export const BuildConfigTable: FC<PropTypes> = ({defaultBuildConfigs = DEFAULT_B
       state: {coverSettings}
     } = useCoverSettingsContext(),
     {
-      state: {isFetching, isAuthenticated}
+      state: {isFetching = defaultFetching, isAuthenticated = defaultAuthentication}
     } = useAuthenticationContext();
 
   const confirmDialogRef = useRef<ConfirmDialogHandler>(null),
