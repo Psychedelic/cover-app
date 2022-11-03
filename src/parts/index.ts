@@ -2,6 +2,7 @@ export * from './activityTable';
 export * from './myActivityTable';
 export * from './pageContainer';
 export * from './statsTable';
+export * from './myStatsTable';
 export * from './verificationTable';
 export * from './standardSubmitForm';
 export * from './autoSubmitForm';
