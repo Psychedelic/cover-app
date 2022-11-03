@@ -24,6 +24,7 @@ const slideLeftAndFade = keyframes({
 });
 
 export const StitchesContent = styled(TooltipPrimitive.Content, {
+  zIndex: 9999,
   width: 260,
   borderRadius: 8,
   padding: '$15',
