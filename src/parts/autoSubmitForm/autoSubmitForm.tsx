@@ -38,7 +38,7 @@ export const AutoSubmitForm: FC = () => {
     canisterIdTempRef.current = canisterId;
     setIsFetched(false);
     setCoverMetadata({
-      controller: [],
+      controller: '',
       dfx_version: '',
       canister_name: '',
       commit_hash: '',
@@ -136,7 +136,7 @@ export const AutoSubmitForm: FC = () => {
             <div className={'header'}>
               <span>{'Fetched Results'}</span>
             </div>
-            <FormInput defaultValue={coverMetadata?.controller[0]} disabled label={'Controller'} />
+            <FormInput defaultValue={coverMetadata?.controller} disabled label={'Controller'} />
             <FormInput defaultValue={coverMetadata?.canister_name} disabled label={'Canister Name'} />
             <FormInput defaultValue={coverMetadata?.repo_url} disabled label={'Repo URL'} />
             <FormInput defaultValue={coverMetadata?.commit_hash} disabled label={'Commit Hash'} />
