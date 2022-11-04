@@ -2,7 +2,7 @@ import {StrictMode} from 'react';
 
 import {createRoot} from 'react-dom/client';
 
-import {Core} from '@/components';
+import {Core, DesktopOnly} from '@/components';
 import {globalStyles} from '@/themes';
 
 import {App} from './app';
@@ -18,7 +18,9 @@ root.render(
   <StrictMode>
     <CoverSettingsProvider>
       <AuthenticationProvider>
-        <App />
+        <DesktopOnly>
+          <App />
+        </DesktopOnly>
       </AuthenticationProvider>
     </CoverSettingsProvider>
     <Core.GitInfo />

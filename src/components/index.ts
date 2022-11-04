@@ -10,3 +10,4 @@ export * from './menuItems';
 export * from './settings';
 export * from './confirmDialog';
 export * from './loading';
+export * from './desktopOnly';
