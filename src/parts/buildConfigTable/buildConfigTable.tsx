@@ -38,6 +38,7 @@ import {anonymousBuildWithConfig, isMyCanisterPage, isPrincipal} from '@/utils';
 import {BuildConfigEmpty} from './buildConfigEmpty';
 import {BuildConfigRow} from './buildConfigRow';
 import {tableContainerStyle, tableContentTransparent, tableHeaderStyle} from './buildConfigTable.styled';
+import {RepoAccessTokenDialog, RepoAccessTokenDialogHandler} from './repoAccessTokenDialog';
 
 interface PropTypes {
   defaultBuildConfigs?: BuildConfig[];
@@ -64,7 +65,8 @@ export const BuildConfigTable: FC<PropTypes> = ({
   const confirmDialogRef = useRef<ConfirmDialogHandler>(null),
     errDialogRef = useRef<ErrorDialogHandler>(null),
     infoDialogRef = useRef<InfoDialogHandler>(null),
-    successDialogRef = useRef<SuccessDialogHandler>(null);
+    successDialogRef = useRef<SuccessDialogHandler>(null),
+    repoAccessTokenDialog = useRef<RepoAccessTokenDialogHandler>(null);
 
   const {canisterId: canisterIdParam} = useParams(),
     [canisterIdSelected, setCanisterIdSelected] = useState(''),
@@ -99,15 +101,15 @@ export const BuildConfigTable: FC<PropTypes> = ({
       (buildConfig: BuildConfig) => navigate(BUILD_CONFIG_SUBMIT_PATH, {state: {buildConfig}}),
       [navigate]
     ),
-    onResubmitHandler = useCallback(
-      (buildConfig: BuildConfig) => {
+    submitBuildConfig = useCallback(
+      (buildConfig: BuildConfig, repoAccessToken: string) => {
         infoDialogRef.current?.open({
           title: 'Submission Processing',
           description: 'Your submission is processing, please allow some time for the verification to finish.'
         });
         anonymousBuildWithConfig({
           canisterId: buildConfig.canisterId as string,
-          repoAccessToken: '',
+          repoAccessToken,
           callerId: buildConfig.callerId as string,
           publicKey: publicKey || '',
           signature: '',
@@ -123,6 +125,11 @@ export const BuildConfigTable: FC<PropTypes> = ({
           .finally(() => infoDialogRef.current?.close());
       },
       [publicKey]
+    ),
+    onResubmitHandler = useCallback((buildConfig: BuildConfig) => repoAccessTokenDialog.current?.open(buildConfig), []),
+    onResubmitConfirm = useCallback(
+      (buildConfig: BuildConfig, repoAccessToken: string) => submitBuildConfig(buildConfig, repoAccessToken),
+      [submitBuildConfig]
     );
 
   useEffect(() => {
@@ -190,6 +197,7 @@ export const BuildConfigTable: FC<PropTypes> = ({
       <InfoDialog ref={infoDialogRef} />
       <ErrorDialog ref={errDialogRef} />
       <ConfirmDialog actionContent={'Yes, Delete it'} onAction={onDeleteConfirm} ref={confirmDialogRef} />
+      <RepoAccessTokenDialog onAction={onResubmitConfirm} ref={repoAccessTokenDialog} />
     </TableContainer>
   );
 };
