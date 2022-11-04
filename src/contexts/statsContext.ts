@@ -112,5 +112,8 @@ const mapStats = (data: CanisterStats): Stats => ({
   totalCanisters: data.total_canisters.toString(),
   motokoCanistersCount: data.motoko_canisters_count.toString(),
   rustCanistersCount: data.rust_canisters_count.toString(),
+  customCanistersCount: data.custom_canisters_count.toString(),
+  assetsCanisterCount: data.assets_canisters_count.toString(),
+  unknownCanistersCount: data.unknown_canisters_count.toString(),
   buildSuccessCount: data.build_success_count.toString()
 });
