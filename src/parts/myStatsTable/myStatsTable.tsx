@@ -56,6 +56,9 @@ export const MyStatsTable: FC<PropTypes> = ({defaultStats = DEFAULT_MY_STATS}) =
         <TableRow override>{renderItems('Total Canisters', myStats.totalCanisters)}</TableRow>
         <TableRow override>{renderItems('-- Motoko Canisters', myStats.motokoCanistersCount)}</TableRow>
         <TableRow override>{renderItems('-- Rust Canisters', myStats.rustCanistersCount)}</TableRow>
+        <TableRow override>{renderItems('-- Assets Canisters', myStats.assetsCanisterCount)}</TableRow>
+        <TableRow override>{renderItems('-- Custom Canisters', myStats.customCanistersCount)}</TableRow>
+        <TableRow override>{renderItems('-- Unknown Canisters', myStats.unknownCanistersCount)}</TableRow>
         <TableRow override>{renderItems('Build Success Canisters', myStats.buildSuccessCount)}</TableRow>
       </TableContent>
     </TableContainer>

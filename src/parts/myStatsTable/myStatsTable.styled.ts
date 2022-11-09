@@ -29,7 +29,16 @@ export const tableBodyStyle = {
   '& tr:nth-of-type(3) div > div': {
     borderTop: '1px solid $coverSilver'
   },
-  '& tr:nth-of-type(4)': {
+  '& tr:nth-of-type(4) div > div': {
+    borderTop: '1px solid $coverSilver'
+  },
+  '& tr:nth-of-type(5) div > div': {
+    borderTop: '1px solid $coverSilver'
+  },
+  '& tr:nth-of-type(6) div > div': {
+    borderTop: '1px solid $coverSilver'
+  },
+  '& tr:nth-of-type(7)': {
     borderTop: '1px solid $coverSilver',
     '& td:nth-of-type(2)': {
       color: '$coverLightWhite'
