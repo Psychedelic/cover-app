@@ -51,6 +51,9 @@ export const DEFAULT_MY_STATS: Stats = {
   totalCanisters: 'N/A',
   motokoCanistersCount: 'N/A',
   rustCanistersCount: 'N/A',
+  customCanistersCount: 'N/A',
+  assetsCanisterCount: 'N/A',
+  unknownCanistersCount: 'N/A',
   buildSuccessCount: 'N/A'
 };
 
